@@ -7,15 +7,24 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "study_program")
-public class StudyProgram {
-
+@Table(name = "student")
+public class Student {
+	
 	@Id
 	@GeneratedValue
 	@Column(name = "id")
 	private Long id;
 	
-	@Column(name = "program_name")
-	private String programName;
+	@Column(name = "name")
+	private String name;
+	
+	@Column(name = "surname")
+	private String surname;
+	
+	@Column(name = "address")
+	private String address;
+	
+	@Column(name = "mail")
+	private String mail;
 	
 }
