@@ -8,18 +8,23 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "entrance_exam_subject")
-public class EntranceExamSubject {
+@Table(name = "entrance_exam_student")
+public class EntranceExamStudent {
 	
 	@Id
 	@GeneratedValue
 	@Column(name = "id")
 	private Long id;
 	
+	@Column(name = "points")
+	private double points;
+	
+	@Column(name = "total_points")
+	private double totalPoints;
+	
 	@ManyToOne
 	private EntranceExam entranceExam;
 	
 	@ManyToOne
-	private Subject subject;
-
+	private Student student;
 }
