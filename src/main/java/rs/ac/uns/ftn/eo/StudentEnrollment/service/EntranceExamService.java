@@ -1,4 +1,4 @@
-package service;
+package rs.ac.uns.ftn.eo.StudentEnrollment.service;
 
 import java.util.List;
 
