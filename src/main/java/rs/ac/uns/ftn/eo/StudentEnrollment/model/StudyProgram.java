@@ -43,4 +43,7 @@ public class StudyProgram {
 	@ManyToOne
 	private EntranceExam entranceExam;
 	
+	//TO DO
+	//Make Constuctors and getters and setters
+	
 }

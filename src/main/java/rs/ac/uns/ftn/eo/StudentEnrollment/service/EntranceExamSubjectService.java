@@ -12,7 +12,7 @@ import rs.ac.uns.ftn.eo.StudentEnrollment.repository.EntranceExamSubjectReposito
 public class EntranceExamSubjectService {
 	
 	@Autowired
-	EntranceExamSubjectRepository entranceExamSubjectRepository;
+	private EntranceExamSubjectRepository entranceExamSubjectRepository;
 	
 	public EntranceExamSubject findOne(Long id) {
 		return entranceExamSubjectRepository.findOne(id);

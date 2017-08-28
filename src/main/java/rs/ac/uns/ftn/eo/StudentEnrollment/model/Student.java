@@ -43,4 +43,7 @@ public class Student {
 	@OneToOne
 	private User user;
 	
+	//TO DO
+	//Make Constuctors and getters and setters
+	
 }

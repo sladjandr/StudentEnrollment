@@ -27,4 +27,7 @@ public class EntranceExamStudent {
 	
 	@ManyToOne
 	private Student student;
+	
+	//TO DO
+	//Make Constuctors and getters and setters
 }

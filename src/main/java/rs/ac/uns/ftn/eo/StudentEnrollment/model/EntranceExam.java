@@ -30,5 +30,10 @@ public class EntranceExam {
 	
 	@OneToMany(mappedBy = "entrance_exam")
 	private List<EntranceExamStudent> entanceExamStudents;
+
+	//TO DO
+	//Make Constuctors and getters and setters
 	
 }
+
+

@@ -22,4 +22,7 @@ public class EntranceExamSubject {
 	@ManyToOne
 	private Subject subject;
 
+	//TO DO
+	//Make Constuctors and getters and setters
+	
 }

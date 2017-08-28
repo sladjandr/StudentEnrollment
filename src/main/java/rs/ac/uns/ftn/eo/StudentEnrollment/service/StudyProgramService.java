@@ -12,7 +12,7 @@ import rs.ac.uns.ftn.eo.StudentEnrollment.repository.StudyProgramRepository;
 public class StudyProgramService {
 	
 	@Autowired
-	StudyProgramRepository studyProgramRepository;
+	private StudyProgramRepository studyProgramRepository;
 	
 	public StudyProgram findOne(Long id) {
 		return studyProgramRepository.findOne(id);

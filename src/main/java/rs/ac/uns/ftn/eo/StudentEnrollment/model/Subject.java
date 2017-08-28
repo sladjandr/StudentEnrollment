@@ -23,5 +23,8 @@ public class Subject {
 	
 	@OneToMany(mappedBy = "subject")
 	private List<EntranceExamSubject> entranceExamSubjects;
+	
+	//TO DO
+	//Make Constuctors and getters and setters
 
 }

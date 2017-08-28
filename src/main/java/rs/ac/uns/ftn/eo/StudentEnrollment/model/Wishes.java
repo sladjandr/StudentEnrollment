@@ -10,7 +10,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "wishes")
 public class Wishes {
-	
+
 	@Id
 	@GeneratedValue
 	@Column
@@ -27,5 +27,48 @@ public class Wishes {
 	
 	@OneToOne
 	private Student student;
+	
+	//TO DO
+	//Make Constuctors
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public StudyProgram getFirstWish() {
+		return firstWish;
+	}
+
+	public void setFirstWish(StudyProgram firstWish) {
+		this.firstWish = firstWish;
+	}
+
+	public StudyProgram getSecondWish() {
+		return secondWish;
+	}
+
+	public void setSecondWish(StudyProgram secondWish) {
+		this.secondWish = secondWish;
+	}
+
+	public StudyProgram getThirdWish() {
+		return thirdWish;
+	}
+
+	public void setThirdWish(StudyProgram thirdWish) {
+		this.thirdWish = thirdWish;
+	}
+
+	public Student getStudent() {
+		return student;
+	}
+
+	public void setStudent(Student student) {
+		this.student = student;
+	}
 
 }

@@ -12,7 +12,7 @@ import rs.ac.uns.ftn.eo.StudentEnrollment.repository.StudentRepository;
 public class StudentService {
 	
 	@Autowired
-	StudentRepository studentRepository;
+	private StudentRepository studentRepository;
 	
 	public Student findOne(Long id) {
 		return studentRepository.findOne(id);
