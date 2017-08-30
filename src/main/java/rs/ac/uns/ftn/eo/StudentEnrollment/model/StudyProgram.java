@@ -44,6 +44,78 @@ public class StudyProgram {
 	private EntranceExam entranceExam;
 	
 	//TO DO
-	//Make Constuctors and getters and setters
+	//Make Constuctors
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getProgramName() {
+		return programName;
+	}
+
+	public void setProgramName(String programName) {
+		this.programName = programName;
+	}
+
+	public StudyProgramLevel getLevel() {
+		return level;
+	}
+
+	public void setLevel(StudyProgramLevel level) {
+		this.level = level;
+	}
+
+	public int getDuration() {
+		return duration;
+	}
+
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
+	
+	public String getScientificAreas() {
+		return scientificAreas;
+	}
+
+	public void setScientificAreas(String scientificAreas) {
+		this.scientificAreas = scientificAreas;
+	}
+
+	public int getEspbPoints() {
+		return espbPoints;
+	}
+
+	public void setEspbPoints(int espbPoints) {
+		this.espbPoints = espbPoints;
+	}
+
+	public int getBudgetStudents() {
+		return budgetStudents;
+	}
+
+	public void setBudgetStudents(int budgetStudents) {
+		this.budgetStudents = budgetStudents;
+	}
+
+	public int getSelfFinancingStudents() {
+		return selfFinancingStudents;
+	}
+
+	public void setSelfFinancingStudents(int selfFinancingStudents) {
+		this.selfFinancingStudents = selfFinancingStudents;
+	}
+	
+	public EntranceExam getEntranceExam() {
+		return entranceExam;
+	}
+
+	public void setEntranceExam(EntranceExam entranceExam) {
+		this.entranceExam = entranceExam;
+	}
 	
 }

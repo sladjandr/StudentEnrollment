@@ -10,7 +10,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "entrance_exam_subject")
 public class EntranceExamSubject {
-	
+
 	@Id
 	@GeneratedValue
 	@Column(name = "id")
@@ -23,6 +23,29 @@ public class EntranceExamSubject {
 	private Subject subject;
 
 	//TO DO
-	//Make Constuctors and getters and setters
+	//Make Constuctors
 	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public EntranceExam getEntranceExam() {
+		return entranceExam;
+	}
+
+	public void setEntranceExam(EntranceExam entranceExam) {
+		this.entranceExam = entranceExam;
+	}
+
+	public Subject getSubject() {
+		return subject;
+	}
+
+	public void setSubject(Subject subject) {
+		this.subject = subject;
+	}
 }

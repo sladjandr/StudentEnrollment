@@ -15,7 +15,7 @@ public class EntranceExamStudent {
 	@GeneratedValue
 	@Column(name = "id")
 	private Long id;
-	
+
 	@Column(name = "points")
 	private double points;
 	
@@ -29,5 +29,45 @@ public class EntranceExamStudent {
 	private Student student;
 	
 	//TO DO
-	//Make Constuctors and getters and setters
+	//Make Constuctors 
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public double getPoints() {
+		return points;
+	}
+
+	public void setPoints(double points) {
+		this.points = points;
+	}
+
+	public double getTotalPoints() {
+		return totalPoints;
+	}
+
+	public void setTotalPoints(double totalPoints) {
+		this.totalPoints = totalPoints;
+	}
+	
+	public EntranceExam getEntranceExam() {
+		return entranceExam;
+	}
+
+	public void setEntranceExam(EntranceExam entranceExam) {
+		this.entranceExam = entranceExam;
+	}
+
+	public Student getStudent() {
+		return student;
+	}
+
+	public void setStudent(Student student) {
+		this.student = student;
+	}
 }

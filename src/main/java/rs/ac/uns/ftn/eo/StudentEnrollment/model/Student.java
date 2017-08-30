@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "student")
 public class Student {
-	
+
 	@Id
 	@GeneratedValue
 	@Column(name = "id")
@@ -44,6 +44,78 @@ public class Student {
 	private User user;
 	
 	//TO DO
-	//Make Constuctors and getters and setters
+	//Make Constuctors
+	
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	public double getHighSchoolPoints() {
+		return highSchoolPoints;
+	}
+
+	public void setHighSchoolPoints(double highSchoolPoints) {
+		this.highSchoolPoints = highSchoolPoints;
+	}
+
+	public List<EntranceExamStudent> getEntranceExamStudents() {
+		return entranceExamStudents;
+	}
+
+	public void setEntranceExamStudents(List<EntranceExamStudent> entranceExamStudents) {
+		this.entranceExamStudents = entranceExamStudents;
+	}
+	
+	public Wishes getWishes() {
+		return wishes;
+	}
+
+	public void setWishes(Wishes wishes) {
+		this.wishes = wishes;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
 	
 }
