@@ -16,13 +16,14 @@ public class User {
 	@Column(name = "id")
 	private Long id;
 	
-	@Column(name = "user_role")
+	@Column(name = "user_role", nullable=false)
 	private UserRole role;
 	
-	@Column(name = "username", unique = true)
+	@Column(name = "username", unique = true, nullable=false)
 	private String username;
 	
-	@Column(name = "password")
+	//password might not be needed after implementation of security
+	@Column(name = "password", nullable=false)
 	private String password;
 	
 	@OneToOne

@@ -41,6 +41,13 @@ public class EntranceExamStudent {
 		this.student = student;
 	}
 
+	public EntranceExamStudent(Long id, EntranceExam entranceExam, Student student) {
+		super();
+		this.id = id;
+		this.entranceExam = entranceExam;
+		this.student = student;
+	}
+
 	public Long getId() {
 		return id;
 	}

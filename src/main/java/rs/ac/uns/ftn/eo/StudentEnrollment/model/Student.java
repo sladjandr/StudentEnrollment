@@ -19,16 +19,16 @@ public class Student {
 	@Column(name = "id")
 	private Long id;
 	
-	@Column(name = "name")
+	@Column(name = "name", nullable=false)
 	private String name;
 	
-	@Column(name = "surname")
+	@Column(name = "surname", nullable=false)
 	private String surname;
 	
-	@Column(name = "address")
+	@Column(name = "address", nullable=false)
 	private String address;
 	
-	@Column(name = "mail")
+	@Column(name = "mail", nullable=false)
 	private String mail;
 	
 	@Column(name = "high_school_points")
@@ -59,6 +59,16 @@ public class Student {
 		this.entranceExamStudents = entranceExamStudents;
 		this.wishes = wishes;
 		this.user = user;
+	}
+
+	public Student(Long id, String name, String surname, String address, String mail, double highSchoolPoints) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.surname = surname;
+		this.address = address;
+		this.mail = mail;
+		this.highSchoolPoints = highSchoolPoints;
 	}
 
 	public Long getId() {

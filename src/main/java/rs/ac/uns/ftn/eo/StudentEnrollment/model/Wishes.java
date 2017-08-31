@@ -16,7 +16,7 @@ public class Wishes {
 	@Column
 	private Long id;
 	
-	@Column(name = "first_wish")
+	@Column(name = "first_wish", nullable=false)
 	private StudyProgram firstWish;
 	
 	@Column(name = "second_wish")
