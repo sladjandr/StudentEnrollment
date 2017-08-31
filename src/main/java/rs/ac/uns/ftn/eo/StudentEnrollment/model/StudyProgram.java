@@ -43,9 +43,26 @@ public class StudyProgram {
 	@ManyToOne
 	private EntranceExam entranceExam;
 	
-	//TO DO
-	//Make Constuctors
 	
+	public StudyProgram() {
+		super();
+	}
+
+	public StudyProgram(Long id, String programName, StudyProgramLevel level, int duration, String scientificAreas,
+			int espbPoints, int budgetStudents, int selfFinancingStudents, EntranceExam entranceExam) {
+		super();
+		this.id = id;
+		this.programName = programName;
+		this.level = level;
+		this.duration = duration;
+		this.scientificAreas = scientificAreas;
+		this.espbPoints = espbPoints;
+		this.budgetStudents = budgetStudents;
+		this.selfFinancingStudents = selfFinancingStudents;
+		this.entranceExam = entranceExam;
+	}
+	
+
 	public Long getId() {
 		return id;
 	}

@@ -21,10 +21,18 @@ public class EntranceExamSubject {
 	
 	@ManyToOne
 	private Subject subject;
-
-	//TO DO
-	//Make Constuctors
 	
+	public EntranceExamSubject() {
+		super();
+	}
+
+	public EntranceExamSubject(Long id, EntranceExam entranceExam, Subject subject) {
+		super();
+		this.id = id;
+		this.entranceExam = entranceExam;
+		this.subject = subject;
+	}
+
 	public Long getId() {
 		return id;
 	}

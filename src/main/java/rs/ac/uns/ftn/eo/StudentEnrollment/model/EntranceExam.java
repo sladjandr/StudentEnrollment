@@ -30,10 +30,23 @@ public class EntranceExam {
 	
 	@OneToMany(mappedBy = "entrance_exam")
 	private List<EntranceExamStudent> entanceExamStudents;
-
-	//TO DO
-	//Make Constuctors
 	
+	
+	public EntranceExam() {
+		super();
+	}
+
+	public EntranceExam(Long id, String name, List<StudyProgram> studyPrograms,
+			List<EntranceExamSubject> entranceExamSubjects, List<EntranceExamStudent> entanceExamStudents) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.studyPrograms = studyPrograms;
+		this.entranceExamSubjects = entranceExamSubjects;
+		this.entanceExamStudents = entanceExamStudents;
+	}
+
+
 	public Long getId() {
 		return id;
 	}

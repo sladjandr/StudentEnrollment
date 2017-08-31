@@ -28,9 +28,20 @@ public class Wishes {
 	@OneToOne
 	private Student student;
 	
-	//TO DO
-	//Make Constuctors
 	
+	public Wishes() {
+		super();
+	}
+
+	public Wishes(Long id, StudyProgram firstWish, StudyProgram secondWish, StudyProgram thirdWish, Student student) {
+		super();
+		this.id = id;
+		this.firstWish = firstWish;
+		this.secondWish = secondWish;
+		this.thirdWish = thirdWish;
+		this.student = student;
+	}
+
 	public Long getId() {
 		return id;
 	}

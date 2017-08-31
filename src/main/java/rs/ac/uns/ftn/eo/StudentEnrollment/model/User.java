@@ -28,9 +28,20 @@ public class User {
 	@OneToOne
 	private Student student;
 	
-	//TO DO
-	//Make Constuctors
 	
+	public User() {
+		super();
+	}
+
+	public User(Long id, UserRole role, String username, String password, Student student) {
+		super();
+		this.id = id;
+		this.role = role;
+		this.username = username;
+		this.password = password;
+		this.student = student;
+	}
+
 	public Long getId() {
 		return id;
 	}

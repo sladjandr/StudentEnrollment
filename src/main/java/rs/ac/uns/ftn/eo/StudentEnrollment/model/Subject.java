@@ -24,9 +24,18 @@ public class Subject {
 	@OneToMany(mappedBy = "subject")
 	private List<EntranceExamSubject> entranceExamSubjects;
 	
-	//TO DO
-	//Make Constuctors
 	
+	public Subject() {
+		super();
+	}
+
+	public Subject(Long id, String name, List<EntranceExamSubject> entranceExamSubjects) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.entranceExamSubjects = entranceExamSubjects;
+	}
+
 	public Long getId() {
 		return id;
 	}

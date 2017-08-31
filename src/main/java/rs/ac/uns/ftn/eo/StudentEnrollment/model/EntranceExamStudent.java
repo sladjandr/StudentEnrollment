@@ -28,9 +28,19 @@ public class EntranceExamStudent {
 	@ManyToOne
 	private Student student;
 	
-	//TO DO
-	//Make Constuctors 
-	
+	public EntranceExamStudent() {
+		super();
+	}
+
+	public EntranceExamStudent(Long id, double points, double totalPoints, EntranceExam entranceExam, Student student) {
+		super();
+		this.id = id;
+		this.points = points;
+		this.totalPoints = totalPoints;
+		this.entranceExam = entranceExam;
+		this.student = student;
+	}
+
 	public Long getId() {
 		return id;
 	}

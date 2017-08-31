@@ -43,9 +43,24 @@ public class Student {
 	@OneToOne
 	private User user;
 	
-	//TO DO
-	//Make Constuctors
-	
+	public Student() {
+		super();
+	}
+
+	public Student(Long id, String name, String surname, String address, String mail, double highSchoolPoints,
+			List<EntranceExamStudent> entranceExamStudents, Wishes wishes, User user) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.surname = surname;
+		this.address = address;
+		this.mail = mail;
+		this.highSchoolPoints = highSchoolPoints;
+		this.entranceExamStudents = entranceExamStudents;
+		this.wishes = wishes;
+		this.user = user;
+	}
+
 	public Long getId() {
 		return id;
 	}
