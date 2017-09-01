@@ -45,6 +45,13 @@ public class EntranceExam {
 		this.entranceExamSubjects = entranceExamSubjects;
 		this.entanceExamStudents = entanceExamStudents;
 	}
+	
+	public EntranceExam(Long id, String name, List<EntranceExamSubject> entranceExamSubjects) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.entranceExamSubjects = entranceExamSubjects;
+	}
 
 
 	public Long getId() {

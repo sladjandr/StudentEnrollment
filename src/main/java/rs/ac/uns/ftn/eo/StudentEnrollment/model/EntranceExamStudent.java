@@ -47,6 +47,13 @@ public class EntranceExamStudent {
 		this.entranceExam = entranceExam;
 		this.student = student;
 	}
+	
+	public EntranceExamStudent(Long id, double points, double totalPoints) {
+		super();
+		this.id = id;
+		this.points = points;
+		this.totalPoints = totalPoints;
+	}
 
 	public Long getId() {
 		return id;

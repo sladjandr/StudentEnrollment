@@ -101,6 +101,7 @@ public class StudentController {
 	    	EntranceExamStudent entranceExamStudent1 = new EntranceExamStudent();
 	    	entranceExamStudent1.setEntranceExam(wishes.getFirstWish().getEntranceExam());
 	    	entranceExamStudent1.setStudent(student);
+	    	entranceExamStudent1.setEntranceExam(wishes.getFirstWish().getEntranceExam());
 	    	entranceExamStudent1 = entranceExamStudentService.save(entranceExamStudent1);
 	    	entranceExamStudents.add(entranceExamStudent1);
 	    }
@@ -108,6 +109,7 @@ public class StudentController {
 	    	EntranceExamStudent entranceExamStudent2 = new EntranceExamStudent();
 	    	entranceExamStudent2.setEntranceExam(wishes.getSecondWish().getEntranceExam());
 	    	entranceExamStudent2.setStudent(student);
+	    	entranceExamStudent2.setEntranceExam(wishes.getSecondWish().getEntranceExam());
 	    	entranceExamStudent2 = entranceExamStudentService.save(entranceExamStudent2);
 	    	entranceExamStudents.add(entranceExamStudent2);
 	    }
@@ -115,11 +117,14 @@ public class StudentController {
 	    	EntranceExamStudent entranceExamStudent3 = new EntranceExamStudent();
 	    	entranceExamStudent3.setEntranceExam(wishes.getThirdWish().getEntranceExam());
 	    	entranceExamStudent3.setStudent(student);
+	    	entranceExamStudent3.setEntranceExam(wishes.getThirdWish().getEntranceExam());
 	    	entranceExamStudent3 = entranceExamStudentService.save(entranceExamStudent3);
 	    	entranceExamStudents.add(entranceExamStudent3);
 	    }
 	    
 	    //adding User, Wishes and EntranceExamStudents to Student
+	    //should test if this is even necessary...student is already added once in code above
+	    //probably not necessary
 	    student.setUser(user);
 	    student.setWishes(wishes);
 	    student.setEntranceExamStudents(entranceExamStudents);
@@ -131,19 +136,20 @@ public class StudentController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = "application/json")
 	public ResponseEntity<Student> editStudent(@PathVariable Long id, @RequestBody Student student) {
 
-		if (student == null || student.getId() != id) {
+		if (student.getAddress()==null || student.getMail()==null ){
+			return new ResponseEntity<Student>(HttpStatus.BAD_REQUEST);
+		}
+		
+		Student newStudent = studentService.findOne(id);
+		if (newStudent == null || newStudent.getId() != id) {
 			return new ResponseEntity<Student>(HttpStatus.BAD_REQUEST);
 		}
 
-		Student newStudent = studentService.findOne(id);
+		//wishes, user and EntranceExamStudents can't be changed
+		//name and surname can't be changed
 		newStudent.setAddress(student.getAddress());
-		newStudent.setEntranceExamStudents(student.getEntranceExamStudents());
-		newStudent.setHighSchoolPoints(student.getHighSchoolPoints());
+		newStudent.setHighSchoolPoints(student.getHighSchoolPoints()); //highschool points should probably be set by admin
 		newStudent.setMail(student.getMail());
-		newStudent.setName(student.getName());
-		newStudent.setSurname(student.getSurname());
-		newStudent.setUser(student.getUser()); //we should probably not allow user to be changed, maybe even Wishes and EntranceExamStudents
-		newStudent.setWishes(student.getWishes()); //whenever wish is changed, EntranceExamStudents should be changed too
 		
 		newStudent = studentService.save(newStudent);
 
