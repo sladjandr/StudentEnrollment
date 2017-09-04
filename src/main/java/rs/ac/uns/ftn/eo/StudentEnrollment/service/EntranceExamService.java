@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.EntranceExam;
+import rs.ac.uns.ftn.eo.StudentEnrollment.model.StudyProgram;
 import rs.ac.uns.ftn.eo.StudentEnrollment.repository.EntranceExamRepository;
 
 @Service
@@ -20,6 +21,10 @@ public class EntranceExamService {
 
 	public List<EntranceExam> findAll() {
 		return entranceExamRepository.findAll();
+	}
+	
+	public EntranceExam findByStudyProgram(StudyProgram studyProgram) {
+		return entranceExamRepository.findByStudyProgram(studyProgram);
 	}
 
 	public EntranceExam save(EntranceExam entranceExam) {

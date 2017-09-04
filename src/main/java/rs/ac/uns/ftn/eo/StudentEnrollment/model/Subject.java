@@ -18,7 +18,7 @@ public class Subject {
 	@Column(name = "id")
 	private Long id;
 	
-	@Column(name = "name")
+	@Column(name = "name", unique=true, nullable=false)
 	private String name;
 	
 	@OneToMany(mappedBy = "subject")
@@ -34,6 +34,12 @@ public class Subject {
 		this.id = id;
 		this.name = name;
 		this.entranceExamSubjects = entranceExamSubjects;
+	}
+	
+	public Subject(Long id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
 	}
 
 	public Long getId() {

@@ -18,10 +18,10 @@ public class StudyProgram {
 	@Column(name = "id")
 	private Long id;
 	
-	@Column(name = "program_name")
+	@Column(name = "program_name", nullable=false, unique=true)
 	private String programName;
 	
-	@Column(name = "level")
+	@Column(name = "level", nullable=false)
 	@Enumerated(EnumType.STRING)
 	private StudyProgramLevel level;
 	

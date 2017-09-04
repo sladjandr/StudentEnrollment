@@ -7,5 +7,7 @@ import rs.ac.uns.ftn.eo.StudentEnrollment.model.StudyProgram;
 
 @Repository
 public interface StudyProgramRepository extends JpaRepository<StudyProgram, Long> {
-
+	
+	StudyProgram findByProgramName(String programName);
+	
 }

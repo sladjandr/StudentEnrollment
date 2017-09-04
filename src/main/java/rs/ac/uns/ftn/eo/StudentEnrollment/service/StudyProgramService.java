@@ -21,6 +21,10 @@ public class StudyProgramService {
 	public List<StudyProgram> findAll() {
 		return studyProgramRepository.findAll();
 	}
+	
+	public StudyProgram findByProgramName(String programName){
+		return studyProgramRepository.findByProgramName(programName);
+	}
 
 	public StudyProgram save(StudyProgram studyProgram) {
 		return studyProgramRepository.save(studyProgram);

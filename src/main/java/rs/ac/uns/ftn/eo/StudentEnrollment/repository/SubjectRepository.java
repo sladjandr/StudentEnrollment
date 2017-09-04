@@ -7,5 +7,7 @@ import rs.ac.uns.ftn.eo.StudentEnrollment.model.Subject;
 
 @Repository
 public interface SubjectRepository extends JpaRepository<Subject, Long> {
+	
+	Subject findByName(String name);
 
 }

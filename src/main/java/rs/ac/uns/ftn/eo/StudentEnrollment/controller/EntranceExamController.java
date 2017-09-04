@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import rs.ac.uns.ftn.eo.StudentEnrollment.dto.EntranceExamDTO;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.EntranceExam;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.EntranceExamSubject;
+import rs.ac.uns.ftn.eo.StudentEnrollment.model.StudyProgram;
 import rs.ac.uns.ftn.eo.StudentEnrollment.service.EntranceExamService;
+import rs.ac.uns.ftn.eo.StudentEnrollment.service.EntranceExamSubjectService;
 
 @RestController
 @RequestMapping(value = "api/entranceExam")
@@ -23,6 +25,7 @@ public class EntranceExamController {
 	
 	@Autowired
 	private EntranceExamService entranceExamService;
+	@Autowired EntranceExamSubjectService entranceExamSubjectService;
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
 	public ResponseEntity<EntranceExam> getOne(@PathVariable Long id) {
@@ -39,6 +42,16 @@ public class EntranceExamController {
 		List<EntranceExam> entranceExams = entranceExamService.findAll();
 
 		return new ResponseEntity<List<EntranceExam>>(entranceExams, HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/studyProgram")
+	public ResponseEntity<EntranceExam> getByStudyProgram(@RequestBody StudyProgram studyProgram) {
+		EntranceExam entranceExam = entranceExamService.findByStudyProgram(studyProgram);
+		if (entranceExam == null) {
+			return new ResponseEntity<EntranceExam>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<EntranceExam>(entranceExam, HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
@@ -71,9 +84,15 @@ public class EntranceExamController {
 			return new ResponseEntity<EntranceExam>(HttpStatus.BAD_REQUEST);
 		}
 		
-		EntranceExam newEntranceExam = new EntranceExam();
+		EntranceExam newEntranceExam =  entranceExamService.findOne(id);
 		newEntranceExam.setName(entranceExamDTO.getName());
 		List<EntranceExamSubject> entranceExamSubjects = new ArrayList<EntranceExamSubject>();
+		//delete old EntranceExamSubjects to make space for new ones
+	    List<EntranceExamSubject> oldEntranceExamSubjects = entranceExamSubjectService.findByEntranceExam(newEntranceExam);
+	    for(int i=0; i<oldEntranceExamSubjects.size();i++){
+	    	entranceExamSubjectService.remove(oldEntranceExamSubjects.get(i).getId());
+	    }
+	    //add new EntranceExamSubjects
 		for(int i=0;i<entranceExamDTO.getSubjects().size();i++){
 			EntranceExamSubject entranceExamSubject = new EntranceExamSubject();
 			entranceExamSubject.setSubject(entranceExamDTO.getSubjects().get(i));
@@ -93,7 +112,12 @@ public class EntranceExamController {
 		if (entranceExam == null) {
 			return new ResponseEntity<EntranceExam>(HttpStatus.NOT_FOUND);
 		}
-		
+		//remove EntranceExamSubjects connected to Entrance Exam
+		List<EntranceExamSubject> entranceExamSubjects = entranceExamSubjectService.findByEntranceExam(entranceExam);
+	    for(int i=0; i<entranceExamSubjects.size();i++){
+	    	entranceExamSubjectService.remove(entranceExamSubjects.get(i).getId());
+	    }
+		//remove EntranceExam
 		entranceExamService.remove(id);
 
 		return new ResponseEntity<EntranceExam>(entranceExam, HttpStatus.OK);

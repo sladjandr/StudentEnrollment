@@ -21,6 +21,10 @@ public class SubjectService {
 	public List<Subject> findAll() {
 		return subjectRepository.findAll();
 	}
+	
+	public Subject findByName(String name) {
+		return subjectRepository.findByName(name);
+	}
 
 	public Subject save(Subject subject) {
 		return subjectRepository.save(subject);
