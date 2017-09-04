@@ -16,13 +16,13 @@ public class Wishes {
 	@Column
 	private Long id;
 	
-	@Column(name = "first_wish", nullable=false)
+	@OneToOne
 	private StudyProgram firstWish;
 	
-	@Column(name = "second_wish")
+	@OneToOne
 	private StudyProgram secondWish;
 	
-	@Column(name = "third_wish")
+	@OneToOne
 	private StudyProgram thirdWish;
 	
 	@OneToOne

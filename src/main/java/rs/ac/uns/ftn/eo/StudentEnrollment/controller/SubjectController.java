@@ -38,7 +38,7 @@ public class SubjectController {
 		return new ResponseEntity<List<Subject>>(subjects, HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<Subject> saveSubject(@RequestBody Subject subject) {
 		if(subject.getName()==null){
 			return new ResponseEntity<Subject>(subject, HttpStatus.BAD_REQUEST);
@@ -52,7 +52,7 @@ public class SubjectController {
 		return new ResponseEntity<Subject>(subject, HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.PUT)
+	@RequestMapping(method = RequestMethod.PUT, consumes = "application/json", value="/{id}")
 	public ResponseEntity<Subject> editSubject(@PathVariable Long id,@RequestBody Subject subject) {
 		if(subject.getName()==null){
 			return new ResponseEntity<Subject>(subject, HttpStatus.BAD_REQUEST);
@@ -75,7 +75,7 @@ public class SubjectController {
 		return new ResponseEntity<Subject>(newSubject, HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.DELETE)
+	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
 	public ResponseEntity<Subject> deleteSubject(@PathVariable Long id) {
 		Subject subject = subjectService.findOne(id);
 		if (subjectService == null) {

@@ -15,7 +15,6 @@ import rs.ac.uns.ftn.eo.StudentEnrollment.model.EntranceExam;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.EntranceExamStudent;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.Student;
 import rs.ac.uns.ftn.eo.StudentEnrollment.service.EntranceExamStudentService;
-import rs.ac.uns.ftn.eo.StudentEnrollment.service.StudentService;
 
 @RestController
 @RequestMapping(value = "api/entranceExamStudent")
@@ -23,8 +22,6 @@ public class EntranceExamStudentController {
 	
 	@Autowired
 	private EntranceExamStudentService entranceExamStudentService;
-	@Autowired
-	private StudentService studentService;
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
 	public ResponseEntity<EntranceExamStudent> getById(@PathVariable Long id) {
@@ -56,7 +53,7 @@ public class EntranceExamStudentController {
 	//POST
 	//EntranceExamStudent gets created only when Student associated with it is created.
 	
-	@RequestMapping(method = RequestMethod.PUT)
+	@RequestMapping(method = RequestMethod.PUT, consumes = "application/json", value="/{id}")
 	public ResponseEntity<EntranceExamStudent> edit(@PathVariable Long id, @RequestBody EntranceExamStudent entranceExamStudent) {
 		
 		EntranceExamStudent newEntranceExamStudent = entranceExamStudentService.findOne(id);
@@ -66,7 +63,7 @@ public class EntranceExamStudentController {
 		
 		double points = entranceExamStudent.getPoints();
 		newEntranceExamStudent.setPoints(points);
-		double highSchoolPoints = studentService.findByEntranceExamStudent(newEntranceExamStudent).getHighSchoolPoints();
+		double highSchoolPoints = newEntranceExamStudent.getStudent().getHighSchoolPoints();
 		double totalPoints = points + highSchoolPoints;
 		newEntranceExamStudent.setTotalPoints(totalPoints);
 		

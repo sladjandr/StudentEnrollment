@@ -39,7 +39,7 @@ public class StudyProgramController {
 		return new ResponseEntity<List<StudyProgram>>(studyProgram, HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<StudyProgram> saveStudyProgram(@RequestBody StudyProgram studyProgram) {
 		
 		if(studyProgram.getLevel()!= StudyProgramLevel.BAS && studyProgram.getLevel()!= StudyProgramLevel.BVS){
@@ -59,7 +59,7 @@ public class StudyProgramController {
 		return new ResponseEntity<StudyProgram>(studyProgram, HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.PUT)
+	@RequestMapping(method = RequestMethod.PUT, consumes = "application/json", value="/{id}")
 	public ResponseEntity<StudyProgram> editStudyProgram(@PathVariable Long id,@RequestBody StudyProgram studyProgram) {
 		
 		if(studyProgram.getLevel()!= StudyProgramLevel.BAS && studyProgram.getLevel()!= StudyProgramLevel.BVS){
@@ -90,7 +90,7 @@ public class StudyProgramController {
 		return new ResponseEntity<StudyProgram>(newStudyProgram, HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.DELETE)
+	@RequestMapping(method = RequestMethod.DELETE, value="/{id}")
 	public ResponseEntity<StudyProgram> deleteStudyProgram(@PathVariable Long id) {
 		StudyProgram studyProgram = studyProgramService.findOne(id);
 		if(studyProgram==null){

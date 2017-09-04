@@ -25,7 +25,8 @@ public class EntranceExamController {
 	
 	@Autowired
 	private EntranceExamService entranceExamService;
-	@Autowired EntranceExamSubjectService entranceExamSubjectService;
+	@Autowired
+	private EntranceExamSubjectService entranceExamSubjectService;
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
 	public ResponseEntity<EntranceExam> getOne(@PathVariable Long id) {
@@ -45,8 +46,8 @@ public class EntranceExamController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/studyProgram")
-	public ResponseEntity<EntranceExam> getByStudyProgram(@RequestBody StudyProgram studyProgram) {
-		EntranceExam entranceExam = entranceExamService.findByStudyProgram(studyProgram);
+	public ResponseEntity<EntranceExam> getByStudyProgram(@RequestBody StudyProgram studyProgram) { 
+		EntranceExam entranceExam = studyProgram.getEntranceExam();
 		if (entranceExam == null) {
 			return new ResponseEntity<EntranceExam>(HttpStatus.NOT_FOUND);
 		}
@@ -54,7 +55,7 @@ public class EntranceExamController {
 		return new ResponseEntity<EntranceExam>(entranceExam, HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<EntranceExam> saveEntranceExam(@RequestBody EntranceExamDTO entranceExamDTO) {
 		
 		if(entranceExamDTO.getSubjects()==null || entranceExamDTO.getName()==null){
@@ -77,7 +78,7 @@ public class EntranceExamController {
 		return new ResponseEntity<EntranceExam>(entranceExam, HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.PUT)
+	@RequestMapping(method = RequestMethod.PUT, consumes = "application/json", value="/{id}")
 	public ResponseEntity<EntranceExam> editEntranceExam(@PathVariable Long id, @RequestBody EntranceExamDTO entranceExamDTO) {
 		
 		if(entranceExamDTO.getName()==null || entranceExamDTO.getSubjects()==null){
