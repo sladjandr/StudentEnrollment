@@ -9,9 +9,15 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 
 @Entity
 @Table(name = "entrance_exam")
+@JsonIdentityInfo(
+		  generator = ObjectIdGenerators.PropertyGenerator.class, 
+		  property = "id")
 public class EntranceExam {
 
 	@Id
@@ -53,6 +59,16 @@ public class EntranceExam {
 		this.entranceExamSubjects = entranceExamSubjects;
 	}
 
+	public EntranceExam(Long id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+
+	public EntranceExam(String name) {
+		super();
+		this.name = name;
+	}
 
 	public Long getId() {
 		return id;

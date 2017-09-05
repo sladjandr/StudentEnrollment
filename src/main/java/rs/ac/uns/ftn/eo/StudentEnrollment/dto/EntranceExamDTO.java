@@ -23,6 +23,12 @@ public class EntranceExamDTO {
 		this.name = name;
 		this.subjects = subjects;
 	}
+	
+	public EntranceExamDTO(String name, List<Subject> subjects) {
+		super();
+		this.name = name;
+		this.subjects = subjects;
+	}
 
 	public Long getId() {
 		return id;

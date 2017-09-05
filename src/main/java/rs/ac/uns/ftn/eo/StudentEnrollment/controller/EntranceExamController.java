@@ -20,7 +20,7 @@ import rs.ac.uns.ftn.eo.StudentEnrollment.service.EntranceExamService;
 import rs.ac.uns.ftn.eo.StudentEnrollment.service.EntranceExamSubjectService;
 
 @RestController
-@RequestMapping(value = "api/entranceExam")
+@RequestMapping(value = "api/entranceexam")
 public class EntranceExamController {
 	
 	@Autowired
@@ -64,13 +64,17 @@ public class EntranceExamController {
 		
 		EntranceExam entranceExam = new EntranceExam();
 		entranceExam.setName(entranceExamDTO.getName());
-		List<EntranceExamSubject> entranceExamSubjects = new ArrayList<EntranceExamSubject>();
+		entranceExam = entranceExamService.save(entranceExam);
+		
+		//List<EntranceExamSubject> entranceExamSubjects = new ArrayList<EntranceExamSubject>();
 		for(int i=0;i<entranceExamDTO.getSubjects().size();i++){
 			EntranceExamSubject entranceExamSubject = new EntranceExamSubject();
 			entranceExamSubject.setSubject(entranceExamDTO.getSubjects().get(i));
-			entranceExamSubjects.add(entranceExamSubject);
+			entranceExamSubject.setEntranceExam(entranceExam);
+			entranceExamSubjectService.save(entranceExamSubject);
+			//entranceExamSubjects.add(entranceExamSubject);
 		}
-		entranceExam.setEntranceExamSubjects(entranceExamSubjects);
+		//entranceExam.setEntranceExamSubjects(entranceExamSubjects);
 		
 		
 		entranceExam = entranceExamService.save(entranceExam);
@@ -87,7 +91,7 @@ public class EntranceExamController {
 		
 		EntranceExam newEntranceExam =  entranceExamService.findOne(id);
 		newEntranceExam.setName(entranceExamDTO.getName());
-		List<EntranceExamSubject> entranceExamSubjects = new ArrayList<EntranceExamSubject>();
+		//List<EntranceExamSubject> entranceExamSubjects = new ArrayList<EntranceExamSubject>();
 		//delete old EntranceExamSubjects to make space for new ones
 	    List<EntranceExamSubject> oldEntranceExamSubjects = entranceExamSubjectService.findByEntranceExam(newEntranceExam);
 	    for(int i=0; i<oldEntranceExamSubjects.size();i++){
@@ -97,9 +101,11 @@ public class EntranceExamController {
 		for(int i=0;i<entranceExamDTO.getSubjects().size();i++){
 			EntranceExamSubject entranceExamSubject = new EntranceExamSubject();
 			entranceExamSubject.setSubject(entranceExamDTO.getSubjects().get(i));
-			entranceExamSubjects.add(entranceExamSubject);
+			entranceExamSubject.setEntranceExam(newEntranceExam);
+			entranceExamSubjectService.save(entranceExamSubject);
+			//entranceExamSubjects.add(entranceExamSubject);
 		}
-		newEntranceExam.setEntranceExamSubjects(entranceExamSubjects);
+		//newEntranceExam.setEntranceExamSubjects(entranceExamSubjects);
 		//study programs and students are added on StudyProgramController and StudentController
 		
 		newEntranceExam = entranceExamService.save(newEntranceExam);

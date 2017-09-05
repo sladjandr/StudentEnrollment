@@ -17,7 +17,7 @@ import rs.ac.uns.ftn.eo.StudentEnrollment.model.Subject;
 import rs.ac.uns.ftn.eo.StudentEnrollment.service.EntranceExamSubjectService;
 
 @RestController
-@RequestMapping(value = "api/entranceExamSubject")
+@RequestMapping(value = "api/entranceexamsubject")
 public class EntranceExamSubjectController {
 	
 	@Autowired

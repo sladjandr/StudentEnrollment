@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import rs.ac.uns.ftn.eo.StudentEnrollment.dto.SubjectDTO;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.Subject;
 import rs.ac.uns.ftn.eo.StudentEnrollment.service.SubjectService;
 
@@ -39,14 +40,16 @@ public class SubjectController {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
-	public ResponseEntity<Subject> saveSubject(@RequestBody Subject subject) {
-		if(subject.getName()==null){
-			return new ResponseEntity<Subject>(subject, HttpStatus.BAD_REQUEST);
+	public ResponseEntity<Subject> saveSubject(@RequestBody SubjectDTO subjectDTO) {
+		if(subjectDTO.getName()==null){
+			return new ResponseEntity<Subject>(HttpStatus.BAD_REQUEST);
 		}
-		if(subjectService.findByName(subject.getName())!=null){
-			return new ResponseEntity<Subject>(subject, HttpStatus.BAD_REQUEST);
+		if(subjectService.findByName(subjectDTO.getName())!=null){
+			return new ResponseEntity<Subject>(HttpStatus.BAD_REQUEST);
 		}
 		
+		Subject subject = new Subject();
+		subject.setName(subjectDTO.getName());
 		subject = subjectService.save(subject);
 		//EntranceExamSubjects are set on EntranceExamController
 		
@@ -54,12 +57,12 @@ public class SubjectController {
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT, consumes = "application/json", value="/{id}")
-	public ResponseEntity<Subject> editSubject(@PathVariable Long id,@RequestBody Subject subject) {
-		if(subject.getName()==null){
-			return new ResponseEntity<Subject>(subject, HttpStatus.BAD_REQUEST);
+	public ResponseEntity<Subject> editSubject(@PathVariable Long id,@RequestBody SubjectDTO subjectDTO) {
+		if(subjectDTO.getName()==null){
+			return new ResponseEntity<Subject>(HttpStatus.BAD_REQUEST);
 		}
-		if(subjectService.findByName(subject.getName())!=null){
-			return new ResponseEntity<Subject>(subject, HttpStatus.BAD_REQUEST);
+		if(subjectService.findByName(subjectDTO.getName())!=null){
+			return new ResponseEntity<Subject>(HttpStatus.BAD_REQUEST);
 		}
 		
 		Subject newSubject = subjectService.findOne(id);
@@ -68,7 +71,7 @@ public class SubjectController {
 			return new ResponseEntity<Subject>(newSubject, HttpStatus.NOT_FOUND);
 		}
 		
-		newSubject.setName(subject.getName());
+		newSubject.setName(subjectDTO.getName());
 		//EntranceExamSubjects are set on EntranceExamController
 		
 		newSubject = subjectService.save(newSubject);

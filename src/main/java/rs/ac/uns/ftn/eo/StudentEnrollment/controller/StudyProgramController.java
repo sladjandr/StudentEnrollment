@@ -16,7 +16,7 @@ import rs.ac.uns.ftn.eo.StudentEnrollment.model.StudyProgramLevel;
 import rs.ac.uns.ftn.eo.StudentEnrollment.service.StudyProgramService;
 
 @RestController
-@RequestMapping(value = "api/studyProgram")
+@RequestMapping(value = "api/studyprogram")
 public class StudyProgramController {
 
 	@Autowired
