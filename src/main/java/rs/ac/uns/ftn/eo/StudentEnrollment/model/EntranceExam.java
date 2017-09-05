@@ -22,13 +22,13 @@ public class EntranceExam {
 	@Column(name = "name", unique = true)
 	private String name;
 	
-	@OneToMany
+	@OneToMany(mappedBy = "entranceExam")
 	private List<StudyProgram> studyPrograms;
 	
-	@OneToMany
+	@OneToMany(mappedBy = "entranceExam")
 	private List<EntranceExamSubject> entranceExamSubjects;
 	
-	@OneToMany
+	@OneToMany(mappedBy = "entranceExam")
 	private List<EntranceExamStudent> entanceExamStudents;
 	
 	
