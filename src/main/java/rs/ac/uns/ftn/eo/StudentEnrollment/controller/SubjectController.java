@@ -48,6 +48,7 @@ public class SubjectController {
 		}
 		
 		subject = subjectService.save(subject);
+		//EntranceExamSubjects are set on EntranceExamController
 		
 		return new ResponseEntity<Subject>(subject, HttpStatus.OK);
 	}
@@ -78,13 +79,13 @@ public class SubjectController {
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
 	public ResponseEntity<Subject> deleteSubject(@PathVariable Long id) {
 		Subject subject = subjectService.findOne(id);
-		if (subjectService == null) {
+		if (subject == null) {
 			return new ResponseEntity<Subject>(HttpStatus.NOT_FOUND);
 		}
 		
 		subjectService.remove(id);
 
-		return new ResponseEntity<Subject>(subject, HttpStatus.OK);
+		return new ResponseEntity<Subject>(HttpStatus.OK);
 	}
 	 
 }

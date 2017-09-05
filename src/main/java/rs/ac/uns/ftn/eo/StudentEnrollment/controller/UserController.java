@@ -92,6 +92,6 @@ public class UserController {
 			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
 		}
 	    userService.remove(id);
-		return new ResponseEntity<User>(user, HttpStatus.OK);
+		return new ResponseEntity<User>(HttpStatus.OK);
 	}
 }

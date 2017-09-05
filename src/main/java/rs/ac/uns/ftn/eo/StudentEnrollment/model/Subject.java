@@ -41,6 +41,11 @@ public class Subject {
 		this.id = id;
 		this.name = name;
 	}
+	
+	public Subject( String name) {
+		super();
+		this.name = name;
+	}
 
 	public Long getId() {
 		return id;

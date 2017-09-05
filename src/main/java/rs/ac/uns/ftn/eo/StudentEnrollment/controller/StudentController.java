@@ -173,7 +173,7 @@ public class StudentController {
 		for(int i=0; i<entranceExamStudents.size();i++){
 			entranceExamStudentService.remove(entranceExamStudents.get(i).getId());
 		}
-		return new ResponseEntity<Student>(student, HttpStatus.OK);
+		return new ResponseEntity<Student>(HttpStatus.OK);
 	}
 
 

@@ -121,7 +121,7 @@ public class EntranceExamController {
 		//remove EntranceExam
 		entranceExamService.remove(id);
 
-		return new ResponseEntity<EntranceExam>(entranceExam, HttpStatus.OK);
+		return new ResponseEntity<EntranceExam>(HttpStatus.OK);
 	}
 
 }

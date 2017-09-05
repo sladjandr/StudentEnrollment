@@ -99,7 +99,7 @@ public class StudyProgramController {
 
 		studyProgramService.remove(id);
 		
-		return new ResponseEntity<StudyProgram>(studyProgram, HttpStatus.OK);
+		return new ResponseEntity<StudyProgram>(HttpStatus.OK);
 	}
 	
 }
