@@ -1,6 +1,5 @@
 package rs.ac.uns.ftn.eo.StudentEnrollment.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,15 +65,12 @@ public class EntranceExamController {
 		entranceExam.setName(entranceExamDTO.getName());
 		entranceExam = entranceExamService.save(entranceExam);
 		
-		//List<EntranceExamSubject> entranceExamSubjects = new ArrayList<EntranceExamSubject>();
 		for(int i=0;i<entranceExamDTO.getSubjects().size();i++){
 			EntranceExamSubject entranceExamSubject = new EntranceExamSubject();
 			entranceExamSubject.setSubject(entranceExamDTO.getSubjects().get(i));
 			entranceExamSubject.setEntranceExam(entranceExam);
 			entranceExamSubjectService.save(entranceExamSubject);
-			//entranceExamSubjects.add(entranceExamSubject);
 		}
-		//entranceExam.setEntranceExamSubjects(entranceExamSubjects);
 		
 		
 		entranceExam = entranceExamService.save(entranceExam);
@@ -91,7 +87,6 @@ public class EntranceExamController {
 		
 		EntranceExam newEntranceExam =  entranceExamService.findOne(id);
 		newEntranceExam.setName(entranceExamDTO.getName());
-		//List<EntranceExamSubject> entranceExamSubjects = new ArrayList<EntranceExamSubject>();
 		//delete old EntranceExamSubjects to make space for new ones
 	    List<EntranceExamSubject> oldEntranceExamSubjects = entranceExamSubjectService.findByEntranceExam(newEntranceExam);
 	    for(int i=0; i<oldEntranceExamSubjects.size();i++){
@@ -103,9 +98,7 @@ public class EntranceExamController {
 			entranceExamSubject.setSubject(entranceExamDTO.getSubjects().get(i));
 			entranceExamSubject.setEntranceExam(newEntranceExam);
 			entranceExamSubjectService.save(entranceExamSubject);
-			//entranceExamSubjects.add(entranceExamSubject);
 		}
-		//newEntranceExam.setEntranceExamSubjects(entranceExamSubjects);
 		//study programs and students are added on StudyProgramController and StudentController
 		
 		newEntranceExam = entranceExamService.save(newEntranceExam);
