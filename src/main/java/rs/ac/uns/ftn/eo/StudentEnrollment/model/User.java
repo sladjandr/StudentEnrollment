@@ -2,6 +2,8 @@ package rs.ac.uns.ftn.eo.StudentEnrollment.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -14,7 +16,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Table(name = "user")
 @JsonIdentityInfo(
 		  generator = ObjectIdGenerators.PropertyGenerator.class, 
-		  property = "id")
+		  property = "id",
+		  scope = User.class)
 public class User {
 
 	@Id
@@ -23,6 +26,7 @@ public class User {
 	private Long id;
 	
 	@Column(name = "user_role", nullable=false)
+	@Enumerated(EnumType.STRING)
 	private UserRole role;
 	
 	@Column(name = "username", unique = true, nullable=false)
@@ -48,7 +52,21 @@ public class User {
 		this.password = password;
 		this.student = student;
 	}
+	
+	public User(Long id, UserRole role, String username, String password) {
+		super();
+		this.id = id;
+		this.role = role;
+		this.username = username;
+		this.password = password;
+	}
 
+	public User(String username, String password) {
+		super();
+		this.username = username;
+		this.password = password;
+	}
+	
 	public Long getId() {
 		return id;
 	}

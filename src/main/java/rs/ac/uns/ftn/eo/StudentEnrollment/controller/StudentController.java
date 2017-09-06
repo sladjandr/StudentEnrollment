@@ -102,6 +102,7 @@ public class StudentController {
 	    	entranceExamStudent1.setEntranceExam(wishes.getFirstWish().getEntranceExam());
 	    	entranceExamStudent1.setStudent(student);
 	    	entranceExamStudent1.setEntranceExam(wishes.getFirstWish().getEntranceExam());
+	    	entranceExamStudent1.setTotalPoints(student.getHighSchoolPoints());
 	    	entranceExamStudent1 = entranceExamStudentService.save(entranceExamStudent1);
 	    	entranceExamStudents.add(entranceExamStudent1);
 	    }
@@ -110,6 +111,7 @@ public class StudentController {
 	    	entranceExamStudent2.setEntranceExam(wishes.getSecondWish().getEntranceExam());
 	    	entranceExamStudent2.setStudent(student);
 	    	entranceExamStudent2.setEntranceExam(wishes.getSecondWish().getEntranceExam());
+	    	entranceExamStudent2.setTotalPoints(student.getHighSchoolPoints());
 	    	entranceExamStudent2 = entranceExamStudentService.save(entranceExamStudent2);
 	    	entranceExamStudents.add(entranceExamStudent2);
 	    }
@@ -118,13 +120,12 @@ public class StudentController {
 	    	entranceExamStudent3.setEntranceExam(wishes.getThirdWish().getEntranceExam());
 	    	entranceExamStudent3.setStudent(student);
 	    	entranceExamStudent3.setEntranceExam(wishes.getThirdWish().getEntranceExam());
+	    	entranceExamStudent3.setTotalPoints(student.getHighSchoolPoints());
 	    	entranceExamStudent3 = entranceExamStudentService.save(entranceExamStudent3);
 	    	entranceExamStudents.add(entranceExamStudent3);
 	    }
 	    
 	    //adding User, Wishes and EntranceExamStudents to Student
-	    //should test if this is even necessary...student is already added once in code above
-	    //probably not necessary
 	    student.setUser(user);
 	    student.setWishes(wishes);
 	    student.setEntranceExamStudents(entranceExamStudents);
@@ -151,6 +152,15 @@ public class StudentController {
 		newStudent.setHighSchoolPoints(student.getHighSchoolPoints()); //highschool points should probably be set by admin
 		newStudent.setMail(student.getMail());
 		
+		//Updating total points on EntranceExamStudent
+		List<EntranceExamStudent> entranceExamStudents = entranceExamStudentService.findByStudent(newStudent);
+		for(int i=0; i<entranceExamStudents.size(); i++){
+			EntranceExamStudent entranceExamStudent = entranceExamStudentService.findOne(entranceExamStudents.get(i).getId());
+			double testPoints = entranceExamStudent.getPoints();
+			double highSchoolPoints = student.getHighSchoolPoints();
+			entranceExamStudent.setTotalPoints(testPoints+highSchoolPoints);
+		}
+		
 		newStudent = studentService.save(newStudent);
 
 		return new ResponseEntity<Student>(newStudent, HttpStatus.OK);
@@ -165,7 +175,12 @@ public class StudentController {
 		if (student == null){
 			return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
 		}
-		studentService.remove(id);
+		
+		//set user, wishes and EntranceExamStudents in student to null
+		student.setUser(null);
+		student.setWishes(null);
+		student.setEntranceExamStudents(null);
+		
 		//remove user, wishes and EntranceExamStudents connected with the student
 		userService.remove(userService.findByStudent(student).getId());
 		wishesService.remove(wishesService.findByStudent(student).getId());
@@ -173,6 +188,10 @@ public class StudentController {
 		for(int i=0; i<entranceExamStudents.size();i++){
 			entranceExamStudentService.remove(entranceExamStudents.get(i).getId());
 		}
+		
+		//remove student
+		studentService.remove(id);
+
 		return new ResponseEntity<Student>(HttpStatus.OK);
 	}
 

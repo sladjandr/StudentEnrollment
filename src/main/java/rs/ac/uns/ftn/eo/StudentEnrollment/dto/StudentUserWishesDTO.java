@@ -46,6 +46,39 @@ public class StudentUserWishesDTO {
 		this.thirdWish = thirdWish;
 	}
 	
+	public StudentUserWishesDTO(String name, String surname, String address, String mail,
+			double highSchoolPoints, UserRole role, String username, String password, StudyProgram firstWish,
+			StudyProgram secondWish, StudyProgram thirdWish) {
+		super();
+		this.name = name;
+		this.surname = surname;
+		this.address = address;
+		this.mail = mail;
+		this.highSchoolPoints = highSchoolPoints;
+		this.role = role;
+		this.username = username;
+		this.password = password;
+		this.firstWish = firstWish;
+		this.secondWish = secondWish;
+		this.thirdWish = thirdWish;
+	}
+	
+	public StudentUserWishesDTO(String name, String surname, String address, String mail,
+			double highSchoolPoints, String username, String password, StudyProgram firstWish,
+			StudyProgram secondWish, StudyProgram thirdWish) {
+		super();
+		this.name = name;
+		this.surname = surname;
+		this.address = address;
+		this.mail = mail;
+		this.highSchoolPoints = highSchoolPoints;
+		this.username = username;
+		this.password = password;
+		this.firstWish = firstWish;
+		this.secondWish = secondWish;
+		this.thirdWish = thirdWish;
+	}
+	
 	public Long getId() {
 		return id;
 	}

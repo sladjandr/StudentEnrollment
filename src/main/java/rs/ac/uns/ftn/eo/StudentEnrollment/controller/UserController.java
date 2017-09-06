@@ -28,13 +28,13 @@ public class UserController {
 		return principal;
 	}
 	
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET, value="/all")
 	public ResponseEntity<List<User>> getAll() {
 		List<User> users = userService.findAll();
 		return new ResponseEntity<List<User>>(users, HttpStatus.OK);
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/{username}")
+	@RequestMapping(method = RequestMethod.GET, value = "/username/{username}")
 	public ResponseEntity<User> getByUsername(@PathVariable String username) {
 		User user = userService.findByUsername(username);
 		if (user == null) {

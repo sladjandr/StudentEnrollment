@@ -16,7 +16,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Table(name = "study_program")
 @JsonIdentityInfo(
 		  generator = ObjectIdGenerators.PropertyGenerator.class, 
-		  property = "id")
+		  property = "id",
+		  scope = StudyProgram.class)
 public class StudyProgram {
 
 	@Id
@@ -58,6 +59,19 @@ public class StudyProgram {
 			int espbPoints, int budgetStudents, int selfFinancingStudents, EntranceExam entranceExam) {
 		super();
 		this.id = id;
+		this.programName = programName;
+		this.level = level;
+		this.duration = duration;
+		this.scientificAreas = scientificAreas;
+		this.espbPoints = espbPoints;
+		this.budgetStudents = budgetStudents;
+		this.selfFinancingStudents = selfFinancingStudents;
+		this.entranceExam = entranceExam;
+	}
+	
+	public StudyProgram(String programName, StudyProgramLevel level, int duration, String scientificAreas,
+			int espbPoints, int budgetStudents, int selfFinancingStudents, EntranceExam entranceExam) {
+		super();
 		this.programName = programName;
 		this.level = level;
 		this.duration = duration;

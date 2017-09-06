@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.EntranceExam;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.EntranceExamStudent;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.Student;
+import rs.ac.uns.ftn.eo.StudentEnrollment.service.EntranceExamService;
 import rs.ac.uns.ftn.eo.StudentEnrollment.service.EntranceExamStudentService;
+import rs.ac.uns.ftn.eo.StudentEnrollment.service.StudentService;
 
 @RestController
 @RequestMapping(value = "api/entranceexamstudent")
@@ -22,6 +24,10 @@ public class EntranceExamStudentController {
 	
 	@Autowired
 	private EntranceExamStudentService entranceExamStudentService;
+	@Autowired
+	private StudentService studentService;
+	@Autowired
+	private EntranceExamService entranceExamService;
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
 	public ResponseEntity<EntranceExamStudent> getById(@PathVariable Long id) {
@@ -32,8 +38,9 @@ public class EntranceExamStudentController {
 		return new ResponseEntity<EntranceExamStudent>(entranceExamStudent, HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/student")
-	public ResponseEntity<List<EntranceExamStudent>> getByStudent(@RequestBody Student student) {
+	@RequestMapping(method = RequestMethod.GET, value = "/student/{studentID}")
+	public ResponseEntity<List<EntranceExamStudent>> getByStudent(@PathVariable Long studentID) {
+		Student student = studentService.findOne(studentID);
 		List<EntranceExamStudent> entranceExamsStudent = entranceExamStudentService.findByStudent(student);
 		if (entranceExamsStudent == null) {
 			return new ResponseEntity<List<EntranceExamStudent>>(HttpStatus.NOT_FOUND);
@@ -41,8 +48,9 @@ public class EntranceExamStudentController {
 		return new ResponseEntity<List<EntranceExamStudent>>(entranceExamsStudent, HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/entranceExam")
-	public ResponseEntity<List<EntranceExamStudent>> getByEntranceExam(@RequestBody EntranceExam entranceExam) {
+	@RequestMapping(method = RequestMethod.GET, value = "/entranceexam/{entranceExamID}")
+	public ResponseEntity<List<EntranceExamStudent>> getByEntranceExam(@PathVariable Long entranceExamID) {
+		EntranceExam entranceExam = entranceExamService.findOne(entranceExamID);
 		List<EntranceExamStudent> entranceExamsStudent = entranceExamStudentService.findByEntranceExam(entranceExam);
 		if (entranceExamsStudent == null) {
 			return new ResponseEntity<List<EntranceExamStudent>>(HttpStatus.NOT_FOUND);

@@ -4,13 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.Student;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.Wishes;
+import rs.ac.uns.ftn.eo.StudentEnrollment.service.StudentService;
 import rs.ac.uns.ftn.eo.StudentEnrollment.service.WishesService;
 
 @RestController
@@ -18,6 +18,8 @@ import rs.ac.uns.ftn.eo.StudentEnrollment.service.WishesService;
 public class WishesController {
 	@Autowired
 	private WishesService wishesService;
+	@Autowired
+	private StudentService studentService;
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
 	public ResponseEntity<Wishes> getById(@PathVariable Long id) {
@@ -28,8 +30,9 @@ public class WishesController {
 		return new ResponseEntity<Wishes>(wishes, HttpStatus.OK);
 	}
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/student")
-	public ResponseEntity<Wishes> getByStudent(@RequestBody Student student) {
+	@RequestMapping(method = RequestMethod.GET, value = "/student/{studentID}")
+	public ResponseEntity<Wishes> getByStudent(@PathVariable Long studentID) {
+		Student student = studentService.findOne(studentID);
 		Wishes wishes = wishesService.findByStudent(student);
 		if (wishes == null) {
 			return new ResponseEntity<Wishes>(HttpStatus.NOT_FOUND);

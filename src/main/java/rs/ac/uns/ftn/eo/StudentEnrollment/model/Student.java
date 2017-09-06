@@ -17,7 +17,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Table(name = "student")
 @JsonIdentityInfo(
 		  generator = ObjectIdGenerators.PropertyGenerator.class, 
-		  property = "id")
+		  property = "id",
+		  scope = Student.class)
 public class Student {
 
 	@Id
@@ -72,6 +73,13 @@ public class Student {
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
+		this.address = address;
+		this.mail = mail;
+		this.highSchoolPoints = highSchoolPoints;
+	}
+	
+	public Student( String address, String mail, double highSchoolPoints) {
+		super();
 		this.address = address;
 		this.mail = mail;
 		this.highSchoolPoints = highSchoolPoints;

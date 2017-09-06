@@ -14,7 +14,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Table(name = "entrance_exam_student")
 @JsonIdentityInfo(
 		  generator = ObjectIdGenerators.PropertyGenerator.class, 
-		  property = "id")
+		  property = "id",
+		  scope = EntranceExamStudent.class)
 public class EntranceExamStudent {
 	
 	@Id
@@ -59,6 +60,11 @@ public class EntranceExamStudent {
 		this.id = id;
 		this.points = points;
 		this.totalPoints = totalPoints;
+	}
+	
+	public EntranceExamStudent(double points) {
+		super();
+		this.points = points;
 	}
 
 	public Long getId() {

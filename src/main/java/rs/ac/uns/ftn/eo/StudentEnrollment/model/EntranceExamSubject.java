@@ -14,7 +14,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Table(name = "entrance_exam_subject")
 @JsonIdentityInfo(
 		  generator = ObjectIdGenerators.PropertyGenerator.class, 
-		  property = "id")
+		  property = "id",
+		  scope = EntranceExamSubject.class)
 public class EntranceExamSubject {
 
 	@Id
