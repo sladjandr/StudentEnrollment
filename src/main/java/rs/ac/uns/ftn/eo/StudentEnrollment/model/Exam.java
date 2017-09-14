@@ -29,6 +29,9 @@ public class Exam {
 	@Column(name = "subject_name", unique=true, nullable=false)
 	private String subjectName;
 
+	@Column(name = "max_points", nullable=false)
+	private int maxPoints;
+
 	@OneToMany(mappedBy = "exam")
 	private List<ExamStudent> studentExams;
 	
@@ -40,17 +43,19 @@ public class Exam {
 		super();
 	}
 
-	public Exam(Long id, String subjectName, List<ExamStudent> studentExams, List<StudyProgram> studyPrograms) {
+	public Exam(Long id, String subjectName, int maxPoints, List<ExamStudent> studentExams, List<StudyProgram> studyPrograms) {
 		super();
 		this.id = id;
 		this.subjectName = subjectName;
+		this.maxPoints = maxPoints;
 		this.studentExams = studentExams;
 		this.studyPrograms = studyPrograms;
 	}
 
-	public Exam(String subjectName) {
+	public Exam(String subjectName, int maxPoints) {
 		super();
 		this.subjectName = subjectName;
+		this.maxPoints = maxPoints;
 	}
 
 	public Long getId() {
@@ -69,7 +74,14 @@ public class Exam {
 	public void setSubjectName(String subjectName) {
 		this.subjectName = subjectName;
 	}
+	
+	public int getMaxPoints() {
+		return maxPoints;
+	}
 
+	public void setMaxPoints(int maxPoints) {
+		this.maxPoints = maxPoints;
+	}
 
 	public List<ExamStudent> getStudentExams() {
 		return studentExams;

@@ -38,7 +38,6 @@ public class StudyProgram {
 	@Column(name = "duration", nullable=false)
 	private int duration;
 	
-	//pitaj za ovo da li da koristim string ili novi objekat...i da li je ovo uopste potrebno
 	@Column(name = "scientific_areas")
 	private String scientificAreas;
 	
