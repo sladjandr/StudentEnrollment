@@ -55,6 +55,7 @@ public class StudyProgramController {
 		}
 		
 		studyProgram = studyProgramService.save(studyProgram);
+		
 
 		return new ResponseEntity<StudyProgram>(studyProgram, HttpStatus.OK);
 	}
@@ -84,8 +85,7 @@ public class StudyProgramController {
 			return new ResponseEntity<StudyProgram>(HttpStatus.NOT_FOUND);
 		}
 		
-		//ovo treba da proverim dal moze ovako...
-		if (studyProgram.getWishes() != null){
+		if (!studyProgram.getWishes().isEmpty()){
 			return new ResponseEntity<StudyProgram>(studyProgram, HttpStatus.BAD_REQUEST);
 		}
 

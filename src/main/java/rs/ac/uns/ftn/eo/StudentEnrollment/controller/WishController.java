@@ -13,7 +13,7 @@ import rs.ac.uns.ftn.eo.StudentEnrollment.service.WishService;
 
 @RestController
 @RequestMapping(value = "api/wish")
-public class WishesController {
+public class WishController {
 	@Autowired
 	private WishService wishService;
 	

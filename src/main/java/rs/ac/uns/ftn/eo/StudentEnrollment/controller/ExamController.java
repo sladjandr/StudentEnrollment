@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.eo.StudentEnrollment.controller;
 
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -70,8 +71,7 @@ public class ExamController {
 		}
 		
 		//Exam can't be deleted if there are students scheduled to take the exam.
-		//ovo treba da testiram dal uopste radi (mozda treba da dodam jos jedan uslov za praznu listu, prazan objekat tipa ArrayList)
-		if (entranceExam.getStudentExams() != null) {
+		if (!entranceExam.getStudentExams().isEmpty()) {
 			return new ResponseEntity<Exam>(entranceExam, HttpStatus.BAD_REQUEST);
 		}
 		

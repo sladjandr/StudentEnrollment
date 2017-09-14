@@ -47,7 +47,7 @@ public class Student {
 	@OneToMany(mappedBy = "student")
 	private List<Wish> wishes;
 	
-	@OneToOne
+	@OneToOne(mappedBy = "student")
 	private User user;
 	
 	public Student() {

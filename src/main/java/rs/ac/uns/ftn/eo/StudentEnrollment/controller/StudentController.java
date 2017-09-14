@@ -82,7 +82,7 @@ public class StudentController {
 		//creating User
 		User user = new User();
 		user.setRole(UserRole.STUDENT);
-		user.setUsername(studentUserWishesDTO.getUsername());
+		user.setUsername(studentUserWishesDTO.getUsername()); //maybe username should be generated automaticaly
 		user.setPassword("pass"); //will probably be replaced with random password maker
 		user.setStudent(student);
 		user = userService.save(user);
@@ -100,7 +100,7 @@ public class StudentController {
 		Set<Exam> exams = new HashSet<Exam>();
 		for (int i=0; i < studentUserWishesDTO.getStudyPrograms().size(); i++){
 			List<Exam> studyProgramExams = studentUserWishesDTO.getStudyPrograms().get(i).getExams();
-			for(int j=0; i<studyProgramExams.size(); j++){
+			for(int j=0; j < studyProgramExams.size(); j++){
 				exams.add(studyProgramExams.get(j));
 			}
 		}
@@ -111,13 +111,6 @@ public class StudentController {
 			examStudent.setStudent(student);
 			examStudent = examStudentService.save(examStudent);
 		}
-	    
-	    //adding User, Wishes and EntranceExamStudents to Student
-	    //this is probably not needed...will check it during endpoints testing
-	    //student.setUser(user);
-	    //student.setWishes(wishes);
-	    //student.setEntranceExamStudents(entranceExamStudents);
-	    //student = studentService.save(student);
 	    
 		return new ResponseEntity<Student>(student, HttpStatus.CREATED);	
 	}

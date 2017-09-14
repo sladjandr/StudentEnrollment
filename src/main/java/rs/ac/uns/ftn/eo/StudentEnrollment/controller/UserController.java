@@ -22,7 +22,7 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping(method = RequestMethod.GET, value="/allAdmins")
+	@RequestMapping(method = RequestMethod.GET, value="/admin/all")
 	public ResponseEntity<List<User>> getAllAdmins() {
 		List<User> users = userService.findAllAdmins();
 		return new ResponseEntity<List<User>>(users, HttpStatus.OK);

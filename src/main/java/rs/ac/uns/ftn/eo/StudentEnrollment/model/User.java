@@ -54,10 +54,8 @@ public class User {
 	
 	public User(UserRole role, String username, String password, Student student) {
 		super();
-		this.role = role;
 		this.username = username;
 		this.password = password;
-		this.student = student;
 	}
 	
 	public Long getId() {

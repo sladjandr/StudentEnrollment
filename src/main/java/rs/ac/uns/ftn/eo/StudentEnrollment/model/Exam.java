@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -38,12 +40,13 @@ public class Exam {
 	private String location;
 
 	@Column(name = "date")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
 
 	@OneToMany(mappedBy = "exam")
 	private List<ExamStudent> studentExams;
 	
-	@ManyToMany
+	@ManyToMany(mappedBy = "exams")
 	private List<StudyProgram> studyPrograms;
 
 	
