@@ -30,7 +30,7 @@ public class Exam {
 	private String subjectName;
 
 	@OneToMany(mappedBy = "exam")
-	private List<OneExamStudent> studentExams;
+	private List<ExamStudent> studentExams;
 	
 	@ManyToMany
 	private List<StudyProgram> studyPrograms;
@@ -40,7 +40,7 @@ public class Exam {
 		super();
 	}
 
-	public Exam(Long id, String subjectName, List<OneExamStudent> studentExams, List<StudyProgram> studyPrograms) {
+	public Exam(Long id, String subjectName, List<ExamStudent> studentExams, List<StudyProgram> studyPrograms) {
 		super();
 		this.id = id;
 		this.subjectName = subjectName;
@@ -71,12 +71,12 @@ public class Exam {
 	}
 
 
-	public List<OneExamStudent> getStudentExams() {
+	public List<ExamStudent> getStudentExams() {
 		return studentExams;
 	}
 
 
-	public void setStudentExams(List<OneExamStudent> studentExams) {
+	public void setStudentExams(List<ExamStudent> studentExams) {
 		this.studentExams = studentExams;
 	}
 

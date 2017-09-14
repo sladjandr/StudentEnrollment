@@ -13,12 +13,12 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
-@Table(name = "one_exam_student")
+@Table(name = "exam_student")
 @JsonIdentityInfo(
 		  generator = ObjectIdGenerators.PropertyGenerator.class, 
 		  property = "id",
-		  scope = OneExamStudent.class)
-public class OneExamStudent {
+		  scope = ExamStudent.class)
+public class ExamStudent {
 
 	@Id
 	@GeneratedValue
@@ -35,34 +35,34 @@ public class OneExamStudent {
 	private Date date;
 	
 	@ManyToOne
-	private EntranceExamStudent entranceExamStudent;
+	private Student student;
 	
 	@ManyToOne
 	private Exam exam;
 	
 	
-	public OneExamStudent() {
+	public ExamStudent() {
 		super();
 	}
 
-	public OneExamStudent(Long id, double points, String location, Date date, EntranceExamStudent entranceExamStudent,
+	public ExamStudent(Long id, double points, String location, Date date, Student student,
 			Exam exam) {
 		super();
 		this.id = id;
 		this.points = points;
 		this.location = location;
 		this.date = date;
-		this.entranceExamStudent = entranceExamStudent;
+		this.student = student;
 		this.exam = exam;
 	}
 
-	public OneExamStudent(double points, String location, Date date, EntranceExamStudent entranceExamStudent,
+	public ExamStudent(double points, String location, Date date, Student student,
 			Exam exam) {
 		super();
 		this.points = points;
 		this.location = location;
 		this.date = date;
-		this.entranceExamStudent = entranceExamStudent;
+		this.student = student;
 		this.exam = exam;
 	}
 
@@ -98,12 +98,12 @@ public class OneExamStudent {
 		this.date = date;
 	}
 
-	public EntranceExamStudent getEntranceExamStudent() {
-		return entranceExamStudent;
+	public Student getStudent() {
+		return student;
 	}
 
-	public void setEntranceExamStudent(EntranceExamStudent entranceExamStudent) {
-		this.entranceExamStudent = entranceExamStudent;
+	public void setStudent(Student student) {
+		this.student = student;
 	}
 
 	public Exam getExam() {
