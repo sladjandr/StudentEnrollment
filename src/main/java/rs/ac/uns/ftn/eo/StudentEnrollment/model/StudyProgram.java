@@ -38,9 +38,6 @@ public class StudyProgram {
 	@Column(name = "duration", nullable=false)
 	private int duration;
 	
-	@Column(name = "scientific_areas")
-	private String scientificAreas;
-	
 	@Column(name = "espb_points", nullable=false)
 	private int espbPoints;
 	
@@ -61,14 +58,13 @@ public class StudyProgram {
 		super();
 	}
 
-	public StudyProgram(Long id, String programName, StudyProgramLevel level, int duration, String scientificAreas,
+	public StudyProgram(Long id, String programName, StudyProgramLevel level, int duration, 
 			int espbPoints, int budgetStudents, int selfFinancingStudents, List<Wish> wishes, List<Exam> exams) {
 		super();
 		this.id = id;
 		this.programName = programName;
 		this.level = level;
 		this.duration = duration;
-		this.scientificAreas = scientificAreas;
 		this.espbPoints = espbPoints;
 		this.budgetStudents = budgetStudents;
 		this.selfFinancingStudents = selfFinancingStudents;
@@ -76,13 +72,12 @@ public class StudyProgram {
 		this.exams = exams;
 	}
 
-	public StudyProgram(String programName, StudyProgramLevel level, int duration, String scientificAreas,
+	public StudyProgram(String programName, StudyProgramLevel level, int duration, 
 			int espbPoints, int budgetStudents, int selfFinancingStudents, List<Exam> exams) {
 		super();
 		this.programName = programName;
 		this.level = level;
 		this.duration = duration;
-		this.scientificAreas = scientificAreas;
 		this.espbPoints = espbPoints;
 		this.budgetStudents = budgetStudents;
 		this.selfFinancingStudents = selfFinancingStudents;
@@ -119,14 +114,6 @@ public class StudyProgram {
 
 	public void setDuration(int duration) {
 		this.duration = duration;
-	}
-	
-	public String getScientificAreas() {
-		return scientificAreas;
-	}
-
-	public void setScientificAreas(String scientificAreas) {
-		this.scientificAreas = scientificAreas;
 	}
 
 	public int getEspbPoints() {
