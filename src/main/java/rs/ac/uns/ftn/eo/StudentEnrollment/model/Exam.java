@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.eo.StudentEnrollment.model;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -29,8 +30,15 @@ public class Exam {
 	@Column(name = "subject_name", unique=true, nullable=false)
 	private String subjectName;
 
-	@Column(name = "max_points", nullable=false)
+	@Column(name = "max_points")
 	private int maxPoints;
+	
+	//javi da si izmestio location i date iz examStudent u Exam
+	@Column(name = "location")
+	private String location;
+
+	@Column(name = "date")
+	private Date date;
 
 	@OneToMany(mappedBy = "exam")
 	private List<ExamStudent> studentExams;
@@ -43,20 +51,42 @@ public class Exam {
 		super();
 	}
 
-	public Exam(Long id, String subjectName, int maxPoints, List<ExamStudent> studentExams, List<StudyProgram> studyPrograms) {
+	public Exam(Long id, String subjectName, int maxPoints, String location, Date date, List<ExamStudent> studentExams, List<StudyProgram> studyPrograms) {
 		super();
 		this.id = id;
 		this.subjectName = subjectName;
 		this.maxPoints = maxPoints;
+		this.location = location;
+		this.date = date;
 		this.studentExams = studentExams;
 		this.studyPrograms = studyPrograms;
 	}
 
-	public Exam(String subjectName, int maxPoints) {
+	public Exam(String subjectName, int maxPoints, String location, Date date) {
 		super();
 		this.subjectName = subjectName;
 		this.maxPoints = maxPoints;
+		this.location = location;
+		this.date = date;
 	}
+	
+	
+	@Override
+	public boolean equals(Object object)
+    {
+        if (object != null && object instanceof Exam)
+        {
+            return this.id == ((Exam) object).id;
+        }else{
+        return false;
+        }
+    }
+	
+	@Override
+	public int hashCode(){
+		return this.id.intValue();
+	}
+	
 
 	public Long getId() {
 		return id;
@@ -82,6 +112,22 @@ public class Exam {
 	public void setMaxPoints(int maxPoints) {
 		this.maxPoints = maxPoints;
 	}
+	
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
 	public List<ExamStudent> getStudentExams() {
 		return studentExams;
@@ -100,6 +146,8 @@ public class Exam {
 	public void setStudyPrograms(List<StudyProgram> studyPrograms) {
 		this.studyPrograms = studyPrograms;
 	}
+	
+	
 
 	
 }

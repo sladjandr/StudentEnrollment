@@ -1,6 +1,6 @@
 package rs.ac.uns.ftn.eo.StudentEnrollment.model;
 
-import java.util.Date;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,12 +27,6 @@ public class ExamStudent {
 	
 	@Column(name = "points")
 	private double points;
-
-	@Column(name = "location")
-	private String location;
-	
-	@Column(name = "date")
-	private Date date;
 	
 	@ManyToOne
 	private Student student;
@@ -45,23 +39,17 @@ public class ExamStudent {
 		super();
 	}
 
-	public ExamStudent(Long id, double points, String location, Date date, Student student,
-			Exam exam) {
+	public ExamStudent(Long id, double points, Student student, Exam exam) {
 		super();
 		this.id = id;
 		this.points = points;
-		this.location = location;
-		this.date = date;
 		this.student = student;
 		this.exam = exam;
 	}
 
-	public ExamStudent(double points, String location, Date date, Student student,
-			Exam exam) {
+	public ExamStudent(double points, Student student, Exam exam) {
 		super();
 		this.points = points;
-		this.location = location;
-		this.date = date;
 		this.student = student;
 		this.exam = exam;
 	}
@@ -80,22 +68,6 @@ public class ExamStudent {
 
 	public void setPoints(double points) {
 		this.points = points;
-	}
-	
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
-	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
 	}
 
 	public Student getStudent() {

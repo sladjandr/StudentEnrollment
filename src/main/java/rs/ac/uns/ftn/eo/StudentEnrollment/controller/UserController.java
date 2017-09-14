@@ -1,6 +1,5 @@
 package rs.ac.uns.ftn.eo.StudentEnrollment.controller;
 
-import java.security.Principal;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +22,9 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping(method = RequestMethod.GET, value = "/principal")
-	public Principal user(Principal principal) {
-		return principal;
-	}
-	
-	@RequestMapping(method = RequestMethod.GET, value="/all")
-	public ResponseEntity<List<User>> getAll() {
-		List<User> users = userService.findAll();
+	@RequestMapping(method = RequestMethod.GET, value="/allAdmins")
+	public ResponseEntity<List<User>> getAllAdmins() {
+		List<User> users = userService.findAllAdmins();
 		return new ResponseEntity<List<User>>(users, HttpStatus.OK);
 	}
 
@@ -44,11 +38,9 @@ public class UserController {
 	}
 	
 	//Student User is created when Student associated with the account is created.
-	//This may be changed when security gets implemented.
 	//Bellow is method for creating Admin User.
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json", value = "/admin")
 	public ResponseEntity<User> saveAdminUser(@RequestBody User user) {
-		//password may be removed when security gets implemented
 		if (user.getUsername()==null ||user.getPassword()==null) {
 			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
 		}	
@@ -61,28 +53,26 @@ public class UserController {
 	@RequestMapping(method = RequestMethod.PUT, consumes = "application/json", value = "/{id}")
 	public ResponseEntity<User> editUser(@PathVariable Long id, @RequestBody User user) {
 		
-		//password might be removed after security is implemented
 		if(user.getPassword()==null){
 			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
 		}
 		
-		User newUser = userService.findOne(id);
-		if (newUser == null || newUser.getId() != id) {
-			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
+		User editedUser = userService.findOne(id);
+		if (editedUser == null) {
+			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		}
-		// Username can't be changed because it's unique value. Student can't be changed either.
-		// role change or student change is also not allowed
-		newUser.setPassword(user.getPassword()); //Password will probably be present only in principal, and deleted from here.
+		editedUser.setPassword(user.getPassword()); 
 		
-		newUser = userService.save(newUser);
-		return new ResponseEntity<User>(newUser, HttpStatus.OK);
+		editedUser = userService.save(editedUser);
+		
+		return new ResponseEntity<User>(editedUser, HttpStatus.OK);
 	}
 
 	
 	//Student User gets deleted when student associated with the account is deleted.
 	//Bellow is method for deleting Admin User.
 	@RequestMapping(method = RequestMethod.DELETE, value = "/admin/{id}")
-	public ResponseEntity<User> deleteUser(@PathVariable Long id) {
+	public ResponseEntity<User> deleteAdminUser(@PathVariable Long id) {
 		
 		User user = userService.findOne(id);
 		if (user == null){

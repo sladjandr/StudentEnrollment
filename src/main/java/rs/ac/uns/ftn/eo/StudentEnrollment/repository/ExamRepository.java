@@ -3,11 +3,11 @@ package rs.ac.uns.ftn.eo.StudentEnrollment.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import rs.ac.uns.ftn.eo.StudentEnrollment.model.Subject;
+import rs.ac.uns.ftn.eo.StudentEnrollment.model.Exam;
 
 @Repository
-public interface SubjectRepository extends JpaRepository<Subject, Long> {
+public interface ExamRepository extends JpaRepository<Exam, Long> {
 	
-	Subject findByName(String name);
-
+	Exam findBySubjectName(String subjectName);
+	
 }

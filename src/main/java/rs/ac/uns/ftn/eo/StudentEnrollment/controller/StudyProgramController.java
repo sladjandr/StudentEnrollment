@@ -61,39 +61,31 @@ public class StudyProgramController {
 	
 	@RequestMapping(method = RequestMethod.PUT, consumes = "application/json", value="/{id}")
 	public ResponseEntity<StudyProgram> editStudyProgram(@PathVariable Long id,@RequestBody StudyProgram studyProgram) {
+	
+		StudyProgram editedStudyProgram = studyProgramService.findOne(id);
 		
-		if(studyProgram.getLevel()!= StudyProgramLevel.BAS && studyProgram.getLevel()!= StudyProgramLevel.BVS){
-			return new ResponseEntity<StudyProgram>(studyProgram, HttpStatus.BAD_REQUEST);
+		if(editedStudyProgram==null){
+			return new ResponseEntity<StudyProgram>(HttpStatus.NOT_FOUND);			
 		}
 		
-		if(studyProgram.getProgramName()==null){
-			return new ResponseEntity<StudyProgram>(studyProgram, HttpStatus.BAD_REQUEST);
-		}
+		editedStudyProgram.setBudgetStudents(studyProgram.getBudgetStudents());
+		editedStudyProgram.setSelfFinancingStudents(studyProgram.getSelfFinancingStudents());
+		editedStudyProgram.setExams(studyProgram.getExams());
 		
-		StudyProgram newStudyProgram = studyProgramService.findOne(id);
-		
-		if(newStudyProgram==null){
-			return new ResponseEntity<StudyProgram>(studyProgram, HttpStatus.BAD_REQUEST);			
-		}
-		
-		newStudyProgram.setBudgetStudents(studyProgram.getBudgetStudents());
-		newStudyProgram.setDuration(studyProgram.getDuration());
-		newStudyProgram.setEntranceExam(studyProgram.getEntranceExam());
-		newStudyProgram.setEspbPoints(studyProgram.getEspbPoints());
-		newStudyProgram.setLevel(studyProgram.getLevel());
-		newStudyProgram.setProgramName(studyProgram.getProgramName());
-		newStudyProgram.setScientificAreas(studyProgram.getScientificAreas());
-		newStudyProgram.setSelfFinancingStudents(studyProgram.getSelfFinancingStudents());
-		
-		newStudyProgram = studyProgramService.save(newStudyProgram);
+		editedStudyProgram = studyProgramService.save(editedStudyProgram);
 
-		return new ResponseEntity<StudyProgram>(newStudyProgram, HttpStatus.OK);
+		return new ResponseEntity<StudyProgram>(editedStudyProgram, HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE, value="/{id}")
 	public ResponseEntity<StudyProgram> deleteStudyProgram(@PathVariable Long id) {
 		StudyProgram studyProgram = studyProgramService.findOne(id);
 		if(studyProgram==null){
+			return new ResponseEntity<StudyProgram>(HttpStatus.NOT_FOUND);
+		}
+		
+		//ovo treba da proverim dal moze ovako...
+		if (studyProgram.getWishes() != null){
 			return new ResponseEntity<StudyProgram>(studyProgram, HttpStatus.BAD_REQUEST);
 		}
 

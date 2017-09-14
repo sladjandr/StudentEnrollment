@@ -7,33 +7,33 @@ import org.springframework.stereotype.Service;
 
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.Student;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.Wish;
-import rs.ac.uns.ftn.eo.StudentEnrollment.repository.WishesRepository;
+import rs.ac.uns.ftn.eo.StudentEnrollment.repository.WishRepository;
 
 @Service
-public class WishesService {
+public class WishService {
 	
 	@Autowired
-	private WishesRepository wishesRepository;
+	private WishRepository wishRepository;
 	
 	
 	public Wish findOne(Long id) {
-		return wishesRepository.findOne(id);
+		return wishRepository.findOne(id);
 	}
 
 	public List<Wish> findAll() {
-		return wishesRepository.findAll();
+		return wishRepository.findAll();
 	}
 	
-	public Wish findByStudent(Student student){
-		return wishesRepository.findByStudent(student);
+	public List<Wish> findByStudent(Student student){
+		return wishRepository.findByStudent(student);
 	}
 
 	public Wish save(Wish wishes) {
-		return wishesRepository.save(wishes);
+		return wishRepository.save(wishes);
 	}
 
 	public void remove(Long id) {
-		wishesRepository.delete(id);
+		wishRepository.delete(id);
 	}
 
 }

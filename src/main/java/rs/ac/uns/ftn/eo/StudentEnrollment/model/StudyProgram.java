@@ -35,10 +35,10 @@ public class StudyProgram {
 	@Enumerated(EnumType.STRING)
 	private StudyProgramLevel level;
 	
-	@Column(name = "duration", nullable=false)
+	@Column(name = "duration")
 	private int duration;
 	
-	@Column(name = "espb_points", nullable=false)
+	@Column(name = "espb_points")
 	private int espbPoints;
 	
 	@Column(name = "budget_students")

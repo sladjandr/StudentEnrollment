@@ -1,7 +1,8 @@
 package rs.ac.uns.ftn.eo.StudentEnrollment.controller;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,15 +14,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.eo.StudentEnrollment.dto.StudentUserWishesDTO;
-import rs.ac.uns.ftn.eo.StudentEnrollment.model.EntranceExamStudent;
+import rs.ac.uns.ftn.eo.StudentEnrollment.model.Exam;
+import rs.ac.uns.ftn.eo.StudentEnrollment.model.ExamStudent;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.Student;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.User;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.UserRole;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.Wish;
-import rs.ac.uns.ftn.eo.StudentEnrollment.service.EntranceExamStudentService;
+import rs.ac.uns.ftn.eo.StudentEnrollment.service.ExamStudentService;
 import rs.ac.uns.ftn.eo.StudentEnrollment.service.StudentService;
 import rs.ac.uns.ftn.eo.StudentEnrollment.service.UserService;
-import rs.ac.uns.ftn.eo.StudentEnrollment.service.WishesService;
+import rs.ac.uns.ftn.eo.StudentEnrollment.service.WishService;
 
 @RestController
 @RequestMapping(value = "api/student")
@@ -32,13 +34,13 @@ public class StudentController {
 	@Autowired
 	private UserService userService;
 	@Autowired
-	private WishesService wishesService;
+	private WishService wishService;
 	@Autowired
-	private EntranceExamStudentService entranceExamStudentService;
+	private ExamStudentService examStudentService;
 	
 	
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
-	public ResponseEntity<List<Student>> getStudents() {
+	public ResponseEntity<List<Student>> getAll() {
 
 		List<Student> students = studentService.findAll();
 
@@ -46,7 +48,7 @@ public class StudentController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
-	public ResponseEntity<Student> getStudent(@PathVariable Long id) {
+	public ResponseEntity<Student> getOne(@PathVariable Long id) {
 		Student student = studentService.findOne(id);
 		if (student == null) {
 			return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
@@ -55,14 +57,12 @@ public class StudentController {
 		return new ResponseEntity<Student>(student, HttpStatus.OK);
 	}
 	
-	//Creating Student and User, Wishes, EntranceExamStudents associated with it.
+	//Creating Student and User, Wishes, ExamStudents associated with it.
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
 	public ResponseEntity<Student> saveStudentUserWishes(@RequestBody StudentUserWishesDTO studentUserWishesDTO){
-		//password might not be needed after implementation of security
-		if (studentUserWishesDTO.getAddress()==null || studentUserWishesDTO.getMail()==null 
-				|| studentUserWishesDTO.getName()==null || studentUserWishesDTO.getSurname()==null
-				|| studentUserWishesDTO.getUsername()==null || studentUserWishesDTO.getPassword()==null 
-				|| studentUserWishesDTO.getFirstWish()==null) {
+		if (studentUserWishesDTO.getAddress()==null||studentUserWishesDTO.getMail()==null
+				||studentUserWishesDTO.getName()==null||studentUserWishesDTO.getStudyPrograms()==null||studentUserWishesDTO.getSurname()==null
+				||studentUserWishesDTO.getUsername()==null) {
 			return new ResponseEntity<Student>(HttpStatus.BAD_REQUEST);
 		}
 		
@@ -81,55 +81,43 @@ public class StudentController {
 		
 		//creating User
 		User user = new User();
-		user.setPassword(studentUserWishesDTO.getPassword());//might not be needed after implementation of security
 		user.setRole(UserRole.STUDENT);
 		user.setUsername(studentUserWishesDTO.getUsername());
+		user.setPassword("pass"); //will probably be replaced with random password maker
 		user.setStudent(student);
 		user = userService.save(user);
 	    
 		//creating Wishes
-		Wish wishes = new Wish();
-		wishes.setFirstWish(studentUserWishesDTO.getFirstWish());
-		wishes.setSecondWish(studentUserWishesDTO.getSecondWish());
-	    wishes.setThirdWish(studentUserWishesDTO.getThirdWish());
-	    wishes.setStudent(student);
-	    wishes = wishesService.save(wishes);
+		for (int i=0; i<studentUserWishesDTO.getStudyPrograms().size(); i++){
+			Wish wish = new Wish();
+			wish.setStudent(student);
+			wish.setStudyProgram(studentUserWishesDTO.getStudyPrograms().get(i));
+			wish = wishService.save(wish);
+		}
 	    
-	    //creating EntranceExamStudents
-	    List<EntranceExamStudent> entranceExamStudents = new ArrayList<EntranceExamStudent>();
-	    if (wishes.getFirstWish() != null){	    	
-	    	EntranceExamStudent entranceExamStudent1 = new EntranceExamStudent();
-	    	entranceExamStudent1.setEntranceExam(wishes.getFirstWish().getEntranceExam());
-	    	entranceExamStudent1.setStudent(student);
-	    	entranceExamStudent1.setEntranceExam(wishes.getFirstWish().getEntranceExam());
-	    	entranceExamStudent1.setTotalPoints(student.getHighSchoolPoints());
-	    	entranceExamStudent1 = entranceExamStudentService.save(entranceExamStudent1);
-	    	entranceExamStudents.add(entranceExamStudent1);
-	    }
-	    if (wishes.getSecondWish() != null){
-	    	EntranceExamStudent entranceExamStudent2 = new EntranceExamStudent();
-	    	entranceExamStudent2.setEntranceExam(wishes.getSecondWish().getEntranceExam());
-	    	entranceExamStudent2.setStudent(student);
-	    	entranceExamStudent2.setEntranceExam(wishes.getSecondWish().getEntranceExam());
-	    	entranceExamStudent2.setTotalPoints(student.getHighSchoolPoints());
-	    	entranceExamStudent2 = entranceExamStudentService.save(entranceExamStudent2);
-	    	entranceExamStudents.add(entranceExamStudent2);
-	    }
-	    if (wishes.getThirdWish() != null){
-	    	EntranceExamStudent entranceExamStudent3 = new EntranceExamStudent();
-	    	entranceExamStudent3.setEntranceExam(wishes.getThirdWish().getEntranceExam());
-	    	entranceExamStudent3.setStudent(student);
-	    	entranceExamStudent3.setEntranceExam(wishes.getThirdWish().getEntranceExam());
-	    	entranceExamStudent3.setTotalPoints(student.getHighSchoolPoints());
-	    	entranceExamStudent3 = entranceExamStudentService.save(entranceExamStudent3);
-	    	entranceExamStudents.add(entranceExamStudent3);
-	    }
+	    //creating studentExams
+		//hashset is being used for exams to avoid duplicates
+		Set<Exam> exams = new HashSet<Exam>();
+		for (int i=0; i < studentUserWishesDTO.getStudyPrograms().size(); i++){
+			List<Exam> studyProgramExams = studentUserWishesDTO.getStudyPrograms().get(i).getExams();
+			for(int j=0; i<studyProgramExams.size(); j++){
+				exams.add(studyProgramExams.get(j));
+			}
+		}
+		for (Exam exam : exams){
+			ExamStudent examStudent = new ExamStudent();
+			examStudent.setPoints(0);
+			examStudent.setExam(exam);
+			examStudent.setStudent(student);
+			examStudent = examStudentService.save(examStudent);
+		}
 	    
 	    //adding User, Wishes and EntranceExamStudents to Student
-	    student.setUser(user);
-	    student.setWishes(wishes);
-	    student.setEntranceExamStudents(entranceExamStudents);
-	    student = studentService.save(student);
+	    //this is probably not needed...will check it during endpoints testing
+	    //student.setUser(user);
+	    //student.setWishes(wishes);
+	    //student.setEntranceExamStudents(entranceExamStudents);
+	    //student = studentService.save(student);
 	    
 		return new ResponseEntity<Student>(student, HttpStatus.CREATED);	
 	}
@@ -141,33 +129,24 @@ public class StudentController {
 			return new ResponseEntity<Student>(HttpStatus.BAD_REQUEST);
 		}
 		
-		Student newStudent = studentService.findOne(id);
-		if (newStudent == null || newStudent.getId() != id) {
-			return new ResponseEntity<Student>(HttpStatus.BAD_REQUEST);
+		Student editedStudent = studentService.findOne(id);
+		if (editedStudent == null) {
+			return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
 		}
 
-		//wishes, user and EntranceExamStudents can't be changed
-		//name and surname can't be changed
-		newStudent.setAddress(student.getAddress());
-		newStudent.setHighSchoolPoints(student.getHighSchoolPoints()); //highschool points should probably be set by admin
-		newStudent.setMail(student.getMail());
+		editedStudent.setAddress(student.getAddress());
+		editedStudent.setHighSchoolPoints(student.getHighSchoolPoints()); //highschool points should probably be set by admin
+		editedStudent.setMail(student.getMail());
 		
-		//Updating total points on EntranceExamStudent
-		List<EntranceExamStudent> entranceExamStudents = entranceExamStudentService.findByStudent(newStudent);
-		for(int i=0; i<entranceExamStudents.size(); i++){
-			EntranceExamStudent entranceExamStudent = entranceExamStudentService.findOne(entranceExamStudents.get(i).getId());
-			double testPoints = entranceExamStudent.getPoints();
-			double highSchoolPoints = student.getHighSchoolPoints();
-			entranceExamStudent.setTotalPoints(testPoints+highSchoolPoints);
-		}
-		
-		newStudent = studentService.save(newStudent);
+		editedStudent = studentService.save(editedStudent);
 
-		return new ResponseEntity<Student>(newStudent, HttpStatus.OK);
+		return new ResponseEntity<Student>(editedStudent, HttpStatus.OK);
 
 	}
 
-	
+	//DELETE
+	//Student can't be deleted.
+	/*
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
 	public ResponseEntity<Student> deleteStudent(@PathVariable Long id) {
 		
@@ -176,17 +155,20 @@ public class StudentController {
 			return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
 		}
 		
-		//set user, wishes and EntranceExamStudents in student to null
+		//Long userId = student.getUser().getId();
+		//List<Long> wishIds = 
+		
+		//set user, wishes and studentExams in student to null
 		student.setUser(null);
 		student.setWishes(null);
-		student.setEntranceExamStudents(null);
+		student.setStudentExams(null);
 		
 		//remove user, wishes and EntranceExamStudents connected with the student
 		userService.remove(userService.findByStudent(student).getId());
-		wishesService.remove(wishesService.findByStudent(student).getId());
-		List<EntranceExamStudent> entranceExamStudents = entranceExamStudentService.findByStudent(student);
+		wishService.remove(wishService.findByStudent(student).getId());
+		List<EntranceExamStudent> entranceExamStudents = examStudentService.findByStudent(student);
 		for(int i=0; i<entranceExamStudents.size();i++){
-			entranceExamStudentService.remove(entranceExamStudents.get(i).getId());
+			examStudentService.remove(entranceExamStudents.get(i).getId());
 		}
 		
 		//remove student
@@ -194,7 +176,7 @@ public class StudentController {
 
 		return new ResponseEntity<Student>(HttpStatus.OK);
 	}
-
+	*/
 
 
 	

@@ -69,7 +69,7 @@ public class Student {
 	}
 
 	public Student(String name, String surname, String address, String mail, double highSchoolPoints,
-			List<Wish> wishes) {
+			List<Wish> wishes, User user) {
 		super();
 		this.name = name;
 		this.surname = surname;
@@ -77,6 +77,7 @@ public class Student {
 		this.mail = mail;
 		this.highSchoolPoints = highSchoolPoints;
 		this.wishes = wishes;
+		this.user = user;
 	}
 
 	public Long getId() {
