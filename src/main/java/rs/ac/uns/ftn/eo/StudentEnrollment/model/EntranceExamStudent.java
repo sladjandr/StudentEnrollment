@@ -1,10 +1,13 @@
 package rs.ac.uns.ftn.eo.StudentEnrollment.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -22,15 +25,12 @@ public class EntranceExamStudent {
 	@GeneratedValue
 	@Column(name = "id")
 	private Long id;
-
-	@Column(name = "points")
-	private double points;
 	
 	@Column(name = "total_points")
 	private double totalPoints;
 	
-	@ManyToOne
-	private EntranceExam entranceExam;
+	@OneToMany(mappedBy = "entranceExamStudent")
+	private List<OneExamStudent> exams;
 	
 	@ManyToOne
 	private Student student;
@@ -39,32 +39,19 @@ public class EntranceExamStudent {
 		super();
 	}
 
-	public EntranceExamStudent(Long id, double points, double totalPoints, EntranceExam entranceExam, Student student) {
+	public EntranceExamStudent(Long id, double totalPoints, List<OneExamStudent> exams, Student student) {
 		super();
 		this.id = id;
-		this.points = points;
 		this.totalPoints = totalPoints;
-		this.entranceExam = entranceExam;
+		this.exams = exams;
 		this.student = student;
 	}
 
-	public EntranceExamStudent(Long id, EntranceExam entranceExam, Student student) {
+	public EntranceExamStudent(double totalPoints, List<OneExamStudent> exams, Student student) {
 		super();
-		this.id = id;
-		this.entranceExam = entranceExam;
-		this.student = student;
-	}
-	
-	public EntranceExamStudent(Long id, double points, double totalPoints) {
-		super();
-		this.id = id;
-		this.points = points;
 		this.totalPoints = totalPoints;
-	}
-	
-	public EntranceExamStudent(double points) {
-		super();
-		this.points = points;
+		this.exams = exams;
+		this.student = student;
 	}
 
 	public Long getId() {
@@ -75,14 +62,6 @@ public class EntranceExamStudent {
 		this.id = id;
 	}
 
-	public double getPoints() {
-		return points;
-	}
-
-	public void setPoints(double points) {
-		this.points = points;
-	}
-
 	public double getTotalPoints() {
 		return totalPoints;
 	}
@@ -91,12 +70,12 @@ public class EntranceExamStudent {
 		this.totalPoints = totalPoints;
 	}
 	
-	public EntranceExam getEntranceExam() {
-		return entranceExam;
+	public List<OneExamStudent> getExams() {
+		return exams;
 	}
 
-	public void setEntranceExam(EntranceExam entranceExam) {
-		this.entranceExam = entranceExam;
+	public void setExams(List<OneExamStudent> exams) {
+		this.exams = exams;
 	}
 
 	public Student getStudent() {

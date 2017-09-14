@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.Student;
-import rs.ac.uns.ftn.eo.StudentEnrollment.model.Wishes;
+import rs.ac.uns.ftn.eo.StudentEnrollment.model.Wish;
 import rs.ac.uns.ftn.eo.StudentEnrollment.repository.WishesRepository;
 
 @Service
@@ -16,19 +16,19 @@ public class WishesService {
 	private WishesRepository wishesRepository;
 	
 	
-	public Wishes findOne(Long id) {
+	public Wish findOne(Long id) {
 		return wishesRepository.findOne(id);
 	}
 
-	public List<Wishes> findAll() {
+	public List<Wish> findAll() {
 		return wishesRepository.findAll();
 	}
 	
-	public Wishes findByStudent(Student student){
+	public Wish findByStudent(Student student){
 		return wishesRepository.findByStudent(student);
 	}
 
-	public Wishes save(Wishes wishes) {
+	public Wish save(Wish wishes) {
 		return wishesRepository.save(wishes);
 	}
 

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.Student;
-import rs.ac.uns.ftn.eo.StudentEnrollment.model.Wishes;
+import rs.ac.uns.ftn.eo.StudentEnrollment.model.Wish;
 import rs.ac.uns.ftn.eo.StudentEnrollment.service.StudentService;
 import rs.ac.uns.ftn.eo.StudentEnrollment.service.WishesService;
 
@@ -22,22 +22,22 @@ public class WishesController {
 	private StudentService studentService;
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
-	public ResponseEntity<Wishes> getById(@PathVariable Long id) {
-		Wishes wishes = wishesService.findOne(id);
+	public ResponseEntity<Wish> getById(@PathVariable Long id) {
+		Wish wishes = wishesService.findOne(id);
 		if (wishes == null) {
-			return new ResponseEntity<Wishes>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Wish>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<Wishes>(wishes, HttpStatus.OK);
+		return new ResponseEntity<Wish>(wishes, HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/student/{studentID}")
-	public ResponseEntity<Wishes> getByStudent(@PathVariable Long studentID) {
+	public ResponseEntity<Wish> getByStudent(@PathVariable Long studentID) {
 		Student student = studentService.findOne(studentID);
-		Wishes wishes = wishesService.findByStudent(student);
+		Wish wishes = wishesService.findByStudent(student);
 		if (wishes == null) {
-			return new ResponseEntity<Wishes>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Wish>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<Wishes>(wishes, HttpStatus.OK);
+		return new ResponseEntity<Wish>(wishes, HttpStatus.OK);
 	}
 	
 	//POST

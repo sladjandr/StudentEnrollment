@@ -32,7 +32,6 @@ public class User {
 	@Column(name = "username", unique = true, nullable=false)
 	private String username;
 	
-	//password might not be needed after implementation of security
 	@Column(name = "password", nullable=false)
 	private String password;
 	
@@ -53,18 +52,12 @@ public class User {
 		this.student = student;
 	}
 	
-	public User(Long id, UserRole role, String username, String password) {
+	public User(UserRole role, String username, String password, Student student) {
 		super();
-		this.id = id;
 		this.role = role;
 		this.username = username;
 		this.password = password;
-	}
-
-	public User(String username, String password) {
-		super();
-		this.username = username;
-		this.password = password;
+		this.student = student;
 	}
 	
 	public Long getId() {

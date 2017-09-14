@@ -17,7 +17,7 @@ import rs.ac.uns.ftn.eo.StudentEnrollment.model.EntranceExamStudent;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.Student;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.User;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.UserRole;
-import rs.ac.uns.ftn.eo.StudentEnrollment.model.Wishes;
+import rs.ac.uns.ftn.eo.StudentEnrollment.model.Wish;
 import rs.ac.uns.ftn.eo.StudentEnrollment.service.EntranceExamStudentService;
 import rs.ac.uns.ftn.eo.StudentEnrollment.service.StudentService;
 import rs.ac.uns.ftn.eo.StudentEnrollment.service.UserService;
@@ -88,7 +88,7 @@ public class StudentController {
 		user = userService.save(user);
 	    
 		//creating Wishes
-		Wishes wishes = new Wishes();
+		Wish wishes = new Wish();
 		wishes.setFirstWish(studentUserWishesDTO.getFirstWish());
 		wishes.setSecondWish(studentUserWishesDTO.getSecondWish());
 	    wishes.setThirdWish(studentUserWishesDTO.getThirdWish());

@@ -1,12 +1,15 @@
 package rs.ac.uns.ftn.eo.StudentEnrollment.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -32,13 +35,14 @@ public class StudyProgram {
 	@Enumerated(EnumType.STRING)
 	private StudyProgramLevel level;
 	
-	@Column(name = "duration")
+	@Column(name = "duration", nullable=false)
 	private int duration;
 	
+	//pitaj za ovo da li da koristim string ili novi objekat...i da li je ovo uopste potrebno
 	@Column(name = "scientific_areas")
 	private String scientificAreas;
 	
-	@Column(name = "espb_points")
+	@Column(name = "espb_points", nullable=false)
 	private int espbPoints;
 	
 	@Column(name = "budget_students")
@@ -46,9 +50,12 @@ public class StudyProgram {
 	
 	@Column(name = "self_financing_students")
 	private int selfFinancingStudents;
+
+	@OneToMany(mappedBy="studyProgram")
+	private List<Wish> wishes;
 	
-	@ManyToOne
-	private EntranceExam entranceExam;
+	@ManyToMany
+	private List<Exam> exams;
 	
 	
 	public StudyProgram() {
@@ -56,7 +63,7 @@ public class StudyProgram {
 	}
 
 	public StudyProgram(Long id, String programName, StudyProgramLevel level, int duration, String scientificAreas,
-			int espbPoints, int budgetStudents, int selfFinancingStudents, EntranceExam entranceExam) {
+			int espbPoints, int budgetStudents, int selfFinancingStudents, List<Wish> wishes, List<Exam> exams) {
 		super();
 		this.id = id;
 		this.programName = programName;
@@ -66,11 +73,12 @@ public class StudyProgram {
 		this.espbPoints = espbPoints;
 		this.budgetStudents = budgetStudents;
 		this.selfFinancingStudents = selfFinancingStudents;
-		this.entranceExam = entranceExam;
+		this.wishes = wishes;
+		this.exams = exams;
 	}
-	
+
 	public StudyProgram(String programName, StudyProgramLevel level, int duration, String scientificAreas,
-			int espbPoints, int budgetStudents, int selfFinancingStudents, EntranceExam entranceExam) {
+			int espbPoints, int budgetStudents, int selfFinancingStudents, List<Exam> exams) {
 		super();
 		this.programName = programName;
 		this.level = level;
@@ -79,9 +87,8 @@ public class StudyProgram {
 		this.espbPoints = espbPoints;
 		this.budgetStudents = budgetStudents;
 		this.selfFinancingStudents = selfFinancingStudents;
-		this.entranceExam = entranceExam;
+		this.exams = exams;
 	}
-	
 
 	public Long getId() {
 		return id;
@@ -147,12 +154,21 @@ public class StudyProgram {
 		this.selfFinancingStudents = selfFinancingStudents;
 	}
 	
-	public EntranceExam getEntranceExam() {
-		return entranceExam;
+	public List<Wish> getWishes() {
+		return wishes;
 	}
 
-	public void setEntranceExam(EntranceExam entranceExam) {
-		this.entranceExam = entranceExam;
+	public void setWishes(List<Wish> wishes) {
+		this.wishes = wishes;
 	}
+	
+	public List<Exam> getExams() {
+		return exams;
+	}
+
+	public void setExams(List<Exam> exams) {
+		this.exams = exams;
+	}
+
 	
 }

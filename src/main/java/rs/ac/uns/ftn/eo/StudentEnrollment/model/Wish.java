@@ -11,12 +11,12 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
-@Table(name = "entrance_exam_subject")
+@Table(name = "wishes")
 @JsonIdentityInfo(
 		  generator = ObjectIdGenerators.PropertyGenerator.class, 
 		  property = "id",
-		  scope = EntranceExamSubject.class)
-public class EntranceExamSubject {
+		  scope = Wish.class)
+public class Wish {
 
 	@Id
 	@GeneratedValue
@@ -24,20 +24,26 @@ public class EntranceExamSubject {
 	private Long id;
 	
 	@ManyToOne
-	private EntranceExam entranceExam;
+	private Student student;
 	
 	@ManyToOne
-	private Subject subject;
-	
-	public EntranceExamSubject() {
+	private StudyProgram studyProgram;
+
+	public Wish() {
 		super();
 	}
 
-	public EntranceExamSubject(Long id, EntranceExam entranceExam, Subject subject) {
+	public Wish(Long id, StudyProgram studyProgram, Student student) {
 		super();
 		this.id = id;
-		this.entranceExam = entranceExam;
-		this.subject = subject;
+		this.studyProgram = studyProgram;
+		this.student = student;
+	}
+	
+	public Wish(StudyProgram studyProgram, Student student) {
+		super();
+		this.studyProgram = studyProgram;
+		this.student = student;
 	}
 
 	public Long getId() {
@@ -47,20 +53,22 @@ public class EntranceExamSubject {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	public EntranceExam getEntranceExam() {
-		return entranceExam;
+	
+	public Student getStudent() {
+		return student;
 	}
 
-	public void setEntranceExam(EntranceExam entranceExam) {
-		this.entranceExam = entranceExam;
+	public void setStudent(Student student) {
+		this.student = student;
 	}
 
-	public Subject getSubject() {
-		return subject;
+	public StudyProgram getStudyProgram() {
+		return studyProgram;
 	}
 
-	public void setSubject(Subject subject) {
-		this.subject = subject;
+	public void setStudyProgram(StudyProgram studyProgram) {
+		this.studyProgram = studyProgram;
 	}
+	
+
 }

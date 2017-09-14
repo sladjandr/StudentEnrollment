@@ -5,11 +5,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.Student;
-import rs.ac.uns.ftn.eo.StudentEnrollment.model.Wishes;
+import rs.ac.uns.ftn.eo.StudentEnrollment.model.Wish;
 
 @Repository
-public interface WishesRepository extends JpaRepository<Wishes, Long> {
+public interface WishesRepository extends JpaRepository<Wish, Long> {
 
-	Wishes findByStudent(Student student);
+	Wish findByStudent(Student student);
 	
 }
