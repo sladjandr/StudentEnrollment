@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.eo.StudentEnrollment.dto.StudentUserWishesDTO;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.Exam;
-import rs.ac.uns.ftn.eo.StudentEnrollment.model.StudentExam;
+import rs.ac.uns.ftn.eo.StudentEnrollment.model.ExamStudent;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.StudyProgram;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.Student;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.User;
@@ -103,7 +103,7 @@ public class StudentController {
 			List<Exam> studyProgramExams = studyProgram.getExams();
 			for(Exam exam : studyProgramExams){
 				if(exams.contains(exam)){
-					StudentExam examStudent = examStudentService.findbyStudentAndExam(student, exam);
+					ExamStudent examStudent = examStudentService.findbyStudentAndExam(student, exam);
 					List<Wish> wishes = examStudent.getWishes();
 					wishes.add(wishService.findByStudentAndStudyProgram(student, studyProgram));
 					examStudent.setWishes(wishes);
@@ -112,7 +112,7 @@ public class StudentController {
 				if(!exams.contains(exam)){
 					exams.add(exam);
 					
-					StudentExam examStudent = new StudentExam();
+					ExamStudent examStudent = new ExamStudent();
 					examStudent.setPoints(0);
 					examStudent.setExam(exam);
 					examStudent.setStudent(student);

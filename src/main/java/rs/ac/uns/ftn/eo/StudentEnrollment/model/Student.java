@@ -42,7 +42,7 @@ public class Student {
 	private double highSchoolPoints;
 
 	@OneToMany(mappedBy = "student")
-	private List<StudentExam> studentExams;
+	private List<ExamStudent> studentExams;
 	
 	@OneToMany(mappedBy = "student")
 	private List<Wish> wishes;
@@ -55,7 +55,7 @@ public class Student {
 	}
 
 	public Student(Long id, String name, String surname, String address, String mail, double highSchoolPoints,
-			List<StudentExam> studentExams, List<Wish> wishes, User user) {
+			List<ExamStudent> studentExams, List<Wish> wishes, User user) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -128,11 +128,11 @@ public class Student {
 		this.highSchoolPoints = highSchoolPoints;
 	}
 
-	public List<StudentExam> getStudentExams() {
+	public List<ExamStudent> getStudentExams() {
 		return studentExams;
 	}
 
-	public void setStudentExams(List<StudentExam> studentExams) {
+	public void setStudentExams(List<ExamStudent> studentExams) {
 		this.studentExams = studentExams;
 	}
 	

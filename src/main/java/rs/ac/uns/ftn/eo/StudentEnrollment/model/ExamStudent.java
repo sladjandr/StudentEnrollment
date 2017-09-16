@@ -20,8 +20,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @JsonIdentityInfo(
 		  generator = ObjectIdGenerators.PropertyGenerator.class, 
 		  property = "id",
-		  scope = StudentExam.class)
-public class StudentExam {
+		  scope = ExamStudent.class)
+public class ExamStudent {
 
 	@Id
 	@GeneratedValue
@@ -41,11 +41,11 @@ public class StudentExam {
 	private Exam exam;
 	
 	
-	public StudentExam() {
+	public ExamStudent() {
 		super();
 	}
 
-	public StudentExam(Long id, double points, Student student, List<Wish> wishes, Exam exam) {
+	public ExamStudent(Long id, double points, Student student, List<Wish> wishes, Exam exam) {
 		super();
 		this.id = id;
 		this.points = points;
@@ -54,7 +54,7 @@ public class StudentExam {
 		this.exam = exam;
 	}
 
-	public StudentExam(double points, Student student, List<Wish> wishes, Exam exam) {
+	public ExamStudent(double points, Student student, List<Wish> wishes, Exam exam) {
 		super();
 		this.points = points;
 		this.student = student;

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.Student;
-import rs.ac.uns.ftn.eo.StudentEnrollment.model.StudentExam;
+import rs.ac.uns.ftn.eo.StudentEnrollment.model.ExamStudent;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.StudyProgram;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.Wish;
 import rs.ac.uns.ftn.eo.StudentEnrollment.repository.WishRepository;
@@ -44,7 +44,7 @@ public class WishService {
 	
 	public void updateTotalPoints(Wish wish){
 		double totalPoints = wish.getStudent().getHighSchoolPoints();
-		for (StudentExam studentExam : wish.getStudentExams()){
+		for (ExamStudent studentExam : wish.getStudentExams()){
 			totalPoints = totalPoints + studentExam.getPoints();
 		}
 		wish.setTotalPoints(totalPoints);

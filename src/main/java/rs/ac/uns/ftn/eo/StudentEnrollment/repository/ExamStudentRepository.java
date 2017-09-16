@@ -7,12 +7,12 @@ import org.springframework.stereotype.Repository;
 
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.Exam;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.Student;
-import rs.ac.uns.ftn.eo.StudentEnrollment.model.StudentExam;
+import rs.ac.uns.ftn.eo.StudentEnrollment.model.ExamStudent;
 
 @Repository
-public interface ExamStudentRepository extends JpaRepository<StudentExam, Long> {
+public interface ExamStudentRepository extends JpaRepository<ExamStudent, Long> {
 	
-	List<StudentExam> findByExam(Exam exam);
-	StudentExam findByStudentAndExam(Student student, Exam exam);
+	List<ExamStudent> findByExam(Exam exam);
+	ExamStudent findByStudentAndExam(Student student, Exam exam);
 
 }

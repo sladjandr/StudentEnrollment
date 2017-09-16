@@ -30,7 +30,7 @@ public class Wish {
 	private double totalPoints;
 	
 	@ManyToMany(mappedBy = "wishes")
-	private List<StudentExam> studentExams;
+	private List<ExamStudent> studentExams;
 	
 	@ManyToOne
 	private Student student;
@@ -73,11 +73,11 @@ public class Wish {
 		this.totalPoints = totalPoints;
 	}
 	
-	public List<StudentExam> getStudentExams() {
+	public List<ExamStudent> getStudentExams() {
 		return studentExams;
 	}
 
-	public void setStudentExams(List<StudentExam> studentExams) {
+	public void setStudentExams(List<ExamStudent> studentExams) {
 		this.studentExams = studentExams;
 	}
 	

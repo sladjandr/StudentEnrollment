@@ -43,7 +43,7 @@ public class Exam {
 	private Date date;
 
 	@OneToMany(mappedBy = "exam")
-	private List<StudentExam> studentExams;
+	private List<ExamStudent> studentExams;
 	
 	@ManyToMany(mappedBy = "exams")
 	private List<StudyProgram> studyPrograms;
@@ -53,7 +53,7 @@ public class Exam {
 		super();
 	}
 
-	public Exam(Long id, String subjectName, int maxPoints, String location, Date date, List<StudentExam> studentExams, List<StudyProgram> studyPrograms) {
+	public Exam(Long id, String subjectName, int maxPoints, String location, Date date, List<ExamStudent> studentExams, List<StudyProgram> studyPrograms) {
 		super();
 		this.id = id;
 		this.subjectName = subjectName;
@@ -131,12 +131,12 @@ public class Exam {
 		this.date = date;
 	}
 
-	public List<StudentExam> getStudentExams() {
+	public List<ExamStudent> getStudentExams() {
 		return studentExams;
 	}
 
 
-	public void setStudentExams(List<StudentExam> studentExams) {
+	public void setStudentExams(List<ExamStudent> studentExams) {
 		this.studentExams = studentExams;
 	}
 
