@@ -57,7 +57,7 @@ public class StudyProgramController {
 		studyProgram = studyProgramService.save(studyProgram);
 		
 
-		return new ResponseEntity<StudyProgram>(studyProgram, HttpStatus.OK);
+		return new ResponseEntity<StudyProgram>(studyProgram, HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT, consumes = "application/json", value="/{id}")

@@ -30,7 +30,7 @@ public class WishController {
 	//Wishes get created when Student associated with them is created.
 	
 	//PUT
-	//Wishes can't be changed.
+	//Wishes can't be changed. (totalPoints is updated in ExamStudentController)
 	
 	//DELETE
 	//Wishes are deleted only when student associated with them is deleted.

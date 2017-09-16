@@ -1,9 +1,12 @@
 package rs.ac.uns.ftn.eo.StudentEnrollment.model;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -22,6 +25,12 @@ public class Wish {
 	@GeneratedValue
 	@Column(name = "id")
 	private Long id;
+
+	@Column(name = "total_points")
+	private double totalPoints;
+	
+	@ManyToMany(mappedBy = "wishes")
+	private List<StudentExam> studentExams;
 	
 	@ManyToOne
 	private Student student;
@@ -33,15 +42,17 @@ public class Wish {
 		super();
 	}
 
-	public Wish(Long id, StudyProgram studyProgram, Student student) {
+	public Wish(Long id,  double totalPoints, StudyProgram studyProgram, Student student) {
 		super();
 		this.id = id;
+		this.totalPoints = totalPoints;
 		this.studyProgram = studyProgram;
 		this.student = student;
 	}
 	
-	public Wish(StudyProgram studyProgram, Student student) {
+	public Wish( double totalPoints, StudyProgram studyProgram, Student student) {
 		super();
+		this.totalPoints = totalPoints;
 		this.studyProgram = studyProgram;
 		this.student = student;
 	}
@@ -52,6 +63,22 @@ public class Wish {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	public double getTotalPoints() {
+		return totalPoints;
+	}
+
+	public void setTotalPoints(double totalPoints) {
+		this.totalPoints = totalPoints;
+	}
+	
+	public List<StudentExam> getStudentExams() {
+		return studentExams;
+	}
+
+	public void setStudentExams(List<StudentExam> studentExams) {
+		this.studentExams = studentExams;
 	}
 	
 	public Student getStudent() {

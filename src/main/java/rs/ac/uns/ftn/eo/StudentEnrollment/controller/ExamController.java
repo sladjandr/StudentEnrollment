@@ -44,7 +44,7 @@ public class ExamController {
 		
 		exam = examService.save(exam);
 
-		return new ResponseEntity<Exam>(exam, HttpStatus.OK);
+		return new ResponseEntity<Exam>(exam, HttpStatus.CREATED);
 	}
 	
 

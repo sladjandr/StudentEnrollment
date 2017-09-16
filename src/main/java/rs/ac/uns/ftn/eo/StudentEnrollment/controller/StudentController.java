@@ -1,8 +1,7 @@
 package rs.ac.uns.ftn.eo.StudentEnrollment.controller;
 
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.eo.StudentEnrollment.dto.StudentUserWishesDTO;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.Exam;
-import rs.ac.uns.ftn.eo.StudentEnrollment.model.ExamStudent;
+import rs.ac.uns.ftn.eo.StudentEnrollment.model.StudentExam;
+import rs.ac.uns.ftn.eo.StudentEnrollment.model.StudyProgram;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.Student;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.User;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.UserRole;
@@ -90,6 +90,7 @@ public class StudentController {
 		//creating Wishes
 		for (int i=0; i<studentUserWishesDTO.getStudyPrograms().size(); i++){
 			Wish wish = new Wish();
+			wish.setTotalPoints(studentUserWishesDTO.getHighSchoolPoints());
 			wish.setStudent(student);
 			wish.setStudyProgram(studentUserWishesDTO.getStudyPrograms().get(i));
 			wish = wishService.save(wish);
@@ -97,20 +98,42 @@ public class StudentController {
 	    
 	    //creating studentExams
 		//hashset is being used for exams to avoid duplicates
-		Set<Exam> exams = new HashSet<Exam>();
-		for (int i=0; i < studentUserWishesDTO.getStudyPrograms().size(); i++){
-			List<Exam> studyProgramExams = studentUserWishesDTO.getStudyPrograms().get(i).getExams();
-			for(int j=0; j < studyProgramExams.size(); j++){
-				exams.add(studyProgramExams.get(j));
+		List<Exam> exams = new ArrayList<Exam>();
+		for (StudyProgram studyProgram : studentUserWishesDTO.getStudyPrograms()){
+			List<Exam> studyProgramExams = studyProgram.getExams();
+			for(Exam exam : studyProgramExams){
+				if(exams.contains(exam)){
+					StudentExam examStudent = examStudentService.findbyStudentAndExam(student, exam);
+					List<Wish> wishes = examStudent.getWishes();
+					wishes.add(wishService.findByStudentAndStudyProgram(student, studyProgram));
+					examStudent.setWishes(wishes);
+					examStudent = examStudentService.save(examStudent);
+				}
+				if(!exams.contains(exam)){
+					exams.add(exam);
+					
+					StudentExam examStudent = new StudentExam();
+					examStudent.setPoints(0);
+					examStudent.setExam(exam);
+					examStudent.setStudent(student);
+					List<Wish> wishes = new ArrayList<Wish>();
+					Wish wish = wishService.findByStudentAndStudyProgram(student, studyProgram);
+					wishes.add(wish);
+					examStudent.setWishes(wishes);
+					examStudent = examStudentService.save(examStudent);
+				}
 			}
 		}
+		/*
 		for (Exam exam : exams){
-			ExamStudent examStudent = new ExamStudent();
+			StudentExam examStudent = new StudentExam();
 			examStudent.setPoints(0);
 			examStudent.setExam(exam);
 			examStudent.setStudent(student);
+			
 			examStudent = examStudentService.save(examStudent);
 		}
+		*/
 	    
 		return new ResponseEntity<Student>(student, HttpStatus.CREATED);	
 	}
@@ -128,7 +151,6 @@ public class StudentController {
 		}
 
 		editedStudent.setAddress(student.getAddress());
-		editedStudent.setHighSchoolPoints(student.getHighSchoolPoints()); //highschool points should probably be set by admin
 		editedStudent.setMail(student.getMail());
 		
 		editedStudent = studentService.save(editedStudent);

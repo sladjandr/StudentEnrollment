@@ -35,7 +35,6 @@ public class Exam {
 	@Column(name = "max_points")
 	private int maxPoints;
 	
-	//javi da si izmestio location i date iz examStudent u Exam
 	@Column(name = "location")
 	private String location;
 
@@ -44,7 +43,7 @@ public class Exam {
 	private Date date;
 
 	@OneToMany(mappedBy = "exam")
-	private List<ExamStudent> studentExams;
+	private List<StudentExam> studentExams;
 	
 	@ManyToMany(mappedBy = "exams")
 	private List<StudyProgram> studyPrograms;
@@ -54,7 +53,7 @@ public class Exam {
 		super();
 	}
 
-	public Exam(Long id, String subjectName, int maxPoints, String location, Date date, List<ExamStudent> studentExams, List<StudyProgram> studyPrograms) {
+	public Exam(Long id, String subjectName, int maxPoints, String location, Date date, List<StudentExam> studentExams, List<StudyProgram> studyPrograms) {
 		super();
 		this.id = id;
 		this.subjectName = subjectName;
@@ -132,12 +131,12 @@ public class Exam {
 		this.date = date;
 	}
 
-	public List<ExamStudent> getStudentExams() {
+	public List<StudentExam> getStudentExams() {
 		return studentExams;
 	}
 
 
-	public void setStudentExams(List<ExamStudent> studentExams) {
+	public void setStudentExams(List<StudentExam> studentExams) {
 		this.studentExams = studentExams;
 	}
 

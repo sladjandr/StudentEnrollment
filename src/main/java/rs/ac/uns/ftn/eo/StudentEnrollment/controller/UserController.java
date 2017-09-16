@@ -46,7 +46,7 @@ public class UserController {
 		}	
 		user.setRole(UserRole.ADMIN);
 		user = userService.save(user);
-		return new ResponseEntity<User>(user, HttpStatus.OK);
+		return new ResponseEntity<User>(user, HttpStatus.CREATED);
 	}
 
 	
