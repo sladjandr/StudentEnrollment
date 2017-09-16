@@ -2,6 +2,8 @@ package rs.ac.uns.ftn.eo.StudentEnrollment.controller;
 
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +33,13 @@ public class ExamController {
 		return new ResponseEntity<Exam>(exam, HttpStatus.OK);
 	}
 	
+	@RequestMapping(method = RequestMethod.GET, value = "/all")
+	public ResponseEntity<List<Exam>> getAll() {
+		List<Exam> exams = examService.findAll();
+		
+		return new ResponseEntity<List<Exam>>(exams, HttpStatus.OK);
+	}
+	
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<Exam> saveExam(@RequestBody Exam exam) {
 		
@@ -52,7 +61,7 @@ public class ExamController {
 	public ResponseEntity<Exam> editExam(@RequestBody Exam exam, @PathVariable Long id) {
 		Exam editedExam = examService.findOne(id);
 		if (editedExam == null){
-			return new ResponseEntity<Exam>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<Exam>(HttpStatus.NOT_FOUND);
 		}
 		
 		editedExam.setDate(exam.getDate());
@@ -70,8 +79,7 @@ public class ExamController {
 			return new ResponseEntity<Exam>(HttpStatus.NOT_FOUND);
 		}
 		
-		//Exam can't be deleted if there are students scheduled to take the exam.
-		if (!entranceExam.getStudentExams().isEmpty()) {
+		if (!entranceExam.getStudyPrograms().isEmpty()) {
 			return new ResponseEntity<Exam>(entranceExam, HttpStatus.BAD_REQUEST);
 		}
 		

@@ -1,6 +1,8 @@
 package rs.ac.uns.ftn.eo.StudentEnrollment.service;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,10 @@ public class ExamService {
 	
 	public Exam findOne(Long id) {
 		return examRepository.findOne(id);
+	}
+	
+	public List<Exam> findAll() {
+		return examRepository.findAll();
 	}
 
 	public Exam findBySubjectName(String subjectName) {

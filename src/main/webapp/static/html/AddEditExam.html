@@ -1,0 +1,34 @@
+<form class="form-horizontal" ng-init="initExam();" required>
+
+	<div class="form-group">
+		<label class="col-sm-2">Subject name</label>
+		<div class="col-sm-6">
+			<input ng-model="exam.subjectName" class="form-control" />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-2">Maximum points</label>
+		<div class="col-sm-6">
+			<input type="number" ng-model="exam.maxPoints" class="form-control" />
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-2">Location</label>
+		<div class="col-sm-6">
+			<input ng-model="exam.location" class="form-control" />
+		</div>
+	</div>
+	
+	<!-- TREBA DA VIDIM KAKO CU ZA DATUM -->
+	
+	<!-- TREBA I DA TESTIRAM DA VIDIM DAL TREBA NEKA DODATNA VALIDACIJA ZA save -->
+
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<button ng-disabled="!exam.subjectName"
+				ng-click="saveExam()" type="submit" class="btn btn-default">save</button>
+		</div>
+	</div>
+</form>

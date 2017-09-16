@@ -1,0 +1,30 @@
+<table ng-init="getExams()" class="table table-bordered" >
+	<thead>
+		<tr>
+			<th>Subject name</th>
+			<th>Maximum Points</th>
+			<th>Location</th>
+			<th>Date and time</th>
+			
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="exam in exams">
+			<td>{{ exam.subjectName }}</td>
+			<td>{{ exam.maxPoints }}</td>
+			<td>{{ exam.location }}</td>
+			<td>{{ exam.date }}</td>
+			<td>
+				<button ng-model="button"
+					ng-click="deleteExam(exam.id)"
+					class="btn btn-xs btn-danger" ng-disabled="exam.studyPrograms.length>0">delete</button> <a
+				href="#!/exam/edit/{{ exam.id }}"
+				class="btn btn-xs btn-default">edit</a>
+			</td>
+		</tr>
+
+	</tbody>
+</table>
+
+<a href="#!/addexam" class="btn btn-default">Add</a>
+
