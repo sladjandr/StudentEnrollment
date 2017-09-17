@@ -42,6 +42,9 @@ public class Exam {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
 
+	@Column(name = "is_active")
+	private boolean isActive;
+	
 	@OneToMany(mappedBy = "exam")
 	private List<ExamStudent> studentExams;
 	
@@ -53,23 +56,26 @@ public class Exam {
 		super();
 	}
 
-	public Exam(Long id, String subjectName, int maxPoints, String location, Date date, List<ExamStudent> studentExams, List<StudyProgram> studyPrograms) {
+	public Exam(Long id, String subjectName, int maxPoints, String location, Date date,
+			boolean isActive, List<ExamStudent> studentExams, List<StudyProgram> studyPrograms) {
 		super();
 		this.id = id;
 		this.subjectName = subjectName;
 		this.maxPoints = maxPoints;
 		this.location = location;
 		this.date = date;
+		this.isActive = isActive;
 		this.studentExams = studentExams;
 		this.studyPrograms = studyPrograms;
 	}
 
-	public Exam(String subjectName, int maxPoints, String location, Date date) {
+	public Exam(String subjectName, int maxPoints, String location, Date date, boolean isActive) {
 		super();
 		this.subjectName = subjectName;
 		this.maxPoints = maxPoints;
 		this.location = location;
 		this.date = date;
+		this.isActive = isActive;
 	}
 	
 	
@@ -129,6 +135,14 @@ public class Exam {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+	
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 
 	public List<ExamStudent> getStudentExams() {

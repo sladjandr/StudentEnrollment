@@ -66,6 +66,7 @@ public class ExamController {
 		
 		editedExam.setDate(exam.getDate());
 		editedExam.setLocation(exam.getLocation());
+		editedExam.setActive(exam.isActive());
 		
 		editedExam = examService.save(editedExam);
 

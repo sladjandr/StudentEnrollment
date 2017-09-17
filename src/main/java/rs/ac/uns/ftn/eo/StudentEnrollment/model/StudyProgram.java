@@ -47,6 +47,9 @@ public class StudyProgram {
 	@Column(name = "self_financing_students")
 	private int selfFinancingStudents;
 
+	@Column(name = "is_active")
+	private boolean isActive;
+
 	@OneToMany(mappedBy="studyProgram")
 	private List<Wish> wishes;
 	
@@ -59,7 +62,8 @@ public class StudyProgram {
 	}
 
 	public StudyProgram(Long id, String programName, StudyProgramLevel level, int duration, 
-			int espbPoints, int budgetStudents, int selfFinancingStudents, List<Wish> wishes, List<Exam> exams) {
+			int espbPoints, int budgetStudents, int selfFinancingStudents, 
+			 boolean isActive, List<Wish> wishes, List<Exam> exams) {
 		super();
 		this.id = id;
 		this.programName = programName;
@@ -68,12 +72,14 @@ public class StudyProgram {
 		this.espbPoints = espbPoints;
 		this.budgetStudents = budgetStudents;
 		this.selfFinancingStudents = selfFinancingStudents;
+		this.isActive = isActive;
 		this.wishes = wishes;
 		this.exams = exams;
 	}
 
 	public StudyProgram(String programName, StudyProgramLevel level, int duration, 
-			int espbPoints, int budgetStudents, int selfFinancingStudents, List<Exam> exams) {
+			int espbPoints, int budgetStudents, int selfFinancingStudents, 
+			boolean isActive, List<Exam> exams) {
 		super();
 		this.programName = programName;
 		this.level = level;
@@ -81,6 +87,7 @@ public class StudyProgram {
 		this.espbPoints = espbPoints;
 		this.budgetStudents = budgetStudents;
 		this.selfFinancingStudents = selfFinancingStudents;
+		this.isActive = isActive;
 		this.exams = exams;
 	}
 
@@ -138,6 +145,14 @@ public class StudyProgram {
 
 	public void setSelfFinancingStudents(int selfFinancingStudents) {
 		this.selfFinancingStudents = selfFinancingStudents;
+	}
+	
+	public boolean isActive() {
+		return isActive;
+	}
+
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 	
 	public List<Wish> getWishes() {

@@ -92,6 +92,7 @@ public class StudentController {
 			Wish wish = new Wish();
 			wish.setTotalPoints(studentUserWishesDTO.getHighSchoolPoints());
 			wish.setStudent(student);
+			wish.setYear(studentUserWishesDTO.getYear());
 			wish.setStudyProgram(studentUserWishesDTO.getStudyPrograms().get(i));
 			wish = wishService.save(wish);
 		}

@@ -15,7 +15,9 @@ public class StudentUserWishesDTO {
 	
 	private String username;
 	
+	private int year;
 	private List<StudyProgram> studyPrograms;
+	
 	
 	
 	public StudentUserWishesDTO() {
@@ -23,7 +25,7 @@ public class StudentUserWishesDTO {
 	}
 	
 	public StudentUserWishesDTO(String name, String surname, String address, String mail, double highSchoolPoints,
-			String username, List<StudyProgram> studyPrograms) {
+			String username, int year, List<StudyProgram> studyPrograms) {
 		super();
 		this.name = name;
 		this.surname = surname;
@@ -31,6 +33,7 @@ public class StudentUserWishesDTO {
 		this.mail = mail;
 		this.highSchoolPoints = highSchoolPoints;
 		this.username = username;
+		this.year = year;
 		this.studyPrograms = studyPrograms;
 	}
 
@@ -90,5 +93,12 @@ public class StudentUserWishesDTO {
 		this.studyPrograms = studyPrograms;
 	}
 
-	
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
+	}
+
 }

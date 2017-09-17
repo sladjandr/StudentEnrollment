@@ -71,6 +71,7 @@ public class StudyProgramController {
 		
 		editedStudyProgram.setBudgetStudents(studyProgram.getBudgetStudents());
 		editedStudyProgram.setSelfFinancingStudents(studyProgram.getSelfFinancingStudents());
+		editedStudyProgram.setActive(studyProgram.isActive());
 		editedStudyProgram.setExams(studyProgram.getExams());
 		
 		editedStudyProgram = studyProgramService.save(editedStudyProgram);
