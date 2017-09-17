@@ -38,8 +38,8 @@ public class StudyProgram {
 	@Column(name = "duration")
 	private int duration;
 	
-	@Column(name = "espb_points")
-	private int espbPoints;
+	@Column(name = "ects_points")
+	private int ectsPoints;
 	
 	@Column(name = "budget_students")
 	private int budgetStudents;
@@ -62,14 +62,14 @@ public class StudyProgram {
 	}
 
 	public StudyProgram(Long id, String programName, StudyProgramLevel level, int duration, 
-			int espbPoints, int budgetStudents, int selfFinancingStudents, 
+			int ectsPoints, int budgetStudents, int selfFinancingStudents, 
 			 boolean isActive, List<Wish> wishes, List<Exam> exams) {
 		super();
 		this.id = id;
 		this.programName = programName;
 		this.level = level;
 		this.duration = duration;
-		this.espbPoints = espbPoints;
+		this.ectsPoints = ectsPoints;
 		this.budgetStudents = budgetStudents;
 		this.selfFinancingStudents = selfFinancingStudents;
 		this.isActive = isActive;
@@ -78,13 +78,13 @@ public class StudyProgram {
 	}
 
 	public StudyProgram(String programName, StudyProgramLevel level, int duration, 
-			int espbPoints, int budgetStudents, int selfFinancingStudents, 
+			int ectsPoints, int budgetStudents, int selfFinancingStudents, 
 			boolean isActive, List<Exam> exams) {
 		super();
 		this.programName = programName;
 		this.level = level;
 		this.duration = duration;
-		this.espbPoints = espbPoints;
+		this.ectsPoints = ectsPoints;
 		this.budgetStudents = budgetStudents;
 		this.selfFinancingStudents = selfFinancingStudents;
 		this.isActive = isActive;
@@ -123,12 +123,12 @@ public class StudyProgram {
 		this.duration = duration;
 	}
 
-	public int getEspbPoints() {
-		return espbPoints;
+	public int getEctsPoints() {
+		return ectsPoints;
 	}
 
-	public void setEspbPoints(int espbPoints) {
-		this.espbPoints = espbPoints;
+	public void setEctsPoints(int ectsPoints) {
+		this.ectsPoints = ectsPoints;
 	}
 
 	public int getBudgetStudents() {

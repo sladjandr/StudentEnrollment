@@ -1,0 +1,38 @@
+<table ng-init="getStudyPrograms()" class="table table-bordered" >
+	<thead>
+		<tr>
+			<th>Program name</th>
+			<th>Level</th>
+			<th>Duration</th>
+			<th>ECTS points</th>
+			<th>Budget students</th>
+			<th>Self-financing students</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="studyProgram in studyPrograms | filter:show ">
+			<td>{{ studyProgram.programName }}</td>
+			<td>{{ studyProgram.level }}</td>
+			<td>{{ studyProgram.duration }}</td>
+			<td>{{ studyProgram.ectsPoints }}</td>
+			<td>{{ studyProgram.budgetStudents }}</td>
+			<td>{{ studyProgram.selfFinancingStudents }}</td>
+			<td>
+				<button ng-model="button"
+					ng-click="deleteStudyProgram(studyProgram.id)"
+					class="btn btn-xs btn-danger">delete</button> 
+					<button ng-model="button" ng-click="studyProgramActive(studyProgram.id)" ng-show="studyProgram.active==true"
+					class="btn btn-xs btn-danger">deactivate</button> 
+					<button ng-model="button" ng-click="studyProgramActive(studyProgram.id)" ng-show="studyProgram.active==false"
+					class="btn btn-xs btn-danger">activate</button> 
+					<a href="#!/studyprogram/edit/{{ studyProgram.id }}" class="btn btn-xs btn-default">edit</a>
+			</td>
+		</tr>
+
+	</tbody>
+</table>
+
+<a href="#!/addstudyprogram" class="btn btn-default">Add</a> 
+<button ng-show="show.active==true" ng-click="showDeactivated()" class="btn btn-default">Show deactivated study programs</button>
+<button ng-show="show.active==false" ng-click="showActivated()" class="btn btn-default">Show active study programs</button>
+

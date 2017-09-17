@@ -10,6 +10,10 @@ app.config(['$routeProvider', function($routeProvider) {
         	templateUrl : 'static/html/Exams.html',
         	controller: 'examsController'
         })
+		.when('/studyprograms', {
+        	templateUrl : 'static/html/StudyPrograms.html',
+        	controller: 'studyProgramsController'
+        })
 		.when('/addexam', {
             templateUrl : 'static/html/AddEditExam.html',
             controller: 'examsController'
