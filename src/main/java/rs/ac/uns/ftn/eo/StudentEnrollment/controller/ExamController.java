@@ -51,6 +51,7 @@ public class ExamController {
 			return new ResponseEntity<Exam>(HttpStatus.BAD_REQUEST);
 		}
 		
+		exam.setActive(true);
 		exam = examService.save(exam);
 
 		return new ResponseEntity<Exam>(exam, HttpStatus.CREATED);
@@ -64,9 +65,11 @@ public class ExamController {
 			return new ResponseEntity<Exam>(HttpStatus.NOT_FOUND);
 		}
 		
+		
 		editedExam.setDate(exam.getDate());
 		editedExam.setLocation(exam.getLocation());
 		editedExam.setActive(exam.isActive());
+		
 		
 		editedExam = examService.save(editedExam);
 

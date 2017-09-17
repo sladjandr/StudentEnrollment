@@ -30,6 +30,9 @@ public class ExamStudent {
 	
 	@Column(name = "points")
 	private double points;
+	
+	@Column(name = "is_finished")
+	private boolean isFinished;
 
 	@ManyToOne
 	private Student student;
@@ -45,10 +48,11 @@ public class ExamStudent {
 		super();
 	}
 
-	public ExamStudent(Long id, double points, Student student, List<Wish> wishes, Exam exam) {
+	public ExamStudent(Long id, double points, boolean isFinished, Student student, List<Wish> wishes, Exam exam) {
 		super();
 		this.id = id;
 		this.points = points;
+		this.isFinished = isFinished;
 		this.student = student;
 		this.wishes = wishes;
 		this.exam = exam;
@@ -76,6 +80,14 @@ public class ExamStudent {
 
 	public void setPoints(double points) {
 		this.points = points;
+	}
+	
+	public boolean isFinished() {
+		return isFinished;
+	}
+
+	public void setFinished(boolean isFinished) {
+		this.isFinished = isFinished;
 	}
 	
 	public Student getStudent() {

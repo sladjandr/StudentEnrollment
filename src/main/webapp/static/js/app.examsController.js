@@ -1,6 +1,9 @@
 var app = angular.module('studentEnrollmentApp.examsController', []);
 
-app.controller('examsController', function($scope, $http, $routeParams) {
+app.controller('examsController', function($scope, $http, $routeParams, $window) {
+	
+	$scope.show = {};
+	$scope.show.active = true;
 
     $scope.getExams = function() {
         $http.get('api/exam/all')
@@ -17,29 +20,65 @@ app.controller('examsController', function($scope, $http, $routeParams) {
         $http.delete('api/exam/' + id)
 			.then(function (response){
 				if(response.status==200){
-					alert('Successfully deleted exam!')
+					alert('Exam is deleted!')
 					$scope.getExams();
 				}
 			})
 			.catch(function (response){
 				if(response.status==400){
-					alert('Exam that is connected to a study program can\'t be deleted!')
+					alert('Exam that is connected to a study program can\'t be deleted! It can only be deactivated!')
 				}else{
 					alert('Unexpected error occured while deleting exam!')
 				}
 			});
     };
 
-
+    $scope.examActive = function(id) {
+        $http.get('api/exam/' + id)
+			.then(function (response) {
+				if(response.data.active==true){
+					response.data.active=false;
+				}else{
+					response.data.active=true;
+				}
+				$http.put('api/exam/' + response.data.id, response.data)
+				.then(function (response) {
+					alert('Exam\'s status is changed!')
+					$scope.getExams();
+				})
+				.catch(function (response){
+					if (response.status==404){
+						alert('Exam with given id does not exist!')
+					}else{
+						alert('Unexpected error occured while changing exam status!')
+					}
+				});
+			})
+			.catch(function (response){
+				if (response.status==404){
+					alert('Exam with given id does not exist!')
+				}else{
+					alert('Unexpected error occured while getting exam!')
+				}
+			});
+    };
 	
-	//TEK TREBA DA TESTIRAM
     $scope.initExam = function() {
         $scope.exam = {};
+		$scope.examDate = {};
         if ($routeParams && $routeParams.id) {
             // this is for edit page
             $http.get('api/exam/' + $routeParams.id)
 				.then(function (response) {
 					$scope.exam = response.data;
+					if ($scope.exam.date!=null){
+						var oldDate = new Date(exam.date);
+						$scope.examDate.year = oldDate.getFullYear();
+						$scope.examDate.month = oldDate.getMonth();
+						$scope.examDate.day = oldDate.getDate();
+						$scope.examDate.hour = oldDate.getHours();
+						$scope.examDate.minute = oldDate.getMinutes();
+					}
 				})
 				.catch(function (response){
 					if (response.status==404){
@@ -51,13 +90,19 @@ app.controller('examsController', function($scope, $http, $routeParams) {
         }
     };
 	
-	//TEK TREBA DA TESTIRAM
     $scope.saveExam = function() {
+		if($scope.examDate.year!=null && $scope.examDate.month!=null && $scope.examDate.day!=null && $scope.examDate.hour!=null){
+			if($scope.examDate.minute==null){
+				$scope.examDate.minute=0;
+			}
+			var date = new Date($scope.examDate.year, $scope.examDate.month, $scope.examDate.day, $scope.examDate.hour, $scope.examDate.minute, 0, 0);
+			$scope.exam.date = date.getTime();
+		}
         if ($scope.exam.id) {
             // for edit page
             $http.put('api/exam/' + $scope.exam.id, $scope.exam)
 				.then(function (response) {
-					//$location.path('/exam'); //will see where to redirect...
+					$window.location.href = "#!/exams";
 				})
 				.catch(function (response){
 					if (response.status==404){
@@ -70,7 +115,7 @@ app.controller('examsController', function($scope, $http, $routeParams) {
             // for add page
             $http.post('api/exam', $scope.exam)
 				.then(function (response) {
-					//$location.path('/exam'); //will see where to redirect...
+					$window.location.href = "#!/exams";
 				})
 				.catch(function (response){
 					if (response.status==400){
@@ -81,6 +126,14 @@ app.controller('examsController', function($scope, $http, $routeParams) {
 				});
         }
     };
+	
+	$scope.showDeactivated = function() {
+		$scope.show.active = false;
+	}
+	
+	$scope.showActivated = function() {
+		$scope.show.active = true;
+	}
 	
 });
 

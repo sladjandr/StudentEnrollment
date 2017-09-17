@@ -115,6 +115,7 @@ public class StudentController {
 					
 					ExamStudent examStudent = new ExamStudent();
 					examStudent.setPoints(0);
+					examStudent.setFinished(false);
 					examStudent.setExam(exam);
 					examStudent.setStudent(student);
 					List<Wish> wishes = new ArrayList<Wish>();

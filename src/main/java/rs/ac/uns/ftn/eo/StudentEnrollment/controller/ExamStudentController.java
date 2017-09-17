@@ -65,6 +65,7 @@ public class ExamStudentController {
 		}
 		
 		editedExamStudent.setPoints(examStudent.getPoints());
+		editedExamStudent.setFinished(true);
 		
 		editedExamStudent = examStudentService.save(editedExamStudent);
 		
