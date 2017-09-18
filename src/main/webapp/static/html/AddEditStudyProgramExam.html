@@ -1,0 +1,21 @@
+<table ng-init="initStudyProgram();getExams();" class="table table-bordered" >
+	<thead>
+		<tr>
+			<th>Subject name</th>
+			<th>Maximum Points</th>		
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="exam in exams | filter:{active : true} ">
+			<td>{{ exam.subjectName }}</td>
+			<td>{{ exam.maxPoints }}</td>
+			<td>
+				<button ng-click="addExam(exam.id)"
+					class="btn btn-xs btn-default">add</button>
+			</td>
+		</tr>
+
+	</tbody>
+</table>
+	
+</form>

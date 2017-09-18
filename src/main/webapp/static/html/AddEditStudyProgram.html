@@ -1,0 +1,67 @@
+<form class="form-horizontal" name="studyProgramForm" ng-init="initStudyProgram();" required>
+
+	<div class="form-group">
+		<label class="col-sm-2">Program name</label>
+		<div class="col-sm-6">
+			<input ng-model="studyProgram.programName" class="form-control" ng-disabled="studyProgram.id" />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-2">Level</label>
+		<div class="col-sm-6">
+			<select ng-disabled="studyProgram.id" ng-model="studyProgram.level">
+				<option value="BAS">Basic Academic Studies</option>
+				<option value="BVS">Basic Vocational Studies</option>
+			</select>
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-2">Duration (in semesters)</label>
+		<div class="col-sm-6">
+			<input ng-disabled="studyProgram.id" ng-model="studyProgram.duration" type="number" class="form-control" />
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-2">ECTS points</label>
+		<div class="col-sm-6">
+			<input ng-disabled="studyProgram.id" ng-model="studyProgram.ectsPoints" type="number" class="form-control" />
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-2">Budget students</label>
+		<div class="col-sm-6">
+			<input ng-model="studyProgram.budgetStudents" type="number" class="form-control" />
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-2">Self-financing students</label>
+		<div class="col-sm-6">
+			<input ng-model="studyProgram.selfFinancingStudents" type="number" class="form-control" />
+		</div>
+	</div>
+	
+	<label for="exams">Exams</label>
+    <table id="exams" class="table table-bordered">
+      <tr ng-repeat="exam in studyProgram.exams | orderBy:'exam.subjectName'">
+        <td>
+          {{exam.subjectName}} Maximum points:{{exam.maxPoints}}
+          <button type="button" class="btn btn-default right" ng-click="removeExam(exam.id)">remove exam</button>
+        </td>
+      </tr>
+    </table>
+	<a href="#!/addstudyprogram/exam/:id" class="btn btn-default btn-xs">add exam</a> 
+
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<button ng-disabled="!studyProgram.programsName || !studyProgram.level || !studyProgram.duration 
+			|| !studyProgram.ectsPoints || studyProgramForm.$invalid"
+				ng-click="saveStudyProgram()" type="submit" class="btn btn-default">Save</button>
+		</div>
+	</div>
+	
+</form>

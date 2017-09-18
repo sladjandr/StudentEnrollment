@@ -54,6 +54,7 @@ public class StudyProgramController {
 			return new ResponseEntity<StudyProgram>(studyProgram, HttpStatus.BAD_REQUEST);
 		}
 		
+		studyProgram.setActive(true);
 		studyProgram = studyProgramService.save(studyProgram);
 		
 

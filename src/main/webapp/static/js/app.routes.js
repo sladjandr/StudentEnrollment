@@ -22,6 +22,18 @@ app.config(['$routeProvider', function($routeProvider) {
         	templateUrl : 'static/html/AddEditExam.html',
         	controller: 'examsController'
         })
+		.when('/addstudyprogram', {
+            templateUrl : 'static/html/AddEditStudyProgram.html',
+            controller: 'studyProgramsController'
+        })
+		.when('/studyprogram/edit/:id', {
+        	templateUrl : 'static/html/AddEditStudyProgram.html',
+        	controller: 'studyProgramsController'
+        })
+		.when('/addstudyprogram/exam/:id', {
+        	templateUrl : 'static/html/AddEditStudyProgramExam.html',
+        	controller: 'studyProgramsController'
+        })
         .otherwise({
             redirectTo: '/'
         });
