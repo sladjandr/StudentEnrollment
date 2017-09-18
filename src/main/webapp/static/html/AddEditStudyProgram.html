@@ -44,24 +44,37 @@
 			<input ng-model="studyProgram.selfFinancingStudents" type="number" class="form-control" />
 		</div>
 	</div>
-	
-	<label for="exams">Exams</label>
-    <table id="exams" class="table table-bordered">
-      <tr ng-repeat="exam in studyProgram.exams | orderBy:'exam.subjectName'">
-        <td>
-          {{exam.subjectName}} Maximum points:{{exam.maxPoints}}
-          <button type="button" class="btn btn-default right" ng-click="removeExam(exam.id)">remove exam</button>
-        </td>
-      </tr>
-    </table>
-	<a href="#!/addstudyprogram/exam/:id" class="btn btn-default btn-xs">add exam</a> 
 
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
-			<button ng-disabled="!studyProgram.programsName || !studyProgram.level || !studyProgram.duration 
-			|| !studyProgram.ectsPoints || studyProgramForm.$invalid"
+			<button ng-disabled="!studyProgram.programName || !studyProgram.level || !studyProgram.duration 
+			|| !studyProgram.ectsPoints || studyProgramForm.$invalid "
 				ng-click="saveStudyProgram()" type="submit" class="btn btn-default">Save</button>
 		</div>
+	</div>
+	
+	<div ng-show="studyProgram.id">
+		<label for="exams">Exams</label>
+		<table id="exams" class="table table-bordered">
+		<thead>
+			<tr>
+			<th>Subject name</th>
+			<th>Maximum points</th>
+			</tr>
+		</thead>
+			<tr ng-repeat="exam in studyProgram.exams | orderBy:'exam.subjectName'">
+				<td>
+					{{exam.subjectName}} 
+				</td>
+				<td>
+					{{exam.maxPoints}}
+				</td>
+				<td>
+					<button type="button" class="btn btn-default btn-xs right" ng-click="removeExam(exam.id)">remove exam</button>
+				</td>
+			</tr>
+		</table>
+		<a href="#!/addstudyprogram/exam/{{studyProgram.id}}" class="btn btn-default btn-sm">add exam</a> 
 	</div>
 	
 </form>

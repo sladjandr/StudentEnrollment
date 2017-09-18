@@ -20,12 +20,12 @@
 			<td>
 				<button ng-model="button"
 					ng-click="deleteStudyProgram(studyProgram.id)"
-					class="btn btn-xs btn-danger">delete</button> 
+					class="btn btn-xs btn-danger" ng-disabled="studyProgram.exams.length>0 || studyProgram.wishes.length>0">delete</button> 
 					<button ng-model="button" ng-click="studyProgramActive(studyProgram.id)" ng-show="studyProgram.active==true"
 					class="btn btn-xs btn-danger">deactivate</button> 
 					<button ng-model="button" ng-click="studyProgramActive(studyProgram.id)" ng-show="studyProgram.active==false"
 					class="btn btn-xs btn-danger">activate</button> 
-					<a href="#!/studyprogram/edit/{{ studyProgram.id }}" class="btn btn-xs btn-default">edit</a>
+					<a href="#!/studyprogram/edit/{{ studyProgram.id }}" class="btn btn-xs btn-default">edit / add exam</a>
 			</td>
 		</tr>
 

@@ -13,7 +13,6 @@ app.controller('examsController', function($scope, $http, $routeParams, $window)
 			.catch(function (response){
 				alert('Error getting exams!')
 			});
-
     };
 
     $scope.deleteExam = function(id) {

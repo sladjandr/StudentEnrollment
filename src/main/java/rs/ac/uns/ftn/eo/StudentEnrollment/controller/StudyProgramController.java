@@ -90,6 +90,10 @@ public class StudyProgramController {
 		if (!studyProgram.getWishes().isEmpty()){
 			return new ResponseEntity<StudyProgram>(studyProgram, HttpStatus.BAD_REQUEST);
 		}
+		
+		if (!studyProgram.getExams().isEmpty()){
+			return new ResponseEntity<StudyProgram>(studyProgram, HttpStatus.BAD_REQUEST);
+		}
 
 		studyProgramService.remove(id);
 		
