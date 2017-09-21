@@ -1,0 +1,76 @@
+<form class="form-horizontal" name="studentForm" ng-init="initStudent();getStudyPrograms();" required>
+
+	<div class="form-group">
+		<label class="col-sm-2">Name</label>
+		<div class="col-sm-6">
+			<input ng-model="student.name" class="form-control" ng-disabled="student.id" />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-2">Surname</label>
+		<div class="col-sm-6">
+			<input ng-model="student.surname" class="form-control" ng-disabled="student.id" />
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-2">Address</label>
+		<div class="col-sm-6">
+			<input ng-model="student.address" class="form-control" />
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-2">Mail</label>
+		<div class="col-sm-6">
+			<input type="email" ng-model="student.mail" class="form-control" />
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-sm-2">High School Points</label>
+		<div class="col-sm-6">
+			<input ng-disabled="student.id" ng-model="student.highSchoolPoints" type="number" step="any" min="0" max="40" class="form-control" />
+		</div>
+	</div>
+	
+	<div class="form-group" ng-hide="student.id">
+		<label class="col-sm-2" >First Wish</label>
+		<div class="col-sm-6">
+			<select ng-model="studentPrograms.program1"
+				ng-options="studyProgram as studyProgram.programName for studyProgram in studyPrograms">
+				<option value="" ></option>
+			</select>
+		</div>
+	</div>
+	
+	<div class="form-group" ng-hide="student.id">
+		<label class="col-sm-2" >Second Wish (optional)</label>
+		<div class="col-sm-6">
+			<select ng-model="studentPrograms.program2"
+				ng-options="studyProgram as studyProgram.programName for studyProgram in studyPrograms">
+				<option value="" ></option>
+			</select>
+		</div>
+	</div>
+	
+	<div class="form-group" ng-hide="student.id">
+		<label class="col-sm-2" >Third Wish (optional)</label>
+		<div class="col-sm-6">
+			<select ng-model="studentPrograms.program3"
+				ng-options="studyProgram as studyProgram.programName for studyProgram in studyPrograms">
+				<option value="" ></option>
+			</select>
+		</div>
+	</div>
+
+
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<button ng-disabled="!student.name || !student.surname || !student.address || !student.mail
+			|| !student.highSchoolPoints || studentForm.$invalid"
+				ng-click="saveStudent()" type="submit" class="btn btn-default">Save</button>
+		</div>
+	</div>
+</form>

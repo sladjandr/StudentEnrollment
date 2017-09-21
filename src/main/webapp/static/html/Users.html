@@ -1,0 +1,23 @@
+<table ng-init="getUsers()" class="table table-bordered" >
+	<thead>
+		<tr>
+			<th>Username</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="user in users | filter:show ">
+			<td>{{ user.username }}</td>
+			<td>
+				<button ng-click="deleteUser(user.id)"
+					class="btn btn-xs btn-danger" ng-disabled="user.role == 'STUDENT'">delete</button> 
+			</td>
+		</tr>
+
+	</tbody>
+</table>
+
+<a href="#!/addexam" class="btn btn-default">Add new administrator</a> 
+<button ng-show="show.role=='STUDENT'" ng-click="showStudents()" class="btn btn-default">Show students</button>
+<button ng-show="show.role=='ADMIN'" ng-click="showAdmins()" class="btn btn-default">Show admins</button>
+
+

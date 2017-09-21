@@ -14,6 +14,14 @@ app.config(['$routeProvider', function($routeProvider) {
         	templateUrl : 'static/html/StudyPrograms.html',
         	controller: 'studyProgramsController'
         })
+		.when('/students', {
+        	templateUrl : 'static/html/Students.html',
+        	controller: 'studentsController'
+        })
+		.when('/users', {
+        	templateUrl : 'static/html/Users.html',
+        	controller: 'usersController'
+        })
 		.when('/addexam', {
             templateUrl : 'static/html/AddEditExam.html',
             controller: 'examsController'
@@ -37,6 +45,14 @@ app.config(['$routeProvider', function($routeProvider) {
 		.when('/addstudyprogram/exam/:id', {
         	templateUrl : 'static/html/AddEditStudyProgramExam.html',
         	controller: 'studyProgramsController'
+        })
+		.when('/addstudent', {
+            templateUrl : 'static/html/AddEditStudent.html',
+            controller: 'studentsController'
+        })
+		.when('/student/edit/:id', {
+        	templateUrl : 'static/html/AddEditStudent.html',
+        	controller: 'studentsController'
         })
         .otherwise({
             redirectTo: '/'

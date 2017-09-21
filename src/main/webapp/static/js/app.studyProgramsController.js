@@ -11,7 +11,7 @@ app.controller('studyProgramsController', function($scope, $http, $routeParams, 
 				$scope.studyPrograms = response.data;
 			})
 			.catch(function (response){
-				alert('Error getting study program!')
+				alert('Error getting study programs!')
 			});
     };
 	
@@ -53,7 +53,7 @@ app.controller('studyProgramsController', function($scope, $http, $routeParams, 
 				$http.put('api/studyprogram/' + response.data.id, response.data)
 				.then(function (response) {
 					alert('Study program\'s status is changed!')
-					$scope.getExams();
+					$scope.getStudyPrograms();
 				})
 				.catch(function (response){
 					if (response.status==404){
@@ -121,7 +121,13 @@ app.controller('studyProgramsController', function($scope, $http, $routeParams, 
     };
 	
 	$scope.addExam = function(exam) {
-		if ($scope.studyProgram.exams.indexOf(exam)==-1){
+		var alreadyAdded = false;
+		for(i=0;i<$scope.studyProgram.exams.length;i++){
+			if ($scope.studyProgram.exams[i].subjectName == exam.subjectName){
+				alreadyAdded = true;
+			}
+		}
+		if (alreadyAdded == false){
 			$scope.studyProgram.exams.push(exam);
 		}else{
 			alert("This exam is already connected to this study program!")
@@ -163,6 +169,7 @@ app.controller('studyProgramsController', function($scope, $http, $routeParams, 
 	$scope.showActivated = function() {
 		$scope.show.active = true;
 	}
+	
 	
 });
 

@@ -3,6 +3,7 @@ package rs.ac.uns.ftn.eo.StudentEnrollment.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import rs.ac.uns.ftn.eo.StudentEnrollment.dto.StudentUserWishesDTO;
+import rs.ac.uns.ftn.eo.StudentEnrollment.dto.StudentAndWishesDTO;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.Exam;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.ExamStudent;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.StudyProgram;
@@ -59,48 +60,44 @@ public class StudentController {
 	
 	//Creating Student and User, Wishes, ExamStudents associated with it.
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
-	public ResponseEntity<Student> saveStudentUserWishes(@RequestBody StudentUserWishesDTO studentUserWishesDTO){
-		if (studentUserWishesDTO.getAddress()==null||studentUserWishesDTO.getMail()==null
-				||studentUserWishesDTO.getName()==null||studentUserWishesDTO.getStudyPrograms()==null||studentUserWishesDTO.getSurname()==null
-				||studentUserWishesDTO.getUsername()==null) {
-			return new ResponseEntity<Student>(HttpStatus.BAD_REQUEST);
-		}
-		
-		if (userService.findByUsername(studentUserWishesDTO.getUsername()) != null){
+	public ResponseEntity<Student> saveStudentUserWishes(@RequestBody StudentAndWishesDTO studentAndWishesDTO){
+		if (studentAndWishesDTO.getAddress()==null||studentAndWishesDTO.getMail()==null
+				||studentAndWishesDTO.getName()==null||studentAndWishesDTO.getStudyPrograms()==null
+				||studentAndWishesDTO.getSurname()==null) {
 			return new ResponseEntity<Student>(HttpStatus.BAD_REQUEST);
 		}
 		
 		//creating Student
 	    Student student = new Student();
-	    student.setAddress(studentUserWishesDTO.getAddress());
-	    student.setHighSchoolPoints(studentUserWishesDTO.getHighSchoolPoints());
-	    student.setMail(studentUserWishesDTO.getMail());
-	    student.setName(studentUserWishesDTO.getName());
-	    student.setSurname(studentUserWishesDTO.getSurname());
+	    student.setAddress(studentAndWishesDTO.getAddress());
+	    student.setHighSchoolPoints(studentAndWishesDTO.getHighSchoolPoints());
+	    student.setMail(studentAndWishesDTO.getMail());
+	    student.setName(studentAndWishesDTO.getName());
+	    student.setSurname(studentAndWishesDTO.getSurname());
 		student = studentService.save(student);
 		
 		//creating User
 		User user = new User();
 		user.setRole(UserRole.STUDENT);
-		user.setUsername(studentUserWishesDTO.getUsername()); //maybe username should be generated automaticaly
-		user.setPassword("pass"); //will probably be replaced with random password maker
+		user.setUsername("student" + Long.toString(student.getId()));
+		user.setPassword(RandomStringUtils.randomAlphanumeric(10));
 		user.setStudent(student);
 		user = userService.save(user);
 	    
 		//creating Wishes
-		for (int i=0; i<studentUserWishesDTO.getStudyPrograms().size(); i++){
+		for (int i=0; i<studentAndWishesDTO.getStudyPrograms().size(); i++){
 			Wish wish = new Wish();
-			wish.setTotalPoints(studentUserWishesDTO.getHighSchoolPoints());
+			wish.setTotalPoints(studentAndWishesDTO.getHighSchoolPoints());
 			wish.setStudent(student);
-			wish.setYear(studentUserWishesDTO.getYear());
-			wish.setStudyProgram(studentUserWishesDTO.getStudyPrograms().get(i));
+			wish.setYear(studentAndWishesDTO.getYear());
+			wish.setStudyProgram(studentAndWishesDTO.getStudyPrograms().get(i));
 			wish = wishService.save(wish);
 		}
 	    
 	    //creating studentExams
 		//hashset is being used for exams to avoid duplicates
 		List<Exam> exams = new ArrayList<Exam>();
-		for (StudyProgram studyProgram : studentUserWishesDTO.getStudyPrograms()){
+		for (StudyProgram studyProgram : studentAndWishesDTO.getStudyPrograms()){
 			List<Exam> studyProgramExams = studyProgram.getExams();
 			for(Exam exam : studyProgramExams){
 				if(exams.contains(exam)){
@@ -126,16 +123,7 @@ public class StudentController {
 				}
 			}
 		}
-		/*
-		for (Exam exam : exams){
-			StudentExam examStudent = new StudentExam();
-			examStudent.setPoints(0);
-			examStudent.setExam(exam);
-			examStudent.setStudent(student);
-			
-			examStudent = examStudentService.save(examStudent);
-		}
-		*/
+
 	    
 		return new ResponseEntity<Student>(student, HttpStatus.CREATED);	
 	}
@@ -163,38 +151,6 @@ public class StudentController {
 
 	//DELETE
 	//Student can't be deleted.
-	/*
-	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
-	public ResponseEntity<Student> deleteStudent(@PathVariable Long id) {
-		
-		Student student = studentService.findOne(id);
-		if (student == null){
-			return new ResponseEntity<Student>(HttpStatus.NOT_FOUND);
-		}
-		
-		//Long userId = student.getUser().getId();
-		//List<Long> wishIds = 
-		
-		//set user, wishes and studentExams in student to null
-		student.setUser(null);
-		student.setWishes(null);
-		student.setStudentExams(null);
-		
-		//remove user, wishes and EntranceExamStudents connected with the student
-		userService.remove(userService.findByStudent(student).getId());
-		wishService.remove(wishService.findByStudent(student).getId());
-		List<EntranceExamStudent> entranceExamStudents = examStudentService.findByStudent(student);
-		for(int i=0; i<entranceExamStudents.size();i++){
-			examStudentService.remove(entranceExamStudents.get(i).getId());
-		}
-		
-		//remove student
-		studentService.remove(id);
-
-		return new ResponseEntity<Student>(HttpStatus.OK);
-	}
-	*/
-
 
 	
 }

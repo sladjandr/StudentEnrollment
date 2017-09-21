@@ -5,7 +5,7 @@ import java.util.List;
 
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.StudyProgram;
 
-public class StudentUserWishesDTO {
+public class StudentAndWishesDTO {
 	
 	private String name;
 	private String surname;
@@ -13,26 +13,23 @@ public class StudentUserWishesDTO {
 	private String mail;
 	private double highSchoolPoints;
 	
-	private String username;
-	
 	private int year;
 	private List<StudyProgram> studyPrograms;
 	
 	
 	
-	public StudentUserWishesDTO() {
+	public StudentAndWishesDTO() {
 		super();
 	}
 	
-	public StudentUserWishesDTO(String name, String surname, String address, String mail, double highSchoolPoints,
-			String username, int year, List<StudyProgram> studyPrograms) {
+	public StudentAndWishesDTO(String name, String surname, String address, String mail, double highSchoolPoints,
+			int year, List<StudyProgram> studyPrograms) {
 		super();
 		this.name = name;
 		this.surname = surname;
 		this.address = address;
 		this.mail = mail;
 		this.highSchoolPoints = highSchoolPoints;
-		this.username = username;
 		this.year = year;
 		this.studyPrograms = studyPrograms;
 	}
@@ -75,14 +72,6 @@ public class StudentUserWishesDTO {
 
 	public void setHighSchoolPoints(double highSchoolPoints) {
 		this.highSchoolPoints = highSchoolPoints;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 	public List<StudyProgram> getStudyPrograms() {
