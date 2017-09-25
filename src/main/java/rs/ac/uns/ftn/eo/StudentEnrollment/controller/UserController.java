@@ -22,9 +22,9 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping(method = RequestMethod.GET, value="/admin/all")
-	public ResponseEntity<List<User>> getAllAdmins() {
-		List<User> users = userService.findAllAdmins();
+	@RequestMapping(method = RequestMethod.GET, value="/all")
+	public ResponseEntity<List<User>> getAll() {
+		List<User> users = userService.findAll();
 		return new ResponseEntity<List<User>>(users, HttpStatus.OK);
 	}
 
@@ -44,6 +44,9 @@ public class UserController {
 		if (user.getUsername()==null ||user.getPassword()==null) {
 			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
 		}	
+		if (userService.findByUsername(user.getUsername())!=null){
+			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
+		}
 		user.setRole(UserRole.ADMIN);
 		user = userService.save(user);
 		return new ResponseEntity<User>(user, HttpStatus.CREATED);

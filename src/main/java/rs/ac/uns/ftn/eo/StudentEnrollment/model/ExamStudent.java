@@ -1,7 +1,6 @@
 package rs.ac.uns.ftn.eo.StudentEnrollment.model;
 
 
-
 import java.util.List;
 
 import javax.persistence.Column;
@@ -12,15 +11,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 @Entity
 @Table(name = "student_exam")
-@JsonIdentityInfo(
-		  generator = ObjectIdGenerators.PropertyGenerator.class, 
-		  property = "id",
-		  scope = ExamStudent.class)
 public class ExamStudent {
 
 	@Id
@@ -31,6 +26,9 @@ public class ExamStudent {
 	@Column(name = "points")
 	private double points;
 	
+	@Column(name = "year")
+	private int year;
+
 	@Column(name = "is_finished")
 	private boolean isFinished;
 
@@ -40,6 +38,7 @@ public class ExamStudent {
 	@ManyToMany
 	private List<Wish> wishes;
 
+	@JsonBackReference
 	@ManyToOne
 	private Exam exam;
 	
@@ -48,19 +47,21 @@ public class ExamStudent {
 		super();
 	}
 
-	public ExamStudent(Long id, double points, boolean isFinished, Student student, List<Wish> wishes, Exam exam) {
+	public ExamStudent(Long id, double points, int year, boolean isFinished, Student student, List<Wish> wishes, Exam exam) {
 		super();
 		this.id = id;
 		this.points = points;
+		this.year = year;
 		this.isFinished = isFinished;
 		this.student = student;
 		this.wishes = wishes;
 		this.exam = exam;
 	}
 
-	public ExamStudent(double points, Student student, List<Wish> wishes, Exam exam) {
+	public ExamStudent(double points, int year, Student student, List<Wish> wishes, Exam exam) {
 		super();
 		this.points = points;
+		this.year = year;
 		this.student = student;
 		this.wishes = wishes;
 		this.exam = exam;
@@ -80,6 +81,14 @@ public class ExamStudent {
 
 	public void setPoints(double points) {
 		this.points = points;
+	}
+	
+	public int getYear() {
+		return year;
+	}
+
+	public void setYear(int year) {
+		this.year = year;
 	}
 	
 	public boolean isFinished() {

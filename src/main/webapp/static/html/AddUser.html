@@ -1,0 +1,23 @@
+<form class="form-horizontal" name="userForm" ng-init="initUser();" required>
+
+	<div class="form-group">
+		<label class="col-sm-2">Username</label>
+		<div class="col-sm-6">
+			<input ng-model="user.username" class="form-control" />
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-sm-2">Password</label>
+		<div class="col-sm-6">
+			<input type="password" ng-model="user.password" class="form-control"  />
+		</div>
+	</div>
+	
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-sm-10">
+			<button ng-disabled="!user.username || !user.password || userForm.$invalid"
+				ng-click="saveUser()" type="submit" class="btn btn-default">Save</button>
+		</div>
+	</div>
+</form>

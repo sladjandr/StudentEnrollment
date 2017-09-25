@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.eo.StudentEnrollment.service;
 
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,9 +20,14 @@ public class ExamStudentService {
 	public ExamStudent findOne(Long id) {
 		return examStudentRepository.findOne(id);
 	}
+	
+	public List<ExamStudent> findByStudent(Student student) {
+		return examStudentRepository.findByStudent(student);
+	}
 
-	public List<ExamStudent> findByExam(Exam exam) {
-		return examStudentRepository.findByExam(exam);
+	public List<ExamStudent> findByExamThisYear(Exam exam) {
+		int year = Calendar.getInstance().get(Calendar.YEAR);
+		return examStudentRepository.findByExamAndYear(exam, year);
 	}
 	
 	public ExamStudent findbyStudentAndExam(Student student, Exam exam) {

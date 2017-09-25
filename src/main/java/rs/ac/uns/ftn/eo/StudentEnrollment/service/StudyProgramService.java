@@ -22,6 +22,10 @@ public class StudyProgramService {
 		return studyProgramRepository.findAll();
 	}
 	
+	public List<StudyProgram> findAllActive() {
+		return studyProgramRepository.findByIsActiveTrue();
+	}
+	
 	public StudyProgram findByProgramName(String programName){
 		return studyProgramRepository.findByProgramName(programName);
 	}

@@ -10,15 +10,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 @Table(name = "student")
-@JsonIdentityInfo(
-		  generator = ObjectIdGenerators.PropertyGenerator.class, 
-		  property = "id",
-		  scope = Student.class)
 public class Student {
 
 	@Id
@@ -40,7 +37,8 @@ public class Student {
 	
 	@Column(name = "high_school_points")
 	private double highSchoolPoints;
-
+	
+	@JsonBackReference
 	@OneToMany(mappedBy = "student")
 	private List<ExamStudent> studentExams;
 	
@@ -144,6 +142,7 @@ public class Student {
 		this.wishes = wishes;
 	}
 
+	@JsonIgnore
 	public User getUser() {
 		return user;
 	}

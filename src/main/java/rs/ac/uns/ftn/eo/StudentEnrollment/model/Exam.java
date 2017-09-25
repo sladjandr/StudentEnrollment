@@ -13,15 +13,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 
 @Entity
 @Table(name = "exam")
-@JsonIdentityInfo(
-		  generator = ObjectIdGenerators.PropertyGenerator.class, 
-		  property = "id",
-		  scope = Exam.class)
 public class Exam {
 
 	@Id
@@ -48,6 +44,7 @@ public class Exam {
 	@OneToMany(mappedBy = "exam")
 	private List<ExamStudent> studentExams;
 	
+	@JsonBackReference
 	@ManyToMany(mappedBy = "exams")
 	private List<StudyProgram> studyPrograms;
 
@@ -153,7 +150,6 @@ public class Exam {
 	public void setStudentExams(List<ExamStudent> studentExams) {
 		this.studentExams = studentExams;
 	}
-
 
 	public List<StudyProgram> getStudyPrograms() {
 		return studyPrograms;

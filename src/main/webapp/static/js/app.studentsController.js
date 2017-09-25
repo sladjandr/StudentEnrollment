@@ -6,6 +6,11 @@ app.controller('studentsController', function($scope, $http, $routeParams, $wind
         $http.get('api/student/all')
 			.then(function (response) {
 				$scope.students = response.data;
+				console.log(response);
+				console.log(response.data);
+				console.log($scope.students);
+				//console.log($scope.students[0]);
+				//console.log($scope.students[1]);
 			})
 			.catch(function (response){
 				alert('Error getting students!')
@@ -13,7 +18,7 @@ app.controller('studentsController', function($scope, $http, $routeParams, $wind
     };
 	
 	$scope.getStudyPrograms = function() {
-        $http.get('api/studyprogram/all')
+        $http.get('api/studyprogram/allactive')
 			.then(function (response) {
 				$scope.studyPrograms = response.data;
 			})
@@ -25,6 +30,7 @@ app.controller('studentsController', function($scope, $http, $routeParams, $wind
     $scope.initStudent = function() {
         $scope.student = {};
 		$scope.studentPrograms = {};
+		$scope.spOk = true;
         if ($routeParams && $routeParams.id) {
             // this is for edit page
             $http.get('api/student/' + $routeParams.id)
@@ -81,6 +87,31 @@ app.controller('studentsController', function($scope, $http, $routeParams, $wind
 				});
         }
     };
+	
+	$scope.checkStudyPrograms = function(){
+		$scope.spOk = true;
+		if($scope.studentPrograms.program1!=null && $scope.studentPrograms.program2!=null){
+			if($scope.studentPrograms.program1.programName==$scope.studentPrograms.program2.programName){
+				$scope.spOk = false;
+				alert('It\'s not possible to apply to the same study program twice!')
+				return
+			}
+		}
+		if($scope.studentPrograms.program1!=null && $scope.studentPrograms.program3!=null){
+			if($scope.studentPrograms.program1.programName==$scope.studentPrograms.program3.programName){
+				$scope.spOk = false;
+				alert('It\'s not possible to apply to the same study program twice!')
+				return
+			}
+		}
+		if($scope.studentPrograms.program2!=null && $scope.studentPrograms.program3!=null){
+			if($scope.studentPrograms.program2.programName==$scope.studentPrograms.program3.programName){
+				$scope.spOk = false;
+				alert('It\'s not possible to apply to the same study program twice!')
+				return
+			}
+		}
+	}
 	
 });
 

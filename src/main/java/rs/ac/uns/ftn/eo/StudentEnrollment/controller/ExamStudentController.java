@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.Exam;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.ExamStudent;
+import rs.ac.uns.ftn.eo.StudentEnrollment.model.Student;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.Wish;
 import rs.ac.uns.ftn.eo.StudentEnrollment.service.ExamService;
 import rs.ac.uns.ftn.eo.StudentEnrollment.service.ExamStudentService;
+import rs.ac.uns.ftn.eo.StudentEnrollment.service.StudentService;
 import rs.ac.uns.ftn.eo.StudentEnrollment.service.WishService;
 
 @RestController
@@ -28,6 +30,8 @@ public class ExamStudentController {
 	private ExamService examService;
 	@Autowired
 	private WishService wishService;
+	@Autowired
+	private StudentService studentService;
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
 	public ResponseEntity<ExamStudent> getOne(@PathVariable Long id) {
@@ -45,7 +49,19 @@ public class ExamStudentController {
 			return new ResponseEntity<List<ExamStudent>>(HttpStatus.NOT_FOUND);
 		}
 		
-		List<ExamStudent> studentExams = examStudentService.findByExam(exam);
+		List<ExamStudent> studentExams = examStudentService.findByExamThisYear(exam);
+		
+		return new ResponseEntity<List<ExamStudent>>(studentExams, HttpStatus.OK);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/student/{id}")
+	public ResponseEntity<List<ExamStudent>> getByStudent(@PathVariable Long id) {
+		Student student = studentService.findOne(id);
+		if (student == null) {
+			return new ResponseEntity<List<ExamStudent>>(HttpStatus.NOT_FOUND);
+		}
+		
+		List<ExamStudent> studentExams = examStudentService.findByStudent(student);
 		
 		return new ResponseEntity<List<ExamStudent>>(studentExams, HttpStatus.OK);
 	}

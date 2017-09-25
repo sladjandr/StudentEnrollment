@@ -16,12 +16,13 @@
 			<td>{{ exam.date }}</td>
 			<td>
 				<button ng-click="deleteExam(exam.id)"
-					class="btn btn-xs btn-danger" ng-disabled="exam.studyPrograms.length>0">delete</button> 
-					<button ng-click="examActive(exam.id)" ng-show="exam.active==true"
-					class="btn btn-xs btn-danger">deactivate</button> 
-					<button ng-click="examActive(exam.id)" ng-show="exam.active==false"
-					class="btn btn-xs btn-danger">activate</button> 
-					<a href="#!/exam/edit/{{ exam.id }}" class="btn btn-xs btn-default">edit</a>
+				class="btn btn-xs btn-danger" ng-disabled="exam.studentExams.length>0">delete</button> 
+				<button ng-click="examActive(exam.id)" ng-show="exam.active==true"
+				class="btn btn-xs btn-danger">deactivate</button> 
+				<button ng-click="examActive(exam.id)" ng-show="exam.active==false"
+				class="btn btn-xs btn-danger">activate</button> 
+				<a href="#!/exam/edit/{{ exam.id }}" class="btn btn-xs btn-default">edit</a>
+				<a href="#!/exam/points/{{ exam.id }}" class="btn btn-xs btn-default">enter points</a>
 			</td>
 		</tr>
 

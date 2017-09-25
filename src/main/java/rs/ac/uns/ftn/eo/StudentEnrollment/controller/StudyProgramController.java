@@ -38,6 +38,12 @@ public class StudyProgramController {
 
 		return new ResponseEntity<List<StudyProgram>>(studyProgram, HttpStatus.OK);
 	}
+	@RequestMapping(method = RequestMethod.GET, value = "/allactive")
+	public ResponseEntity<List<StudyProgram>> getAllActive() {
+		List<StudyProgram> studyProgram = studyProgramService.findAllActive();
+
+		return new ResponseEntity<List<StudyProgram>>(studyProgram, HttpStatus.OK);
+	}
 	
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<StudyProgram> saveStudyProgram(@RequestBody StudyProgram studyProgram) {

@@ -85,7 +85,7 @@ public class Wish {
 	public void setTotalPoints(double totalPoints) {
 		this.totalPoints = totalPoints;
 	}
-	
+
 	public List<ExamStudent> getStudentExams() {
 		return studentExams;
 	}

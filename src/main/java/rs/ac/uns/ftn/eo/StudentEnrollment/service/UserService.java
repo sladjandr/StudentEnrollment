@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.User;
-import rs.ac.uns.ftn.eo.StudentEnrollment.model.UserRole;
 import rs.ac.uns.ftn.eo.StudentEnrollment.repository.UserRepository;
 
 @Service
@@ -23,8 +22,8 @@ public class UserService {
 		return userRepository.findByUsername(username);
 	}
 	
-	public List<User> findAllAdmins() {
-		return userRepository.findByRole(UserRole.ADMIN);
+	public List<User> findAll() {
+		return userRepository.findAll();
 	}
 
 	public User save(User user) {

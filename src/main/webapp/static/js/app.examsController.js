@@ -14,6 +14,17 @@ app.controller('examsController', function($scope, $http, $routeParams, $window)
 				alert('Error getting exams!')
 			});
     };
+	
+    $scope.getExamStudents = function() {
+        $http.get('api/examstudent/exam/' + $routeParams.id)
+			.then(function (response) {
+				$scope.examStudents = response.data;
+				console.log($scope.examStudents);
+			})
+			.catch(function (response){
+				alert('Error getting exam students!')
+			});
+    };
 
     $scope.deleteExam = function(id) {
         $http.delete('api/exam/' + id)
@@ -25,7 +36,7 @@ app.controller('examsController', function($scope, $http, $routeParams, $window)
 			})
 			.catch(function (response){
 				if(response.status==400){
-					alert('Exam that is connected to a study program can\'t be deleted! It can only be deactivated!')
+					alert('Exam that is connected to a study program or a student can\'t be deleted! It can only be deactivated!')
 				}else{
 					alert('Unexpected error occured while deleting exam!')
 				}

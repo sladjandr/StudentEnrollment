@@ -39,7 +39,8 @@
 		<label class="col-sm-2" >First Wish</label>
 		<div class="col-sm-6">
 			<select ng-model="studentPrograms.program1"
-				ng-options="studyProgram as studyProgram.programName for studyProgram in studyPrograms">
+				ng-options="studyProgram as studyProgram.programName for studyProgram in studyPrograms"
+				ng-change="checkStudyPrograms()">
 				<option value="" ></option>
 			</select>
 		</div>
@@ -49,7 +50,8 @@
 		<label class="col-sm-2" >Second Wish (optional)</label>
 		<div class="col-sm-6">
 			<select ng-model="studentPrograms.program2"
-				ng-options="studyProgram as studyProgram.programName for studyProgram in studyPrograms">
+				ng-options="studyProgram as studyProgram.programName for studyProgram in studyPrograms" 
+				ng-disabled="!studentPrograms.program1" ng-change="checkStudyPrograms()">
 				<option value="" ></option>
 			</select>
 		</div>
@@ -59,7 +61,8 @@
 		<label class="col-sm-2" >Third Wish (optional)</label>
 		<div class="col-sm-6">
 			<select ng-model="studentPrograms.program3"
-				ng-options="studyProgram as studyProgram.programName for studyProgram in studyPrograms">
+				ng-options="studyProgram as studyProgram.programName for studyProgram in studyPrograms"
+				ng-disabled="!studentPrograms.program1 || !studentPrograms.program2" ng-change="checkStudyPrograms()">
 				<option value="" ></option>
 			</select>
 		</div>
@@ -69,7 +72,7 @@
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
 			<button ng-disabled="!student.name || !student.surname || !student.address || !student.mail
-			|| !student.highSchoolPoints || studentForm.$invalid"
+			|| !student.highSchoolPoints || !studentPrograms.program1 || !spOk || studentForm.$invalid"
 				ng-click="saveStudent()" type="submit" class="btn btn-default">Save</button>
 		</div>
 	</div>

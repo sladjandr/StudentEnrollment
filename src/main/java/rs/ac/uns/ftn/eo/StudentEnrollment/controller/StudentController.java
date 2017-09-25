@@ -44,6 +44,14 @@ public class StudentController {
 	public ResponseEntity<List<Student>> getAll() {
 
 		List<Student> students = studentService.findAll();
+		
+		System.out.println(students.size());
+		if(students.size()>0){
+			System.out.println(students.get(0));
+		}
+		if(students.size()>1){
+			System.out.println(students.get(1));
+		}
 
 		return new ResponseEntity<List<Student>>(students, HttpStatus.OK);
 	}
@@ -112,6 +120,7 @@ public class StudentController {
 					
 					ExamStudent examStudent = new ExamStudent();
 					examStudent.setPoints(0);
+					examStudent.setYear(studentAndWishesDTO.getYear());
 					examStudent.setFinished(false);
 					examStudent.setExam(exam);
 					examStudent.setStudent(student);

@@ -1,0 +1,23 @@
+<table ng-init="getExamStudents()" class="table table-bordered" >
+	<thead>
+		<tr>
+			<th>Name</th>
+			<th>Surname</th>
+			<th>Address</th>
+			<th>Points</th>
+			
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="examStudent in examStudents">
+			<td>{{ examStudent.student.name }}</td>
+			<td>{{ examStudent.student.surname }}</td>
+			<td>{{ examStudent.student.address }}</td>
+			<td>{{ examStudent.points }}</td>
+			<td>
+				<a href="#!/exam/points/{{ exam.id }}/student/{{examStudent.id}}" class="btn btn-xs btn-default">enter points</a>
+			</td>
+		</tr>
+
+	</tbody>
+</table>
