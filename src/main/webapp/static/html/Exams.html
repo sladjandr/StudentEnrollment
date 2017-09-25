@@ -16,7 +16,7 @@
 			<td>{{ exam.date }}</td>
 			<td>
 				<button ng-click="deleteExam(exam.id)"
-				class="btn btn-xs btn-danger" ng-disabled="exam.studentExams.length>0">delete</button> 
+				class="btn btn-xs btn-danger">delete</button> 
 				<button ng-click="examActive(exam.id)" ng-show="exam.active==true"
 				class="btn btn-xs btn-danger">deactivate</button> 
 				<button ng-click="examActive(exam.id)" ng-show="exam.active==false"

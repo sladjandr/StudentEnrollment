@@ -19,7 +19,7 @@ app.controller('examsController', function($scope, $http, $routeParams, $window)
         $http.get('api/examstudent/exam/' + $routeParams.id)
 			.then(function (response) {
 				$scope.examStudents = response.data;
-				console.log($scope.examStudents);
+				$scope.examId = $routeParams.id; //this will be needed for a link to individual student points
 			})
 			.catch(function (response){
 				alert('Error getting exam students!')
@@ -100,6 +100,24 @@ app.controller('examsController', function($scope, $http, $routeParams, $window)
         }
     };
 	
+	$scope.initExamStudent = function() {
+        $scope.examStudent = {};
+        if ($routeParams && $routeParams.examStudentId) {
+            // this is for edit page
+            $http.get('api/examstudent/' + $routeParams.examStudentId)
+				.then(function (response) {
+					$scope.examStudent = response.data;
+				})
+				.catch(function (response){
+					if (response.status==404){
+						alert('Student\'s exam with given id does not exist!')
+					}else{
+						alert('Unexpected error occured while getting student\'s exam!')
+					}
+				});
+        }
+    };
+	
     $scope.saveExam = function() {
 		if($scope.examDate.year!=null && $scope.examDate.month!=null && $scope.examDate.day!=null && $scope.examDate.hour!=null){
 			if($scope.examDate.minute==null){
@@ -135,6 +153,23 @@ app.controller('examsController', function($scope, $http, $routeParams, $window)
 					}
 				});
         }
+    };
+	
+	
+	    $scope.saveExamPoints = function() {
+            // for edit page
+            $http.put('api/examstudent/' + $scope.examStudent.id, $scope.examStudent)
+				.then(function (response) {
+					$window.location.href = "#!/exam/points/"+$routeParams.examStudentId;
+				})
+				.catch(function (response){
+					if (response.status==404){
+						alert('Exam with given id does not exist!')
+					}else{
+						alert('Unexpected error occured while editing exam!')
+					}
+				});
+
     };
 	
 	$scope.showDeactivated = function() {
