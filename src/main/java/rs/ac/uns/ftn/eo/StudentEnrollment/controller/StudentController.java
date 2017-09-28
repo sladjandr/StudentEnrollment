@@ -120,7 +120,6 @@ public class StudentController {
 					
 					ExamStudent examStudent = new ExamStudent();
 					examStudent.setPoints(0);
-					examStudent.setYear(studentAndWishesDTO.getYear());
 					examStudent.setFinished(false);
 					examStudent.setExam(exam);
 					examStudent.setStudent(student);

@@ -1,6 +1,7 @@
 package rs.ac.uns.ftn.eo.StudentEnrollment.model;
 
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -10,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -25,9 +28,13 @@ public class ExamStudent {
 	
 	@Column(name = "points")
 	private double points;
-	
-	@Column(name = "year")
-	private int year;
+
+	@Column(name = "location")
+	private String location;
+
+	@Column(name = "date")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date date;
 
 	@Column(name = "is_finished")
 	private boolean isFinished;
@@ -47,21 +54,22 @@ public class ExamStudent {
 		super();
 	}
 
-	public ExamStudent(Long id, double points, int year, boolean isFinished, Student student, List<Wish> wishes, Exam exam) {
+	public ExamStudent(Long id, double points, boolean isFinished, String location, Date date,
+			Student student, List<Wish> wishes, Exam exam) {
 		super();
 		this.id = id;
 		this.points = points;
-		this.year = year;
 		this.isFinished = isFinished;
+		this.location = location;
+		this.date = date;
 		this.student = student;
 		this.wishes = wishes;
 		this.exam = exam;
 	}
 
-	public ExamStudent(double points, int year, Student student, List<Wish> wishes, Exam exam) {
+	public ExamStudent(double points, Student student, List<Wish> wishes, Exam exam) {
 		super();
 		this.points = points;
-		this.year = year;
 		this.student = student;
 		this.wishes = wishes;
 		this.exam = exam;
@@ -83,12 +91,20 @@ public class ExamStudent {
 		this.points = points;
 	}
 	
-	public int getYear() {
-		return year;
+	public String getLocation() {
+		return location;
 	}
 
-	public void setYear(int year) {
-		this.year = year;
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 	
 	public boolean isFinished() {

@@ -3,8 +3,6 @@
 		<tr>
 			<th>Subject name</th>
 			<th>Maximum Points</th>
-			<th>Location</th>
-			<th>Date and time</th>
 			
 		</tr>
 	</thead>
@@ -12,16 +10,14 @@
 		<tr ng-repeat="exam in exams | filter:show ">
 			<td>{{ exam.subjectName }}</td>
 			<td>{{ exam.maxPoints }}</td>
-			<td>{{ exam.location }}</td>
-			<td>{{ exam.date }}</td>
 			<td>
 				<button ng-click="deleteExam(exam.id)"
-				class="btn btn-xs btn-danger">delete</button> 
+				class="btn btn-xs btn-danger" ng-disabled="exam.studentExams.length>0">delete</button> 
 				<button ng-click="examActive(exam.id)" ng-show="exam.active==true"
 				class="btn btn-xs btn-danger">deactivate</button> 
 				<button ng-click="examActive(exam.id)" ng-show="exam.active==false"
 				class="btn btn-xs btn-danger">activate</button> 
-				<a href="#!/exam/edit/{{ exam.id }}" class="btn btn-xs btn-default">edit</a>
+				<a href="#!/exam/set/{{ exam.id }}" class="btn btn-xs btn-default">set location and date</a>
 				<a href="#!/exam/points/{{ exam.id }}" class="btn btn-xs btn-default">enter points</a>
 			</td>
 		</tr>

@@ -3,8 +3,8 @@ var app = angular.module('studentEnrollmentApp.routes', ['ngRoute']);
 app.config(['$routeProvider', function($routeProvider) {
     $routeProvider
         .when('/', {
-        	templateUrl : 'static/html/aaa.html',
-        	controller: 'aaaController'
+        	templateUrl : 'static/html/Home.html',
+        	controller: 'homeController'
         })
 		.when('/exams', {
         	templateUrl : 'static/html/Exams.html',
@@ -22,12 +22,16 @@ app.config(['$routeProvider', function($routeProvider) {
         	templateUrl : 'static/html/Users.html',
         	controller: 'usersController'
         })
+		.when('/schedule', {
+        	templateUrl : 'static/html/Schedule.html',
+        	controller: 'scheduleController'
+        })
 		.when('/addexam', {
             templateUrl : 'static/html/AddEditExam.html',
             controller: 'examsController'
         })
-		.when('/exam/edit/:id', {
-        	templateUrl : 'static/html/AddEditExam.html',
+		.when('/exam/set/:id', {
+        	templateUrl : 'static/html/ExamSetLocationAndDate.html',
         	controller: 'examsController'
         })
 		.when('/exam/points/:id', {

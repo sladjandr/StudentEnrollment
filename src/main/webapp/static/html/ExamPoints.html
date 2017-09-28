@@ -3,7 +3,7 @@
 		<tr>
 			<th>Name</th>
 			<th>Surname</th>
-			<th>Address</th>
+			<th>Mail</th>
 			<th>Points</th>
 			
 		</tr>
@@ -12,7 +12,7 @@
 		<tr ng-repeat="examStudent in examStudents">
 			<td>{{ examStudent.student.name }}</td>
 			<td>{{ examStudent.student.surname }}</td>
-			<td>{{ examStudent.student.address }}</td>
+			<td>{{ examStudent.student.mail }}</td>
 			<td>{{ examStudent.points }}</td>
 			<td>
 				<a href="#!/exam/points/{{ examId }}/student/{{examStudent.id}}" class="btn btn-xs btn-default">enter points</a>

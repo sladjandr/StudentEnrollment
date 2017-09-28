@@ -13,7 +13,7 @@ import rs.ac.uns.ftn.eo.StudentEnrollment.model.ExamStudent;
 public interface ExamStudentRepository extends JpaRepository<ExamStudent, Long> {
 	
 	List<ExamStudent> findByStudent(Student student);
-	List<ExamStudent> findByExamAndYear(Exam exam, int year);
+	List<ExamStudent> findByExam(Exam exam);
 	ExamStudent findByStudentAndExam(Student student, Exam exam);
 
 }

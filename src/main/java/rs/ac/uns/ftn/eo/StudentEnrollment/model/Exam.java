@@ -1,6 +1,6 @@
 package rs.ac.uns.ftn.eo.StudentEnrollment.model;
 
-import java.util.Date;
+
 import java.util.List;
 
 import javax.persistence.Column;
@@ -10,8 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -30,13 +28,6 @@ public class Exam {
 
 	@Column(name = "max_points")
 	private int maxPoints;
-	
-	@Column(name = "location")
-	private String location;
-
-	@Column(name = "date")
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date date;
 
 	@Column(name = "is_active")
 	private boolean isActive;
@@ -53,25 +44,22 @@ public class Exam {
 		super();
 	}
 
-	public Exam(Long id, String subjectName, int maxPoints, String location, Date date,
-			boolean isActive, List<ExamStudent> studentExams, List<StudyProgram> studyPrograms) {
+	public Exam(Long id, String subjectName, int maxPoints, boolean isActive, 
+			List<ExamStudent> studentExams, List<StudyProgram> studyPrograms) {
 		super();
 		this.id = id;
 		this.subjectName = subjectName;
 		this.maxPoints = maxPoints;
-		this.location = location;
-		this.date = date;
+
 		this.isActive = isActive;
 		this.studentExams = studentExams;
 		this.studyPrograms = studyPrograms;
 	}
 
-	public Exam(String subjectName, int maxPoints, String location, Date date, boolean isActive) {
+	public Exam(String subjectName, int maxPoints, boolean isActive) {
 		super();
 		this.subjectName = subjectName;
 		this.maxPoints = maxPoints;
-		this.location = location;
-		this.date = date;
 		this.isActive = isActive;
 	}
 	
@@ -116,22 +104,6 @@ public class Exam {
 
 	public void setMaxPoints(int maxPoints) {
 		this.maxPoints = maxPoints;
-	}
-	
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
-	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
 	}
 	
 	public boolean isActive() {

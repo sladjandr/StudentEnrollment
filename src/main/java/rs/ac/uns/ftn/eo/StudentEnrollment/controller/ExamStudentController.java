@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import rs.ac.uns.ftn.eo.StudentEnrollment.dto.DateLocationDTO;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.Exam;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.ExamStudent;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.Student;
@@ -68,6 +69,21 @@ public class ExamStudentController {
 	
 	//POST
 	//ExamStudent gets created only when Student associated with it is created.
+	
+	@RequestMapping(method = RequestMethod.PUT, consumes = "application/json", value="/exam/{examId}")
+	public ResponseEntity<ExamStudent> setDateAndLocation(@PathVariable Long examId, @RequestBody DateLocationDTO dateLocationDTO) {
+		
+		Exam exam = examService.findOne(examId);
+		List<ExamStudent> studentExams = examStudentService.findByExamThisYear(exam); 
+		
+		for (ExamStudent studentExam : studentExams){
+			studentExam.setDate(dateLocationDTO.getDate());
+			studentExam.setLocation(dateLocationDTO.getLocation());
+			examStudentService.save(studentExam);
+		}
+		
+		return new ResponseEntity<ExamStudent>(HttpStatus.OK);
+	}
 	
 	@RequestMapping(method = RequestMethod.PUT, consumes = "application/json", value="/{id}")
 	public ResponseEntity<ExamStudent> edit(@PathVariable Long id, @RequestBody ExamStudent examStudent) {

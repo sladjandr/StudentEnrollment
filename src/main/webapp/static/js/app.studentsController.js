@@ -6,11 +6,6 @@ app.controller('studentsController', function($scope, $http, $routeParams, $wind
         $http.get('api/student/all')
 			.then(function (response) {
 				$scope.students = response.data;
-				console.log(response);
-				console.log(response.data);
-				console.log($scope.students);
-				//console.log($scope.students[0]);
-				//console.log($scope.students[1]);
 			})
 			.catch(function (response){
 				alert('Error getting students!')

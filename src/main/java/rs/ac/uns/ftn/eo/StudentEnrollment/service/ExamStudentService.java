@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.eo.StudentEnrollment.service;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -26,8 +27,24 @@ public class ExamStudentService {
 	}
 
 	public List<ExamStudent> findByExamThisYear(Exam exam) {
-		int year = Calendar.getInstance().get(Calendar.YEAR);
-		return examStudentRepository.findByExamAndYear(exam, year);
+		int thisYear = Calendar.getInstance().get(Calendar.YEAR);
+		List<ExamStudent> listByExam = examStudentRepository.findByExam(exam);
+		List<ExamStudent> listByExamThisYear = new ArrayList<ExamStudent>();
+		for (ExamStudent examStudent : listByExam){
+			if(examStudent.getDate()!=null){
+				Calendar cal = Calendar.getInstance();
+		    	cal.setTime(examStudent.getDate());
+		    	int examYear = cal.get(Calendar.YEAR);
+				if(examYear == thisYear){
+					listByExamThisYear.add(examStudent);
+				}else if(!examStudent.isFinished()){
+					listByExamThisYear.add(examStudent);
+				}
+			}else if(!examStudent.isFinished()){
+				listByExamThisYear.add(examStudent);
+			}
+		}
+		return listByExamThisYear;
 	}
 	
 	public ExamStudent findbyStudentAndExam(Student student, Exam exam) {

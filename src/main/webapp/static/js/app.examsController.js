@@ -36,7 +36,7 @@ app.controller('examsController', function($scope, $http, $routeParams, $window)
 			})
 			.catch(function (response){
 				if(response.status==400){
-					alert('Exam that is connected to a study program or a student can\'t be deleted! It can only be deactivated!')
+					alert('Exam that is connected to a study program can\'t be deleted! It can only be deactivated!')
 				}else{
 					alert('Unexpected error occured while deleting exam!')
 				}
@@ -100,6 +100,51 @@ app.controller('examsController', function($scope, $http, $routeParams, $window)
         }
     };
 	
+	$scope.initLocationAndDate = function() {
+        $scope.lad = {};
+		$scope.ladDate = {};
+        if ($routeParams && $routeParams.id) {
+            // getting current date and location from examStudents[0] inside exam
+            $http.get('api/exam/' + $routeParams.id)
+				.then(function (response) {
+					$scope.exam = response.data;
+					if($scope.exam.studentExams.length>0){
+						var studentExamIndex = $scope.exam.studentExams.findIndex(isUnfinished);
+						if(studentExamIndex!=-1){
+							if ($scope.exam.studentExams[studentExamIndex].date!=null){
+								var oldDate = new Date($scope.exam.studentExams[studentExamIndex].date);
+								$scope.ladDate.year = oldDate.getFullYear();
+								$scope.ladDate.month = oldDate.getMonth()+1;
+								$scope.ladDate.day = oldDate.getDate();
+								$scope.ladDate.hour = oldDate.getHours();
+								$scope.ladDate.minute = oldDate.getMinutes();
+							}
+							if ($scope.exam.studentExams[studentExamIndex].location!=null){
+								$scope.lad.location = $scope.exam.studentExams[studentExamIndex].location;
+							}
+						}else{
+							alert("There are are no students waiting to take this exam.")
+							$window.location.href = "#!/exams";
+						}
+					}else{
+						alert("There are are no students waiting to take this exam.")
+						$window.location.href = "#!/exams";
+					}
+				})
+				.catch(function (response){
+					if (response.status==404){
+						alert('Exam with given id does not exist!')
+					}else{
+						alert('Unexpected error occured while getting exam!')
+					}
+				});
+        }
+    };
+	
+	function isUnfinished(studentExam) {
+		return studentExam.finished == false;
+	}
+	
 	$scope.initExamStudent = function() {
         $scope.examStudent = {};
         if ($routeParams && $routeParams.examStudentId) {
@@ -119,13 +164,6 @@ app.controller('examsController', function($scope, $http, $routeParams, $window)
     };
 	
     $scope.saveExam = function() {
-		if($scope.examDate.year!=null && $scope.examDate.month!=null && $scope.examDate.day!=null && $scope.examDate.hour!=null){
-			if($scope.examDate.minute==null){
-				$scope.examDate.minute=0;
-			}
-			var date = new Date($scope.examDate.year, $scope.examDate.month, $scope.examDate.day, $scope.examDate.hour, $scope.examDate.minute, 0, 0);
-			$scope.exam.date = date.getTime();
-		}
         if ($scope.exam.id) {
             // for edit page
             $http.put('api/exam/' + $scope.exam.id, $scope.exam)
@@ -155,6 +193,27 @@ app.controller('examsController', function($scope, $http, $routeParams, $window)
         }
     };
 	
+	$scope.setLocationAndDate = function() {
+		if($scope.ladDate.year!=null && $scope.ladDate.month!=null && $scope.ladDate.day!=null && $scope.ladDate.hour!=null){
+			if($scope.ladDate.minute==null){
+				$scope.ladDate.minute=0;
+			}
+			var date = new Date($scope.ladDate.year, $scope.ladDate.month-1, $scope.ladDate.day, $scope.ladDate.hour, $scope.ladDate.minute, 0, 0);
+			$scope.lad.date = date.getTime();
+		}
+        $http.put('api/examstudent/exam/' + $scope.exam.id, $scope.lad)
+			.then(function (response) {
+				$window.location.href = "#!/exams";
+			})
+			.catch(function (response){
+				if (response.status==404){
+					alert('Exam with given id does not exist!')
+				}else{
+					alert('Unexpected error occured while setting location and date!')
+				}
+			});
+
+    };
 	
 	    $scope.saveExamPoints = function() {
             // for edit page
@@ -164,9 +223,11 @@ app.controller('examsController', function($scope, $http, $routeParams, $window)
 				})
 				.catch(function (response){
 					if (response.status==404){
-						alert('Exam with given id does not exist!')
+						alert('Student\'s exam with given id does not exist!')
+					}else if (response.status==400){
+						alert('Number of points entered is higher then allowed!')
 					}else{
-						alert('Unexpected error occured while editing exam!')
+						alert('Unexpected error occured while editing student\'s exam!')
 					}
 				});
 
