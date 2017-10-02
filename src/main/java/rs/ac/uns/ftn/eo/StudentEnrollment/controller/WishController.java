@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.eo.StudentEnrollment.controller;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +20,11 @@ public class WishController {
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
 	public ResponseEntity<Wish> getById(@PathVariable Long id) {
-		Wish wishes = wishService.findOne(id);
-		if (wishes == null) {
+		Wish wish = wishService.findOne(id);
+		if (wish == null) {
 			return new ResponseEntity<Wish>(HttpStatus.NOT_FOUND);
 		}
-		return new ResponseEntity<Wish>(wishes, HttpStatus.OK);
+		return new ResponseEntity<Wish>(wish, HttpStatus.OK);
 	}
 	
 	//POST

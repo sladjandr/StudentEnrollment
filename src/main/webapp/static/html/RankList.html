@@ -1,0 +1,28 @@
+<table ng-init="getStudyProgram()" class="table table-bordered" >
+	<thead>
+		<tr>
+			<th>Number</th>
+			<th>Name</th>
+			<th>Surname</th>
+			<th>High School Points</th>
+			<th ng-repeat="exam in studyProgram.exams">{{exam.subjectName}}</th>
+			<th>Total Points</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="wish in studyProgram.wishes | filter:show.year | orderBy:'-totalPoints'">
+			<td>{{ $index + 1 }}</td>
+			<td>{{ wish.student.name }}</td>
+			<td>{{ wish.student.surname }}</td>
+			<td>{{ wish.student.highSchoolPoints }}</td>
+			<td ng-repeat="examStudent in wish.studentExams">{{examStudent.points}}</td>
+			<td>{{ wish.totalPoints }}</td>
+		</tr>
+	</tbody>
+</table>
+
+<p><b>Study program {{studyProgram.programName}} accepts {{studyProgram.budgetStudents}} budget students and {{studyProgram.selfFinancingStudents}} self-financing students.</b></p>
+
+<a href="#!/ranklists" class="btn btn-default">Go back</a> 
+
+

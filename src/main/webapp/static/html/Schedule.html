@@ -1,23 +1,20 @@
 <table ng-init="getStudentExams()" class="table table-bordered" >
 	<thead>
 		<tr>
-			<th>Username</th>
+			<th>Exam</th>
+			<th>Location</th>
+			<th>Date</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr ng-repeat="studentExam in studentExams">
-			<td>{{ user.username }}</td>
-			<td>
-				<button ng-click="deleteUser(user.id)"
-					class="btn btn-xs btn-danger" ng-disabled="user.role == 'STUDENT'">delete</button> 
-			</td>
+			<td>{{ studentExam.exam.subjectName }}</td>
+			<td>{{ studentExam.location }}</td>
+			<td>{{ dateString(studentExam.date) }}</td>
 		</tr>
 
 	</tbody>
 </table>
 
-<a href="#!/adduser" class="btn btn-default">Add new administrator</a> 
-<button ng-show="show.role=='ADMIN'" ng-click="showStudents()" class="btn btn-default">Show students</button>
-<button ng-show="show.role=='STUDENT'" ng-click="showAdmins()" class="btn btn-default">Show administrators</button>
 
 

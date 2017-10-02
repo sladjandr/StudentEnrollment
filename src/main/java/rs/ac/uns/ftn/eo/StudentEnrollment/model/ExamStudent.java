@@ -42,10 +42,11 @@ public class ExamStudent {
 	@ManyToOne
 	private Student student;
 
+	@JsonBackReference(value = "se-wi")
 	@ManyToMany
 	private List<Wish> wishes;
 
-	@JsonBackReference
+	@JsonBackReference(value = "se-ex")
 	@ManyToOne
 	private Exam exam;
 	

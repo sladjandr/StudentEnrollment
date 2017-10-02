@@ -26,6 +26,14 @@ app.config(['$routeProvider', function($routeProvider) {
         	templateUrl : 'static/html/Schedule.html',
         	controller: 'scheduleController'
         })
+		.when('/ranklists', {
+        	templateUrl : 'static/html/RankLists.html',
+        	controller: 'rankListController'
+        })
+		.when('/ranklists/:studyProgramId', {
+        	templateUrl : 'static/html/RankList.html',
+        	controller: 'rankListController'
+        })
 		.when('/addexam', {
             templateUrl : 'static/html/AddEditExam.html',
             controller: 'examsController'

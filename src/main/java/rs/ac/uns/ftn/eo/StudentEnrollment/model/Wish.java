@@ -10,15 +10,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "wishes")
-@JsonIdentityInfo(
-		  generator = ObjectIdGenerators.PropertyGenerator.class, 
-		  property = "id",
-		  scope = Wish.class)
 public class Wish {
 
 	@Id
@@ -38,6 +33,7 @@ public class Wish {
 	@ManyToOne
 	private Student student;
 	
+	@JsonBackReference(value = "wi-sp")
 	@ManyToOne
 	private StudyProgram studyProgram;
 

@@ -35,7 +35,7 @@ public class Exam {
 	@OneToMany(mappedBy = "exam")
 	private List<ExamStudent> studentExams;
 	
-	@JsonBackReference
+	@JsonBackReference(value = "ex-sp") //back reference needs to have value to avoid Multiple back-reference properties with same name error
 	@ManyToMany(mappedBy = "exams")
 	private List<StudyProgram> studyPrograms;
 

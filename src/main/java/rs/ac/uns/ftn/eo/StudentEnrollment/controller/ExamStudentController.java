@@ -1,5 +1,6 @@
 package rs.ac.uns.ftn.eo.StudentEnrollment.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.eo.StudentEnrollment.dto.DateLocationDTO;
+import rs.ac.uns.ftn.eo.StudentEnrollment.dto.ExamStudentDTO;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.Exam;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.ExamStudent;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.Student;
@@ -56,15 +58,24 @@ public class ExamStudentController {
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, value = "/student/{id}")
-	public ResponseEntity<List<ExamStudent>> getByStudent(@PathVariable Long id) {
+	public ResponseEntity<List<ExamStudentDTO>> getByStudent(@PathVariable Long id) {
 		Student student = studentService.findOne(id);
 		if (student == null) {
-			return new ResponseEntity<List<ExamStudent>>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<List<ExamStudentDTO>>(HttpStatus.NOT_FOUND);
 		}
 		
 		List<ExamStudent> studentExams = examStudentService.findByStudent(student);
+		List<ExamStudentDTO> examStudentDTOs = new ArrayList<ExamStudentDTO>();
 		
-		return new ResponseEntity<List<ExamStudent>>(studentExams, HttpStatus.OK);
+		for (ExamStudent examStudent : studentExams){
+			ExamStudentDTO examStudentDTO = new ExamStudentDTO();
+			examStudentDTO.setDate(examStudent.getDate());
+			examStudentDTO.setExam(examStudent.getExam());
+			examStudentDTO.setLocation(examStudent.getLocation());
+			examStudentDTOs.add(examStudentDTO);
+		}
+		
+		return new ResponseEntity<List<ExamStudentDTO>>(examStudentDTOs, HttpStatus.OK);
 	}
 	
 	//POST

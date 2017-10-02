@@ -38,10 +38,11 @@ public class Student {
 	@Column(name = "high_school_points")
 	private double highSchoolPoints;
 	
-	@JsonBackReference
+	@JsonBackReference(value = "st-se")
 	@OneToMany(mappedBy = "student")
 	private List<ExamStudent> studentExams;
 	
+	@JsonBackReference(value = "st-wi")
 	@OneToMany(mappedBy = "student")
 	private List<Wish> wishes;
 	
