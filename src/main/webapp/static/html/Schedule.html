@@ -9,8 +9,8 @@
 	<tbody>
 		<tr ng-repeat="studentExam in studentExams">
 			<td>{{ studentExam.exam.subjectName }}</td>
-			<td>{{ studentExam.location }}</td>
-			<td>{{ dateString(studentExam.date) }}</td>
+			<td>{{ studentExam.location }}<i ng-show="!studentExam.location">Not determined yet.</i></td>
+			<td>{{ dateString(studentExam.date) }}<i ng-show="!studentExam.date">Not determined yet.</i></td>
 		</tr>
 
 	</tbody>

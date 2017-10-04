@@ -3,13 +3,13 @@
 	<div class="form-group">
 		<label class="col-sm-2">Points</label>
 		<div class="col-sm-6">
-			<input type="number" step="any" ng-model="examStudent.points" class="form-control" />
+			<input type="number" step="any" ng-model="examStudent.points" min="0" class="form-control" />
 		</div>
 	</div>
 
 	<div class="form-group">
 		<div class="col-sm-offset-2 col-sm-10">
-			<button ng-disabled="!examStudent.points || examPointsForm.$invalid"
+			<button ng-disabled="(!examStudent.points && examStudent.points!=0) || examPointsForm.$invalid"
 				ng-click="saveExamPoints()" type="submit" class="btn btn-default">Save</button>
 		</div>
 	</div>

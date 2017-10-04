@@ -219,7 +219,7 @@ app.controller('examsController', function($scope, $http, $routeParams, $window)
             // for edit page
             $http.put('api/examstudent/' + $scope.examStudent.id, $scope.examStudent)
 				.then(function (response) {
-					$window.location.href = "#!/exam/points/"+$routeParams.examStudentId;
+					window.history.back();
 				})
 				.catch(function (response){
 					if (response.status==404){

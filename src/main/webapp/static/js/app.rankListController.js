@@ -16,10 +16,13 @@ app.controller('rankListController', function($scope, $http, $routeParams, $wind
     };
 	
 	$scope.getStudyProgram = function() {
-        $http.get('api/studyprogram/' + $routeParams.studyProgramId)
+        $http.get('api/studyprogram/' + $routeParams.studyProgramId + '/student/1') //second number will be replaced with student logged in
 			.then(function (response) {
+				if (!response.data){
+					alert('Rank list has not been determined yet!')
+					$window.location.href = "#!/ranklists";
+				}
 				$scope.studyProgram = response.data;
-				console.log($scope.studyProgram.wishes);
 			})
 			.catch(function (response){
 				alert('Error getting study program!')
