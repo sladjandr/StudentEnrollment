@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +34,7 @@ public class StudyProgramController {
 	@Autowired
 	private WishService wishService;
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
 	public ResponseEntity<StudyProgram> getOne(@PathVariable Long id) {
 		StudyProgram studyProgram = studyProgramService.findOne(id);
@@ -43,12 +45,15 @@ public class StudyProgramController {
 		return new ResponseEntity<StudyProgram>(studyProgram, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.GET, value = "/all")
 	public ResponseEntity<List<StudyProgram>> getAll() {
 		List<StudyProgram> studyProgram = studyProgramService.findAll();
 
 		return new ResponseEntity<List<StudyProgram>>(studyProgram, HttpStatus.OK);
 	}
+	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.GET, value = "/allactive")
 	public ResponseEntity<List<StudyProgram>> getAllActive() {
 		List<StudyProgram> studyProgram = studyProgramService.findAllActive();
@@ -56,6 +61,7 @@ public class StudyProgramController {
 		return new ResponseEntity<List<StudyProgram>>(studyProgram, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.GET, value = "/student/{studentId}")
 	public ResponseEntity<List<StudyProgram>> getByStudent(@PathVariable Long studentId) {
 		Student student = studentService.findOne(studentId); //logged in student
@@ -71,6 +77,7 @@ public class StudyProgramController {
 		return new ResponseEntity<List<StudyProgram>>(studyPrograms, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}/student/{studentId}")
 	public ResponseEntity<StudyProgram> getOneForRL(@PathVariable Long id, @PathVariable Long studentId ) {
 		StudyProgram studyProgram = studyProgramService.findOne(id);
@@ -104,6 +111,7 @@ public class StudyProgramController {
 		return new ResponseEntity<StudyProgram>(studyProgram, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<StudyProgram> saveStudyProgram(@RequestBody StudyProgram studyProgram) {
 		
@@ -126,6 +134,7 @@ public class StudyProgramController {
 		return new ResponseEntity<StudyProgram>(studyProgram, HttpStatus.CREATED);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.PUT, consumes = "application/json", value="/{id}")
 	public ResponseEntity<StudyProgram> editStudyProgram(@PathVariable Long id,@RequestBody StudyProgram studyProgram) {
 	
@@ -145,6 +154,7 @@ public class StudyProgramController {
 		return new ResponseEntity<StudyProgram>(editedStudyProgram, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.DELETE, value="/{id}")
 	public ResponseEntity<StudyProgram> deleteStudyProgram(@PathVariable Long id) {
 		StudyProgram studyProgram = studyProgramService.findOne(id);

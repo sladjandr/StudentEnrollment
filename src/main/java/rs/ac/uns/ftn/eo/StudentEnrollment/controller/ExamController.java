@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ public class ExamController {
 	@Autowired
 	private ExamService examService;
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
 	public ResponseEntity<Exam> getOne(@PathVariable Long id) {
 		Exam exam = examService.findOne(id);
@@ -33,6 +35,7 @@ public class ExamController {
 		return new ResponseEntity<Exam>(exam, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.GET, value = "/all")
 	public ResponseEntity<List<Exam>> getAll() {
 		List<Exam> exams = examService.findAll();
@@ -40,6 +43,7 @@ public class ExamController {
 		return new ResponseEntity<List<Exam>>(exams, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
 	public ResponseEntity<Exam> saveExam(@RequestBody Exam exam) {
 		
@@ -57,7 +61,7 @@ public class ExamController {
 		return new ResponseEntity<Exam>(exam, HttpStatus.CREATED);
 	}
 	
-
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.PUT, consumes = "application/json", value="/{id}")
 	public ResponseEntity<Exam> editExam(@RequestBody Exam exam, @PathVariable Long id) {
 		Exam editedExam = examService.findOne(id);
@@ -74,6 +78,7 @@ public class ExamController {
 		return new ResponseEntity<Exam>(editedExam, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
 	public ResponseEntity<Exam> removeExam(@PathVariable Long id) {
 		Exam entranceExam = examService.findOne(id);

@@ -7,6 +7,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +40,7 @@ public class StudentController {
 	@Autowired
 	private ExamStudentService examStudentService;
 	
-	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
 	public ResponseEntity<List<Student>> getAll() {
 
@@ -56,6 +57,7 @@ public class StudentController {
 		return new ResponseEntity<List<Student>>(students, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
 	public ResponseEntity<Student> getOne(@PathVariable Long id) {
 		Student student = studentService.findOne(id);
@@ -67,6 +69,7 @@ public class StudentController {
 	}
 	
 	//Creating Student and User, Wishes, ExamStudents associated with it.
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method=RequestMethod.POST, consumes="application/json")
 	public ResponseEntity<Student> saveStudentUserWishes(@RequestBody StudentAndWishesDTO studentAndWishesDTO){
 		if (studentAndWishesDTO.getAddress()==null||studentAndWishesDTO.getMail()==null
@@ -136,6 +139,7 @@ public class StudentController {
 		return new ResponseEntity<Student>(student, HttpStatus.CREATED);	
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes = "application/json")
 	public ResponseEntity<Student> editStudent(@PathVariable Long id, @RequestBody Student student) {
 

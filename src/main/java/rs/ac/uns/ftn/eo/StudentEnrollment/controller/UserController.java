@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,12 +23,14 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.GET, value="/all")
 	public ResponseEntity<List<User>> getAll() {
 		List<User> users = userService.findAll();
 		return new ResponseEntity<List<User>>(users, HttpStatus.OK);
 	}
 
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.GET, value = "/username/{username}")
 	public ResponseEntity<User> getByUsername(@PathVariable String username) {
 		User user = userService.findByUsername(username);
@@ -39,6 +42,7 @@ public class UserController {
 	
 	//Student User is created when Student associated with the account is created.
 	//Bellow is method for creating Admin User.
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.POST, consumes = "application/json", value = "/admin")
 	public ResponseEntity<User> saveAdminUser(@RequestBody User user) {
 		if (user.getUsername()==null ||user.getPassword()==null) {
@@ -52,7 +56,7 @@ public class UserController {
 		return new ResponseEntity<User>(user, HttpStatus.CREATED);
 	}
 
-	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.PUT, consumes = "application/json", value = "/{id}")
 	public ResponseEntity<User> editUser(@PathVariable Long id, @RequestBody User user) {
 		
@@ -74,6 +78,7 @@ public class UserController {
 	
 	//Student User gets deleted when student associated with the account is deleted.
 	//Bellow is method for deleting Admin User.
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.DELETE, value = "/admin/{id}")
 	public ResponseEntity<User> deleteAdminUser(@PathVariable Long id) {
 		

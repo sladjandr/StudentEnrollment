@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +37,7 @@ public class ExamStudentController {
 	@Autowired
 	private StudentService studentService;
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
 	public ResponseEntity<ExamStudent> getOne(@PathVariable Long id) {
 		ExamStudent examStudent = examStudentService.findOne(id);
@@ -45,6 +47,7 @@ public class ExamStudentController {
 		return new ResponseEntity<ExamStudent>(examStudent, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.GET, value = "/exam/{id}")
 	public ResponseEntity<List<ExamStudent>> getByExam(@PathVariable Long id) {
 		Exam exam = examService.findOne(id);
@@ -57,6 +60,7 @@ public class ExamStudentController {
 		return new ResponseEntity<List<ExamStudent>>(studentExams, HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.GET, value = "/student/{id}")
 	public ResponseEntity<List<ExamStudentDTO>> getByStudent(@PathVariable Long id) {
 		Student student = studentService.findOne(id);
@@ -81,6 +85,7 @@ public class ExamStudentController {
 	//POST
 	//ExamStudent gets created only when Student associated with it is created.
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.PUT, consumes = "application/json", value="/exam/{examId}")
 	public ResponseEntity<ExamStudent> setDateAndLocation(@PathVariable Long examId, @RequestBody DateLocationDTO dateLocationDTO) {
 		
@@ -96,6 +101,7 @@ public class ExamStudentController {
 		return new ResponseEntity<ExamStudent>(HttpStatus.OK);
 	}
 	
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.PUT, consumes = "application/json", value="/{id}")
 	public ResponseEntity<ExamStudent> edit(@PathVariable Long id, @RequestBody ExamStudent examStudent) {
 		
