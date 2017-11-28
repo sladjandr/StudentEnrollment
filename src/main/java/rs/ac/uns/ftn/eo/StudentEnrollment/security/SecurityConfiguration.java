@@ -52,7 +52,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 		    	.antMatchers(HttpMethod.OPTIONS, "/").permitAll()
 		    	.antMatchers("/oauth/**").permitAll()
 		    	.antMatchers("/api/**").authenticated()
-		        //.and().httpBasic()
 		        .and().csrf().disable();
     }
     

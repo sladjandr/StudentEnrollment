@@ -5,7 +5,8 @@ var app = angular.module('studentEnrollmentApp', ['studentEnrollmentApp.homeCont
 												  'studentEnrollmentApp.usersController',
 												  'studentEnrollmentApp.scheduleController',
 												  'studentEnrollmentApp.rankListController',
-												  'studentEnrollmentApp.directives',
-												  'studentEnrollmentApp.services',
+												  'studentEnrollmentApp.applicationController',
+												  'studentEnrollmentApp.loginController',
+												  'studentEnrollmentApp.authService', 
                                                   'studentEnrollmentApp.routes']);
 

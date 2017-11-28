@@ -215,21 +215,21 @@ app.controller('examsController', function($scope, $http, $routeParams, $window)
 
     };
 	
-	    $scope.saveExamPoints = function() {
-            // for edit page
-            $http.put('api/examstudent/' + $scope.examStudent.id, $scope.examStudent)
-				.then(function (response) {
-					window.history.back();
-				})
-				.catch(function (response){
-					if (response.status==404){
-						alert('Student\'s exam with given id does not exist!')
-					}else if (response.status==400){
-						alert('Number of points entered is higher then allowed!')
-					}else{
-						alert('Unexpected error occured while editing student\'s exam!')
-					}
-				});
+	$scope.saveExamPoints = function() {
+        // for edit page
+        $http.put('api/examstudent/' + $scope.examStudent.id, $scope.examStudent)
+		.then(function (response) {
+			window.history.back();
+		})
+		.catch(function (response){
+			if (response.status==404){
+				alert('Student\'s exam with given id does not exist!')
+			}else if (response.status==400){
+				alert('Number of points entered is higher then allowed!')
+			}else{
+				alert('Unexpected error occured while editing student\'s exam!')
+			}
+		});
 
     };
 	

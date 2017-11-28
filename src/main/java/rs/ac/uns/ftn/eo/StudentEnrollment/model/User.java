@@ -19,12 +19,12 @@ public class User {
 	@Column(name = "id")
 	private Long id;
 	
-	@Column(name = "user_role", nullable=false)
+	@Column(name = "role", nullable=false)
 	@Enumerated(EnumType.STRING)
 	private UserRole role;
 	
-	@Column(name = "username", unique = true, nullable=false)
-	private String username;
+	@Column(name = "user_name", unique = true, nullable=false)
+	private String userName;
 	
 	@Column(name = "password", nullable=false)
 	private String password;
@@ -41,14 +41,14 @@ public class User {
 		super();
 		this.id = id;
 		this.role = role;
-		this.username = username;
+		this.userName = username;
 		this.password = password;
 		this.student = student;
 	}
 	
-	public User(UserRole role, String username, String password, Student student) {
+	public User(String username, String password) {
 		super();
-		this.username = username;
+		this.userName = username;
 		this.password = password;
 	}
 	
@@ -69,11 +69,11 @@ public class User {
 	}
 
 	public String getUsername() {
-		return username;
+		return userName;
 	}
 
 	public void setUsername(String username) {
-		this.username = username;
+		this.userName = username;
 	}
 
 	public String getPassword() {

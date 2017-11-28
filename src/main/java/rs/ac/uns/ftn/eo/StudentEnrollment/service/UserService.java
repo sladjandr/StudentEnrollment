@@ -25,7 +25,7 @@ public class UserService implements UserDetailsService {
 	}
 	
 	public User findByUsername(String username) {
-		return userRepository.findByUsername(username);
+		return userRepository.findByUserName(username);
 	}
 	
 	public List<User> findAll() {
@@ -41,9 +41,8 @@ public class UserService implements UserDetailsService {
 	}
 	
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userRepository.findByUsername(username);
-			return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getGrantedAuthorities(user));
-
+		User user = userRepository.findByUserName(username);
+		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getGrantedAuthorities(user));
 	}
 	
 	private List<GrantedAuthority> getGrantedAuthorities(User user){

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,6 +53,11 @@ public class UserController {
 			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
 		}
 		user.setRole(UserRole.ADMIN);
+		
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String hashedPassword = passwordEncoder.encode(user.getPassword()); 
+		user.setPassword(hashedPassword);
+		
 		user = userService.save(user);
 		return new ResponseEntity<User>(user, HttpStatus.CREATED);
 	}
@@ -68,7 +74,11 @@ public class UserController {
 		if (editedUser == null) {
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		}
-		editedUser.setPassword(user.getPassword()); 
+		
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String hashedPassword = passwordEncoder.encode(user.getPassword());
+		
+		editedUser.setPassword(hashedPassword); 
 		
 		editedUser = userService.save(editedUser);
 		
@@ -86,7 +96,7 @@ public class UserController {
 		if (user == null){
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		}
-		if (user.getRole() != UserRole.ADMIN){
+		if (!user.getRole().equals("ADMIN")){
 			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
 		}
 	    userService.remove(id);

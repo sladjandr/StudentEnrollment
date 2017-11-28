@@ -60,7 +60,7 @@ public class ExamStudentController {
 		return new ResponseEntity<List<ExamStudent>>(studentExams, HttpStatus.OK);
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STUDENT')")
 	@RequestMapping(method = RequestMethod.GET, value = "/student/{id}")
 	public ResponseEntity<List<ExamStudentDTO>> getByStudent(@PathVariable Long id) {
 		Student student = studentService.findOne(id);

@@ -84,7 +84,7 @@ public class StudyProgramController {
 		if (studyProgram == null) {
 			return new ResponseEntity<StudyProgram>(HttpStatus.NOT_FOUND);
 		}
-		Student student = studentService.findOne(studentId); //logged in student
+		Student student = studentService.findOne(studentId); //logged in student (we just need it to know which year to show)
 		if (student == null){
 			return new ResponseEntity<StudyProgram>(HttpStatus.NOT_FOUND);
 		}

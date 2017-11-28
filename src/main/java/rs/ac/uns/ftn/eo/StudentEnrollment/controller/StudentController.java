@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,14 +46,6 @@ public class StudentController {
 	public ResponseEntity<List<Student>> getAll() {
 
 		List<Student> students = studentService.findAll();
-		
-		System.out.println(students.size());
-		if(students.size()>0){
-			System.out.println(students.get(0));
-		}
-		if(students.size()>1){
-			System.out.println(students.get(1));
-		}
 
 		return new ResponseEntity<List<Student>>(students, HttpStatus.OK);
 	}
@@ -91,7 +84,12 @@ public class StudentController {
 		User user = new User();
 		user.setRole(UserRole.STUDENT);
 		user.setUsername("student" + Long.toString(student.getId()));
-		user.setPassword(RandomStringUtils.randomAlphanumeric(10));
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		String password = RandomStringUtils.randomAlphanumeric(10);
+		System.out.println("Student password: "); //this will be removed later
+		System.out.println(password); //this will be removed later
+		String hashedPassword = passwordEncoder.encode(password); 
+		user.setPassword(hashedPassword);
 		user.setStudent(student);
 		user = userService.save(user);
 	    
@@ -106,7 +104,7 @@ public class StudentController {
 		}
 	    
 	    //creating studentExams
-		//hashset is being used for exams to avoid duplicates
+		//contains() uses hashcode() and equals() methods in model
 		List<Exam> exams = new ArrayList<Exam>();
 		for (StudyProgram studyProgram : studentAndWishesDTO.getStudyPrograms()){
 			List<Exam> studyProgramExams = studyProgram.getExams();

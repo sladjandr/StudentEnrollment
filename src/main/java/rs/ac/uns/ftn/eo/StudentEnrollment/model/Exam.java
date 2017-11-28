@@ -63,7 +63,7 @@ public class Exam {
 		this.isActive = isActive;
 	}
 	
-	
+	//needed for contains()
 	@Override
 	public boolean equals(Object object)
     {
@@ -75,6 +75,7 @@ public class Exam {
         }
     }
 	
+	//needed for contains()
 	@Override
 	public int hashCode(){
 		return this.id.intValue();

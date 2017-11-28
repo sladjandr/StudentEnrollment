@@ -1,10 +1,14 @@
-var app = angular.module('studentEnrollmentApp.routes', ['ngRoute']);
+var app = angular.module('studentEnrollmentApp.routes', ['angular-jwt', 'ngRoute']);
 
 app.config(['$routeProvider', function($routeProvider) {
     $routeProvider
         .when('/', {
         	templateUrl : 'static/html/Home.html',
         	controller: 'homeController'
+        })
+		.when('/login', {
+        	templateUrl : 'static/html/Login.html',
+        	controller: 'loginController'
         })
 		.when('/exams', {
         	templateUrl : 'static/html/Exams.html',
@@ -79,6 +83,6 @@ app.config(['$routeProvider', function($routeProvider) {
             controller: 'usersController'
         })
         .otherwise({
-            redirectTo: '/'
+            redirectTo: '/login'
         });
 }]);
