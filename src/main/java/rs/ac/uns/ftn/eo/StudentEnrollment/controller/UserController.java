@@ -31,7 +31,7 @@ public class UserController {
 		return new ResponseEntity<List<User>>(users, HttpStatus.OK);
 	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STUDENT')")
 	@RequestMapping(method = RequestMethod.GET, value = "/username/{username}")
 	public ResponseEntity<User> getByUsername(@PathVariable String username) {
 		User user = userService.findByUsername(username);

@@ -1,5 +1,4 @@
-var app = angular.module('studentEnrollmentApp', ['studentEnrollmentApp.homeController',
-												  'studentEnrollmentApp.examsController',
+var app = angular.module('studentEnrollmentApp', ['studentEnrollmentApp.examsController',
 												  'studentEnrollmentApp.studyProgramsController',
 												  'studentEnrollmentApp.studentsController',
 												  'studentEnrollmentApp.usersController',

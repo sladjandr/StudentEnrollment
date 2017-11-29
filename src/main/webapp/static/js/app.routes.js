@@ -2,10 +2,6 @@ var app = angular.module('studentEnrollmentApp.routes', ['angular-jwt', 'ngRoute
 
 app.config(['$routeProvider', function($routeProvider) {
     $routeProvider
-        .when('/', {
-        	templateUrl : 'static/html/Home.html',
-        	controller: 'homeController'
-        })
 		.when('/login', {
         	templateUrl : 'static/html/Login.html',
         	controller: 'loginController'

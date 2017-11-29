@@ -61,7 +61,7 @@ public class StudyProgramController {
 		return new ResponseEntity<List<StudyProgram>>(studyProgram, HttpStatus.OK);
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STUDENT')")
 	@RequestMapping(method = RequestMethod.GET, value = "/student/{studentId}")
 	public ResponseEntity<List<StudyProgram>> getByStudent(@PathVariable Long studentId) {
 		Student student = studentService.findOne(studentId); //logged in student
@@ -77,7 +77,7 @@ public class StudyProgramController {
 		return new ResponseEntity<List<StudyProgram>>(studyPrograms, HttpStatus.OK);
 	}
 	
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STUDENT')")
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}/student/{studentId}")
 	public ResponseEntity<StudyProgram> getOneForRL(@PathVariable Long id, @PathVariable Long studentId ) {
 		StudyProgram studyProgram = studyProgramService.findOne(id);

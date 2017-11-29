@@ -1,6 +1,6 @@
 var app = angular.module('studentEnrollmentApp.loginController', []);
 
-app.controller('loginController', function($rootScope, $http, $scope, jwtHelper) {
+app.controller('loginController', function($rootScope, $http, $scope, jwtHelper, authService) {
 	
 	$scope.credentials = {};
 	
@@ -22,22 +22,15 @@ app.controller('loginController', function($rootScope, $http, $scope, jwtHelper)
 				var token = "Bearer " + response.access_token;
 				$http.defaults.headers.common.Authorization = token;
 				localStorage.setItem('jwt_token', response.access_token);
-				////////////////////////////////
-				var token = localStorage.getItem('jwt_token');
-				var payload = jwtHelper.decodeToken(token);
-				console.log(payload);
-				console.log(payload.user_name);
-				console.log(payload.authorities);
-				///////////////////
 				$http.get('api/user/username/' + $scope.credentials.username)
 				.then(function (response) {
 					$scope.user = data;
 					localStorage.setItem('userId', $scope.user.id);
 					$rootScope.userId = localStorage.getItem('userId');
-					if ($scope.user.role=='STUDENT') {
-						window.location = "/#!/schedule";
-					}else{
+					if (authService.isAdmin()) {
 						window.location = "/#!/exams"
+					}else{
+						window.location = "/#!/schedule";
 					}
 				})
 				.catch(function (response){

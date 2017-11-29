@@ -17,7 +17,6 @@
 <script src="/webjars/angular-jwt/angular-jwt.js"></script>
 		
 <script src="static/js/app.js"></script>
-<script src="static/js/app.homeController.js"></script>
 <script src="static/js/services/app.authService.js"></script>
 <script src="static/js/app.examsController.js"></script>
 <script src="static/js/app.studyProgramsController.js"></script>
@@ -35,7 +34,6 @@
     <div   class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href="/">Home</a>
 				<a class="navbar-brand" ng-hide="isLoggedIn()" href="#!/login">Login</a> 
 				<a class="navbar-brand" ng-show="isAdmin()" href="#!/exams">Exams</a>
 				<a class="navbar-brand" ng-show="isAdmin()" href="#!/studyprograms">Study Programs</a>
