@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import rs.ac.uns.ftn.eo.StudentEnrollment.dto.StudentAndWishesDTO;
+import rs.ac.uns.ftn.eo.StudentEnrollment.dto.StudentIdAndYearDTO;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.Exam;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.ExamStudent;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.StudyProgram;
@@ -59,6 +60,26 @@ public class StudentController {
 		}
 
 		return new ResponseEntity<Student>(student, HttpStatus.OK);
+	}
+	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STUDENT')")
+	@RequestMapping(method = RequestMethod.GET, value = "username/{username}")
+	public ResponseEntity<StudentIdAndYearDTO> getByUserName(@PathVariable String username) {
+		User user = userService.findByUsername(username);
+		if (user == null) {
+			return new ResponseEntity<StudentIdAndYearDTO>(HttpStatus.NOT_FOUND);
+		}
+
+		Student student = user.getStudent();
+		if (student == null) {
+			return new ResponseEntity<StudentIdAndYearDTO>(HttpStatus.NOT_FOUND);
+		}
+		
+		StudentIdAndYearDTO studentDTO = new StudentIdAndYearDTO();
+		studentDTO.setStudentId(student.getId());
+		studentDTO.setYear(student.getWishes().get(0).getYear());
+
+		return new ResponseEntity<StudentIdAndYearDTO>(studentDTO, HttpStatus.OK);
 	}
 	
 	//Creating Student and User, Wishes, ExamStudents associated with it.
