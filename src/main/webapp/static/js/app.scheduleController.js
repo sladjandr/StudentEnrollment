@@ -1,9 +1,11 @@
 var app = angular.module('studentEnrollmentApp.scheduleController', []);
 
-app.controller('scheduleController', function($scope, $rootScope, $http, $routeParams, $window, authService) {
+app.controller('scheduleController', function($scope, $http, $routeParams, $window) {
+	
+	var studentId = localStorage.getItem('loggedInStudentId');
 	
 	$scope.getStudentExams = function() {
-        $http.get('api/examstudent/student/1') //will be replaced with student logged in
+        $http.get('api/examstudent/student/' + studentId)
 			.then(function (response) {
 				$scope.studentExams = response.data;
 			})

@@ -30,7 +30,15 @@ app.controller('loginController', function($rootScope, $http, $scope, jwtHelper,
 					if (authService.isAdmin()) {
 						window.location = "/#!/exams"
 					}else{
-						window.location = "/#!/schedule";
+						$http.get('api/student/username/' + $rootScope.username)
+						.then(function (response) {
+							localStorage.setItem('loggedInStudentId', response.data.studentId);
+							localStorage.setItem('loggedInStudentYear', response.data.year);
+							window.location = "/#!/schedule";
+						})
+						.catch(function (response){
+							alert('Error getting student by username!')
+						});
 					}
 				})
 				.catch(function (response){

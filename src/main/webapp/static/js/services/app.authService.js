@@ -58,18 +58,7 @@ app.service('authService', function ($http, jwtHelper, $rootScope, $log) {
 			}
     				
         	return false;
-        }
-		
-		service.getStudent = function() {
-			$http.get('api/student/username/' + $rootScope.username)
-			.then(function (response) {
-				return response.data
-			})
-			.catch(function (response){
-				alert('Error getting student by username!')
-			});
-		}
-     
+        }     
 
         return service;
 
