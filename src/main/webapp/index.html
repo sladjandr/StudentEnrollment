@@ -25,6 +25,7 @@
 <script src="static/js/app.scheduleController.js"></script>
 <script src="static/js/app.rankListController.js"></script>
 <script src="static/js/app.applicationController.js"></script>
+<script src="static/js/app.accountController.js"></script>
 <script src="static/js/app.loginController.js"></script>
 <script src="static/js/app.routes.js"></script>	
 
@@ -41,6 +42,7 @@
 				<a class="navbar-brand" ng-show="isAdmin()" href="#!/users">Users</a>
 				<a class="navbar-brand" ng-show="isStudent()" href="#!/schedule">Schedule</a>
 				<a class="navbar-brand" ng-show="isStudent()" href="#!/ranklists">Rank Lists</a>
+				<a class="navbar-brand" ng-show="isLoggedIn()" href="#!/account">Account</a> 
 				<a class="navbar-brand" ng-show="isLoggedIn()" ng-click="logout()" href="#!/login">Logout</a> 
             </div>
          </div>

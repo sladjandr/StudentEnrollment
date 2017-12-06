@@ -78,6 +78,10 @@ app.config(['$routeProvider', function($routeProvider) {
             templateUrl : 'static/html/AddUser.html',
             controller: 'usersController'
         })
+		.when('/account', {
+            templateUrl : 'static/html/Account.html',
+            controller: 'accountController'
+        })
         .otherwise({
             redirectTo: '/login'
         });

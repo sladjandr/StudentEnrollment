@@ -24,9 +24,13 @@ app.controller('loginController', function($rootScope, $http, $scope, jwtHelper,
 				localStorage.setItem('jwt_token', response.access_token);
 				$http.get('api/user/username/' + $scope.credentials.username)
 				.then(function (response) {
-					$scope.user = data;
-					localStorage.setItem('userId', $scope.user.id);
-					$rootScope.userId = localStorage.getItem('userId');
+					$http.get('api/user/username/' + $rootScope.username)
+						.then(function (response) {
+							localStorage.setItem('userId', response.data.id);
+						})
+						.catch(function (response){
+							alert('Error getting user by username!')
+						});
 					if (authService.isAdmin()) {
 						window.location = "/#!/exams"
 					}else{

@@ -62,11 +62,13 @@ public class UserController {
 		return new ResponseEntity<User>(user, HttpStatus.CREATED);
 	}
 
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STUDENT')")
 	@RequestMapping(method = RequestMethod.PUT, consumes = "application/json", value = "/{id}")
-	public ResponseEntity<User> editUser(@PathVariable Long id, @RequestBody User user) {
+	public ResponseEntity<User> editUser(@PathVariable Long id, @RequestBody String newPassword) {
 		
-		if(user.getPassword()==null){
+		System.out.println(newPassword);
+		
+		if(newPassword==null){
 			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
 		}
 		
@@ -76,9 +78,9 @@ public class UserController {
 		}
 		
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		String hashedPassword = passwordEncoder.encode(user.getPassword());
+		String hashedPasswordNew = passwordEncoder.encode(newPassword);
 		
-		editedUser.setPassword(hashedPassword); 
+		editedUser.setPassword(hashedPasswordNew); 
 		
 		editedUser = userService.save(editedUser);
 		
