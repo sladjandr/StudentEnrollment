@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import rs.ac.uns.ftn.eo.StudentEnrollment.model.Student;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.User;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.UserRole;
+import rs.ac.uns.ftn.eo.StudentEnrollment.service.EmailService;
 import rs.ac.uns.ftn.eo.StudentEnrollment.service.UserService;
 
 @RestController
@@ -23,6 +25,8 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private EmailService emailService;
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(method = RequestMethod.GET, value="/all")
@@ -66,7 +70,7 @@ public class UserController {
 	@RequestMapping(method = RequestMethod.PUT, consumes = "application/json", value = "/{id}")
 	public ResponseEntity<User> editUser(@PathVariable Long id, @RequestBody String newPassword) {
 		
-		System.out.println(newPassword);
+		System.out.println(newPassword); //will be removed later
 		
 		if(newPassword==null){
 			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
@@ -83,6 +87,13 @@ public class UserController {
 		editedUser.setPassword(hashedPasswordNew); 
 		
 		editedUser = userService.save(editedUser);
+		
+		//send new credentials to student
+		if (editedUser.getRole().equals(UserRole.STUDENT)){
+			Student student = editedUser.getStudent();
+			String mailText = "Username: " + editedUser.getUsername() + "   Password: " + newPassword;
+			emailService.sendMessage(student.getMail(), "New Student Enrollment Credentials - Your password has been changed.", mailText);
+		}
 		
 		return new ResponseEntity<User>(editedUser, HttpStatus.OK);
 	}

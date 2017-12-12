@@ -24,6 +24,7 @@ import rs.ac.uns.ftn.eo.StudentEnrollment.model.Student;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.User;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.UserRole;
 import rs.ac.uns.ftn.eo.StudentEnrollment.model.Wish;
+import rs.ac.uns.ftn.eo.StudentEnrollment.service.EmailService;
 import rs.ac.uns.ftn.eo.StudentEnrollment.service.ExamStudentService;
 import rs.ac.uns.ftn.eo.StudentEnrollment.service.StudentService;
 import rs.ac.uns.ftn.eo.StudentEnrollment.service.UserService;
@@ -41,6 +42,8 @@ public class StudentController {
 	private WishService wishService;
 	@Autowired
 	private ExamStudentService examStudentService;
+	@Autowired
+	private EmailService emailService;
 	
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@RequestMapping(value = "/all", method = RequestMethod.GET)
@@ -113,6 +116,10 @@ public class StudentController {
 		user.setPassword(hashedPassword);
 		user.setStudent(student);
 		user = userService.save(user);
+		
+		//sending username and password to student
+		String mailText = "Username: " + user.getUsername() + "   Password: " + password;
+		emailService.sendMessage(student.getMail(), "Student Enrollment Credentials", mailText);
 	    
 		//creating Wishes
 		for (int i=0; i<studentAndWishesDTO.getStudyPrograms().size(); i++){
