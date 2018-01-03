@@ -109,7 +109,7 @@ public class UserController {
 		if (user == null){
 			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
 		}
-		if (!user.getRole().equals("ADMIN")){
+		if (!user.getRole().equals(UserRole.ADMIN)){
 			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
 		}
 	    userService.remove(id);
